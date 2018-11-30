@@ -2,7 +2,8 @@
  * 	helloWorld.java
  * 	authors:
  *  Marnix Jansma, 23-11-18
- *  Gijs Hendriks 
+ *  Gijs Hendriks (s2410540)
+ *  Hidde
  *  
  *  To compile:
  *  javac -classpath "$FLORADIR/java/flora2java.jar":"$FLORADIR/java/interprolog.jar" helloWorld.java
@@ -39,14 +40,7 @@ public class helloWorld{
 	    
 	    
 	    
-	    JButton nextButton = new JButton("Click me");
-	    nextButton.addActionListener(new ActionListener()
-	    {
-	    	  public void actionPerformed(ActionEvent e)
-	    	  {
-	    	    System.out.println("clicked a button");
-	    	  }
-	    	});
+	    JButton nextButton = createNextButton("Click me!");
 	    
 	    frame.add(nextButton);
 	    frame.setLayout(layout);
@@ -54,6 +48,19 @@ public class helloWorld{
 	    frame.setLocation(300, 300);
 	    frame.setVisible(true);
 	    
+	}
+	
+	public static JButton createNextButton(String text){
+		JButton nextButton = new JButton(text);
+	    nextButton.addActionListener(new ActionListener()
+	    {
+	    	  public void actionPerformed(ActionEvent e)
+	    	  {
+	    	    System.out.println("clicked a button");
+	    	  }
+	    	});
+	    return nextButton;
+		
 	}
 
 }
