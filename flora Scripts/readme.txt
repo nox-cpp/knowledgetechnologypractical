@@ -11,11 +11,7 @@ Here it is assumed that the variable $FLORADIR (%FLORADIR% on Windows) is set us
 ## RUNNING
 To run the program I use the following line (it should all be one command):
 
-  java 
-    -DPROLOGDIR=$PROLOGDIR 
-    -DFLORADIR=$FLORADIR 
-    -classpath $FLORADIR/java/flora2java.jar:$FLORADIR/java/interprolog.jar./flora\ Scripts/ 
-    helloWorld
+  java -DPROLOGDIR=$PROLOGDIR -DFLORADIR=$FLORADIR -classpath $FLORADIR/java/flora2java.jar:$FLORADIR/java/interprolog.jar:./ helloWorld
 
 The first two arguments are used to make clear to java where it can find the Flora and Java executables. This is required for the packages to work. The third argument specifies to java where it can find the Flora package and the flora and interprolog .jar's. This was giving me trouble at first because the paths and references are either incorrect in the flora api source or there was some parameter we were missing to point to them.
 I made it work by placing the package in the same directory as the helloWorld java class AND moving the flrException class folder (util) to the same folder as the rest of the flora classes. Otherwise it wouldn't quite work.
