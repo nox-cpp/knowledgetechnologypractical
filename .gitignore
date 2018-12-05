@@ -1,2 +1,3 @@
 .flora_aux_files/
 .vscode/
+*.class
