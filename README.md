@@ -13,9 +13,11 @@ The command to compile the project in a linux terminal is as follows:
 ```bash
 javac -d build/main -classpath "$FLORADIR"/java/flora2java.jar:"$FLORADIR"/java/interprolog.jar src/java/*.java
 ```
+Alternatively, you can use the command bash comp.sh in order to run the shell script that also contains the right command.
+
 Here it is assumed that the variable $FLORADIR (%FLORADIR% on Windows) is set using either the supplied scripts in the Flora-2 installation directory or manually. I had to set this manually, as the scripts seem to be somewhat specific to a certain machine.
 
-Compiled classes are added to the build folder
+Compiled classes are added to the build folder.
 
 NOTE: The quotes ("") are not a luxury here. It is often the case that the path contains spaces, and to account for that we need to include quotes.
 
