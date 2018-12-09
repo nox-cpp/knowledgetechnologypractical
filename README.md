@@ -34,7 +34,7 @@ On Windows, system variables may be set through the settings GUI. As a general n
 ### RUNNING
 To run the program (on linux) I use the following line (it should all be one command):
 ```bash
-java -DPROLOGDIR="$PROLOGDIR" -DFLORADIR="$FLORADIR" -classpath "$FLORADIR"/java/flora2java.jar:"$FLORADIR"/java/interprolog.jar:./build/main/ helloWorld
+java -DPROLOGDIR="$PROLOGDIR" -DFLORADIR="$FLORADIR" -classpath "$FLORADIR"/java/flora2java.jar:"$FLORADIR"/java/interprolog.jar:./build/main/:./src/ src/java/helloWorld
 ```
 NOTE: It is assumed that these commands are run from the top level of the repository.
 
