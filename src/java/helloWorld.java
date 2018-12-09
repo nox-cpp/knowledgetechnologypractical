@@ -32,6 +32,10 @@ public class helloWorld{
 			// Create a frame for the prgram
 			ktpFrame frame = new ktpFrame();
 			System.out.println("Made a Frame");
+			// Ask the model to give info on all its persons
+			System.out.println(floraController.queryModel("?X:person@knowledgebase."));
+			// Query the model for persons that fit a specific profile
+			System.out.println(floraController.queryModel("?X:person[age -> 21]@knowledgebase."));
 			// Close the FloraSession prior to exiting the program
 			floraController.closeSession();
 		}

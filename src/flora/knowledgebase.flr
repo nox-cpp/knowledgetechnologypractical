@@ -7,6 +7,7 @@
 /**
 * The values for the class attributes use primitive data types available in Flora
 * (See page 202 of the Flora manual)
+* NOTE: Don't forget to always end any statement with a '.'
 */
 person[|
   age => integer,
@@ -15,10 +16,23 @@ person[|
   has_disease => boolean
 |].
 
-/** marnix:person[|
-*  age -> 21,
-*  relatives -> {},
-*  risk_level -> 'unknown'
-*  has_disease -> false
-* |]
-**/
+Marnix:person[
+  age -> 21,
+  relatives -> {},
+  risk_level -> 'unknown',
+  has_disease -> false
+].
+
+Tim:person[
+  age -> 17,
+  relatives -> {Marietje},
+  risk_level -> 'overwhelming',
+  has_disease -> true
+].
+
+Marietje:person[
+  age -> 18,
+  relatives -> {Tim},
+  risk_level -> 'unknown',
+  has_disease -> false
+].

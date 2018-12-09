@@ -25,5 +25,14 @@ public class FloraController {
     session.close();
   }
 
-  
+  // Sends a given query to the model and returns the results as a string
+  public String queryModel(String query) {
+    Iterator<FloraObject> response = session.ExecuteQuery(query);
+    String answervals = "";
+    if(response.hasNext())
+      answervals = response.next().toString();
+    while(response.hasNext())
+      answervals += ","+response.next().toString();
+    return answervals;
+  }
 }
