@@ -1,0 +1,24 @@
+/** File: knowledgebase.flr
+* Author: Marnix Jansma
+*
+*/
+
+/** Class declaration */
+/**
+* The values for the class attributes use primitive data types available in Flora
+* (See page 202 of the Flora manual)
+*/
+person[|
+  age => integer,
+  relatives => person,
+  risk_level => string,
+  has_disease => boolean
+|].
+
+/** marnix:person[|
+*  age -> 21,
+*  relatives -> {},
+*  risk_level -> 'unknown'
+*  has_disease -> false
+* |]
+**/

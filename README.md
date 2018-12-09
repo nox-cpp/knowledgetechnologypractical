@@ -27,8 +27,12 @@ One way of setting these variables on Linux would be to add the following lines 
 FLORADIR="[PATH-TO-FLORA]/Flora-2/flora2"
 PROLOGDIR="[PATH-TO-FLORA]/Flora-2/XSB/config/x86_64-unknown-linux-gnu/bin"
 FLORA2JAVA="[PATH-TO-FLORA]/Flora-2/flora2/java/API"
+export FLORADIR
+export PROLOGDIR
 ```
 [PATH-TO-FLORA] being the path to your Flora installation folder.
+
+It is important to also export the variables, otherwise they can not be used by the processes that execute the shell scripts.
 
 On Windows, system variables may be set through the settings GUI. As a general note, on Windows all system variables follow this format `%VAR%`. Whenever a command in this manual shows `$VAR` it should be replaced with `%VAR%` on Windows.
 ### RUNNING

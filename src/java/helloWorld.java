@@ -18,19 +18,22 @@ package src.java;
 import java.util.*;
 import net.sf.flora2.API.*;
 import net.sf.flora2.API.util.*;
+import src.java.FloraController;
+
 import javax.swing.*;	//swing
 
 public class helloWorld{
-	
 	public static void main(String[] args) {
 				
-			FloraSession session = new FloraSession();
+			FloraController floraController = new FloraController();
 			System.out.println("Flora-2 session started");
-			
-			
-			
+			// Load the knowledgebase into the Flora session
+			floraController.loadModel();
+			// Create a frame for the prgram
 			ktpFrame frame = new ktpFrame();
 			System.out.println("Made a Frame");
+			// Close the FloraSession prior to exiting the program
+			floraController.closeSession();
 		}
 
 }
