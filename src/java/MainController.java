@@ -36,6 +36,9 @@ public class MainController{
 			System.out.println(floraController.queryModel("?X:person@knowledgebase."));
 			// Query the model for persons that fit a specific profile
 			System.out.println(floraController.queryModel("?X:person[age -> 21]@knowledgebase."));
+
+			System.out.println(floraController.queryModel("?X.relatives[self->?Y]@knowledgebase."));
+
 			// Close the FloraSession prior to exiting the program
 			floraController.closeSession();
 		}

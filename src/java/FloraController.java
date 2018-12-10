@@ -27,12 +27,27 @@ public class FloraController {
 
   // Sends a given query to the model and returns the results as a string
   public String queryModel(String query) {
-    Iterator<FloraObject> response = session.ExecuteQuery(query);
+    Iterator<FloraObject> response = this.session.ExecuteQuery(query);
     String answervals = "";
     if(response.hasNext())
       answervals = response.next().toString();
     while(response.hasNext())
       answervals += ","+response.next().toString();
     return answervals;
+  }
+
+  // Returns a List of Strings with answers to the query
+  // If the query is not `complex' this calls the base function
+  public List<String> queryModel(String query, boolean complex) {
+    ArrayList<String> response = new ArrayList<>();
+    if (complex == false) {
+      response.add(queryModel(query));
+      return response;
+    }
+    return response;
+  }
+
+  public void commandModel(String command) {
+    this.session.command(query);
   }
 }
