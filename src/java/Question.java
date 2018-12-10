@@ -14,6 +14,7 @@ public class Question {
 	
 	public String question;
 	public List<JComponent> componentList;
+	private String answer;
 	
 	Question(String question){
 		this.question = question;
@@ -23,7 +24,7 @@ public class Question {
 	Question(String question, List<JComponent> componentList){
 		this.question = question;
 		this.componentList = componentList;
-		
+		this.answer = null;
 	}
 	
 	/**
@@ -39,5 +40,31 @@ public class Question {
 	 */
 	public String toString(){
 		return "Question object: " + this.question + " with "+ this.componentList.size() + " components" ;
+	}
+	
+	
+	public void setAnswer(String a){
+		this.answer = a;
+	}
+	
+	public String getAnswer(){
+		
+		
+		for(JComponent item : componentList){
+			if(item instanceof JTextField){
+				this.setAnswer("The answer is in a radiobutton");
+			}
+			else if(item instanceof JRadioButton){
+				
+				this.setAnswer("The answer is in a textfield");
+			}
+			else if(item instanceof JButton){
+				this.setAnswer("The answer is in a JButton");
+			}
+			
+		}
+		
+		
+		return this.answer;
 	}
 }

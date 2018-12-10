@@ -7,15 +7,17 @@
 
 
 package src.java;
-import src.java.*;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.Format;
+import java.text.NumberFormat;
 import java.util.*;
 import javax.swing.*;
 
 public class ktpFrame extends JFrame {
 	public List<ktpPanel> panelList;
+	public List<String> answerList;
 	public int currentPanel;
 
 	
@@ -26,6 +28,7 @@ public class ktpFrame extends JFrame {
 	ktpFrame(){
 		super("Genetic disorder risk assesment");
 		panelList = new ArrayList<ktpPanel>();
+		answerList = new ArrayList<String>();
 		this.currentPanel = 0;
 		initGUI();
 		
@@ -46,7 +49,8 @@ public class ktpFrame extends JFrame {
 		
 		// first example question
 		List<JComponent> lst = new ArrayList<JComponent>();
-		lst.add(new JTextField());
+		Format amountFormat = NumberFormat.getNumberInstance();
+		lst.add(new JFormattedTextField(amountFormat));
 		Question firstq = new Question("What is your age?", lst);
 	    ktpPanel first = new ktpPanel(firstq);
 	    
@@ -96,19 +100,26 @@ public class ktpFrame extends JFrame {
 		this.remove(toRemove);
 		this.add(toAdd);
 		this.currentPanel = this.panelList.indexOf(toAdd);
-		
-		System.out.println(toRemove.debug);
-		System.out.println(toAdd.debug);
 		invalidate();
 		validate();
 		repaint();
 		
 	}
 	
+	public void sendQuestionData(int current){
+		ktpPanel p = this.panelList.get(current);
+		//System.out.println("Current panel = " + current);
+		
+		answerList.add(p.getQuestion().getAnswer());
+		for(String s : this.answerList){
+			System.out.println(s);
+		}
+		
+	}
 	
 	
 	
-
+	
 	
 	/** 
 	 * Creates the next button with action listener
@@ -120,8 +131,12 @@ public class ktpFrame extends JFrame {
 	    nextButton.addActionListener(new ActionListener(){	    	
 	    	public void actionPerformed(ActionEvent e){
 	    		if(currentPanel + 1 < panelList.size()){
-	    			System.out.format("clicked a button currentPanel = %d new = %d\n", currentPanel, (1-currentPanel), (1-0));
+	    			
+	    			//System.out.format("clicked a button currentPanel = %d new = %d\n", currentPanel, (1-currentPanel), (1-0));
+	    			
+	    			sendQuestionData(currentPanel);
 	    			changePanel(panelList.get(currentPanel), panelList.get(currentPanel+1));
+	    			
 	    		}else{
 	    			System.out.println("No next panel");
 	    		}
@@ -142,7 +157,7 @@ public class ktpFrame extends JFrame {
 	    {
 	    	  public void actionPerformed(ActionEvent e){
 	    		  if(currentPanel - 1 >= 0 ){
-	    			  System.out.format("clicked prev button currentPanel = %d new = %d\n", currentPanel, (1-currentPanel), (1-0));
+	    			  //System.out.format("clicked prev button currentPanel = %d new = %d\n", currentPanel, (1-currentPanel), (1-0));
 			    	  changePanel(panelList.get(currentPanel), panelList.get(currentPanel-1));
 	    		  }else{
 	    			  System.out.println("No previous panel");

@@ -7,6 +7,7 @@ import javax.swing.*;
 public class ktpPanel extends JPanel {
 
 	public int debug;
+	private Question question;
 
 	ktpPanel(String title, int debug){
 		initPanel(title);
@@ -15,6 +16,7 @@ public class ktpPanel extends JPanel {
 
 	ktpPanel(Question q){
 		this.debug = 0;
+		this.question = q;
 		initPanel(q);
 		
 	}
@@ -29,8 +31,17 @@ public class ktpPanel extends JPanel {
 		this.setLayout(new GridLayout(0,1));
 	}
 	
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
 	/**
 	 * initiate the panel
+	 * @param q The question to be displayed by the panel.
 	 */
 	void initPanel(Question q){
 		this.setLayout(new GridLayout(0,1));
