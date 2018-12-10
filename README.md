@@ -11,7 +11,7 @@ Further information on working with Flora can be found on [this page](http://flo
 ### COMPILATION
 The command to compile the project in a linux terminal is as follows:
 ```bash
-javac -d build/main -classpath "$FLORADIR"/java/flora2java.jar:"$FLORADIR"/java/interprolog.jar src/java/*.java
+javac -d build/main -classpath .:./src src/java/MainController.java
 ```
 Alternatively, you can use the command bash comp.sh in order to run the shell script that also contains the right command.
 
@@ -38,7 +38,7 @@ On Windows, system variables may be set through the settings GUI. As a general n
 ### RUNNING
 To run the program (on linux) I use the following line (it should all be one command):
 ```bash
-java -DPROLOGDIR="$PROLOGDIR" -DFLORADIR="$FLORADIR" -classpath "$FLORADIR"/java/flora2java.jar:"$FLORADIR"/java/interprolog.jar:./build/main/:./src/ src/java/helloWorld
+  java -DPROLOGDIR="${PROLOGDIR}" -DFLORADIR="$FLORADIR" -classpath "$FLORADIR"/java/flora2java.jar:"${FLORADIR}"/java/interprolog.jar:./build/main/:./src/ src/java/MainController
 ```
 NOTE: It is assumed that these commands are run from the top level of the repository.
 

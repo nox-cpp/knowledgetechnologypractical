@@ -1,1 +1,1 @@
-javac -d build/main -classpath .:./src src/java/helloWorld.java
+javac -d build/main -classpath .:./src src/java/MainController.java
