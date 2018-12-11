@@ -140,12 +140,32 @@ public class ktpFrame extends JFrame {
 		
 	}
 	
+	/**
+	 * Removes the last answer from the answerlist
+	 * 
+	 */
+	public void removeLastAnswer(){
+		this.answerList.remove(this.answerList.size() - 1);
+	}
 	
+	
+	/**
+	 * Checks the input bounds of the current panel before sending the data to the controller.
+	 * @param current
+	 * @return
+	 */
+	public boolean checkInputBounds(int current){
+		//TODO implement
+		return true;
+	}
 	
 	
 	
 	/** 
-	 * Creates the next button with action listener
+	 * Creates the next button with action listener. 
+	 * When clicked the data from the current panel is added to this.answerList.
+	 * Also the next panel is shown if the value entered is within bounds.
+	 * 
 	 * @param text The text of the button
 	 */
 	public JButton createNextButton(String text){
@@ -153,13 +173,12 @@ public class ktpFrame extends JFrame {
 		
 	    nextButton.addActionListener(new ActionListener(){	    	
 	    	public void actionPerformed(ActionEvent e){
-	    		if(currentPanel + 1 < panelList.size()){
-	    			
-	    			//System.out.format("clicked a button currentPanel = %d new = %d\n", currentPanel, (1-currentPanel), (1-0));
-	    			
-	    			sendQuestionData(currentPanel);
-	    			changePanel(panelList.get(currentPanel), panelList.get(currentPanel+1));
-	    			
+	    		
+	    		if(currentPanel + 1 < panelList.size()){	// check if there is a next panel
+	    			if(checkInputBounds(currentPanel)){
+	    				sendQuestionData(currentPanel);
+	    				changePanel(panelList.get(currentPanel), panelList.get(currentPanel+1));
+	    			}
 	    		}else{
 	    			System.out.println("No next panel");
 	    		}
@@ -179,9 +198,9 @@ public class ktpFrame extends JFrame {
 		prevButton.addActionListener(new ActionListener()
 	    {
 	    	  public void actionPerformed(ActionEvent e){
-	    		  if(currentPanel - 1 >= 0 ){
-	    			  //System.out.format("clicked prev button currentPanel = %d new = %d\n", currentPanel, (1-currentPanel), (1-0));
-			    	  changePanel(panelList.get(currentPanel), panelList.get(currentPanel-1));
+	    		  if(currentPanel - 1 >= 0 ){		// check if there is a previous panel
+	    			  removeLastAnswer();
+	    			  changePanel(panelList.get(currentPanel), panelList.get(currentPanel-1));
 	    		  }else{
 	    			  System.out.println("No previous panel");
 	    		  }
