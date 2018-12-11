@@ -57,12 +57,12 @@ public class ktpFrame extends JFrame {
 	    ktpPanel first = new ktpPanel(firstq);
 	    
 	    
+	    
 	    //second example question
 	    List<KTPJComponent> lst2 = new ArrayList<KTPJComponent>();
 	    KTPJRadioButton man = new KTPJRadioButton("Man");
 	    //man.setSelected(true);
 	    KTPJRadioButton woman = new KTPJRadioButton("Woman");
-	    
 	    ButtonGroup group = new ButtonGroup();
 	    group.add(man);
 	    group.add(woman);
@@ -72,29 +72,37 @@ public class ktpFrame extends JFrame {
 	    ktpPanel second = new ktpPanel(secondq);
 	    
 	    
+	    
 	    //third example question
 	    List<KTPJComponent> lst3 = new ArrayList<KTPJComponent>();
-		lst3.add(new KTPJRadioButton("Yes"));
-		lst3.add(new KTPJRadioButton("No"));
+	    KTPJRadioButton yes = new KTPJRadioButton("Yes");
+	    KTPJRadioButton no = new KTPJRadioButton("No");
+	    ButtonGroup group2 = new ButtonGroup();
+	    group2.add(yes);
+	    group2.add(no);
+		lst3.add(yes);
+		lst3.add(no);
 		Question thirdq = new Question("Do you have disease in the family?", lst3);
 	    ktpPanel third = new ktpPanel(thirdq);
 
-
 	    
+	    
+
+	    // add the panels to the panel list
 	    this.panelList.add(first);
 	    this.panelList.add(second);
 	    this.panelList.add(third);
 	    
 	    
+	    // create next and previous buttons
 	    JButton nextButton = createNextButton("Next");
 	    JButton prevButton = createPrevButton("Previous");
 	    JPanel buttonPanel = new JPanel();
 	    buttonPanel.setLayout(new GridLayout(0,2));
-	    
 	    buttonPanel.add(prevButton);
 	    buttonPanel.add(nextButton);
 	    this.add(buttonPanel);
-	    this.add(panelList.get(0));
+	    this.add(panelList.get(0));		// add the first panel
 
 	    
 	    
