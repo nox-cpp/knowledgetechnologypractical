@@ -1,4 +1,5 @@
 package src.java;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.Iterator;
 import src.java.*;
@@ -31,6 +32,10 @@ public class ktpPanel extends JPanel {
 		this.setLayout(new GridLayout(0,1));
 	}
 	
+	/**
+	 * Returns the Question object of this panel
+	 * @return Question object
+	 */
 	public Question getQuestion() {
 		return question;
 	}
@@ -49,9 +54,10 @@ public class ktpPanel extends JPanel {
 		JLabel question = new JLabel(q.question);
 		this.add(question);
 		// add each component for q
-		for(Iterator<JComponent> i = q.componentList.iterator(); i.hasNext();){
-			JComponent item = i.next();
-			this.add(item);
+		for(Iterator<KTPJComponent> i = q.componentList.iterator(); i.hasNext();){
+			KTPJComponent item = i.next();
+			//TODO mabey create new add method?
+			this.add((Component) item);
 			
 		}
 		

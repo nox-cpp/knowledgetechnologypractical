@@ -48,23 +48,42 @@ public class ktpFrame extends JFrame {
 		
 		
 		// first example question
-		List<JComponent> lst = new ArrayList<JComponent>();
-		Format amountFormat = NumberFormat.getNumberInstance();
-		lst.add(new JFormattedTextField(amountFormat));
+		List<KTPJComponent> lst = new ArrayList<KTPJComponent>();
+		SpinnerModel model = new SpinnerNumberModel(18, 18, 120, 1);     
+		KTPJSpinner spinner = new KTPJSpinner(model);
+		lst.add(spinner);
 		Question firstq = new Question("What is your age?", lst);
+		System.out.println("lst size = " + lst.size());
 	    ktpPanel first = new ktpPanel(firstq);
 	    
 	    
 	    //second example question
-	    lst.clear();
-		lst.add(new JRadioButton("Man"));
-		lst.add(new JRadioButton("Woman"));
-		Question secondq = new Question("What is your gender?", lst);
+	    List<KTPJComponent> lst2 = new ArrayList<KTPJComponent>();
+	    KTPJRadioButton man = new KTPJRadioButton("Man");
+	    man.setSelected(true);
+	    KTPJRadioButton woman = new KTPJRadioButton("Woman");
+	    
+	    ButtonGroup group = new ButtonGroup();
+	    group.add(man);
+	    group.add(woman);
+		lst2.add(man);
+		lst2.add(woman);
+		Question secondq = new Question("What is your gender?", lst2);
 	    ktpPanel second = new ktpPanel(secondq);
+	    
+	    
+	    //third example question
+	    List<KTPJComponent> lst3 = new ArrayList<KTPJComponent>();
+		lst3.add(new KTPJRadioButton("Yes"));
+		lst3.add(new KTPJRadioButton("No"));
+		Question thirdq = new Question("Do you have disease in the family?", lst3);
+	    ktpPanel third = new ktpPanel(thirdq);
+
 
 	    
 	    this.panelList.add(first);
 	    this.panelList.add(second);
+	    this.panelList.add(third);
 	    
 	    
 	    JButton nextButton = createNextButton("Next");
@@ -96,6 +115,7 @@ public class ktpFrame extends JFrame {
 	 * @param toAdd	Panel to be shown next
 	 */
 	public void changePanel(ktpPanel toRemove, ktpPanel toAdd){
+		//System.out.println("changePanel() is called");
 		
 		this.remove(toRemove);
 		this.add(toAdd);
@@ -106,10 +126,13 @@ public class ktpFrame extends JFrame {
 		
 	}
 	
+	
+	
 	public void sendQuestionData(int current){
 		ktpPanel p = this.panelList.get(current);
 		//System.out.println("Current panel = " + current);
 		
+		//System.out.println("sendQuestionData is called, calling get answer");
 		answerList.add(p.getQuestion().getAnswer());
 		for(String s : this.answerList){
 			System.out.println(s);
