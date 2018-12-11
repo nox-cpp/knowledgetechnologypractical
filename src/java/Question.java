@@ -15,6 +15,7 @@ public class Question {
 	public String question;
 	public List<KTPJComponent> componentList;
 	private String answer;
+	public String extraExplanation;
 	// TODO Add an extra button to show extra explanation for this question
 	
 
@@ -23,8 +24,9 @@ public class Question {
 	 * @param question The string that contains the question itself.
 	 * @param componentList List of KTPJComponents that you want to show. (Radiobuttons etc)
 	 */
-	Question(String question, List<KTPJComponent> componentList){
+	Question(String question, String extra, List<KTPJComponent> componentList){
 		this.question = question;
+		this.extraExplanation = extra;
 		this.componentList = componentList;
 		this.answer = null;
 	}

@@ -52,7 +52,7 @@ public class ktpFrame extends JFrame {
 		SpinnerModel model = new SpinnerNumberModel(18, 18, 120, 1);     
 		KTPJSpinner spinner = new KTPJSpinner(model);
 		lst.add(spinner);
-		Question firstq = new Question("What is your age?", lst);
+		Question firstq = new Question("What is your age?", "" ,lst);
 		System.out.println("lst size = " + lst.size());
 	    ktpPanel first = new ktpPanel(firstq);
 	    
@@ -68,7 +68,7 @@ public class ktpFrame extends JFrame {
 	    group.add(woman);
 		lst2.add(man);
 		lst2.add(woman);
-		Question secondq = new Question("What is your gender?", lst2);
+		Question secondq = new Question("What is your gender?", "", lst2);
 	    ktpPanel second = new ktpPanel(secondq);
 	    
 	    
@@ -82,7 +82,7 @@ public class ktpFrame extends JFrame {
 	    group2.add(no);
 		lst3.add(yes);
 		lst3.add(no);
-		Question thirdq = new Question("Do you have disease in the family?", lst3);
+		Question thirdq = new Question("Do you have disease in the family?", "Diseases include: cancer blah" , lst3);
 	    ktpPanel third = new ktpPanel(thirdq);
 
 	    
@@ -97,9 +97,11 @@ public class ktpFrame extends JFrame {
 	    // create next and previous buttons
 	    JButton nextButton = createNextButton("Next");
 	    JButton prevButton = createPrevButton("Previous");
+	    JButton infoButton = createInfoButton("Extra explanation");
 	    JPanel buttonPanel = new JPanel();
-	    buttonPanel.setLayout(new GridLayout(0,2));
+	    buttonPanel.setLayout(new GridLayout(0,3));
 	    buttonPanel.add(prevButton);
+	    buttonPanel.add(infoButton);
 	    buttonPanel.add(nextButton);
 	    this.add(buttonPanel);
 	    this.add(panelList.get(0));		// add the first panel
@@ -133,7 +135,10 @@ public class ktpFrame extends JFrame {
 	}
 	
 	
-	
+	/**
+	 * Adds the new data from the panel to the answerList
+	 * @param current
+	 */
 	public void sendQuestionData(int current){
 		ktpPanel p = this.panelList.get(current);
 		answerList.add(p.getQuestion().getAnswer());
@@ -175,7 +180,7 @@ public class ktpFrame extends JFrame {
 	 * 
 	 * @param text The text of the button
 	 */
-	public JButton createNextButton(String text){
+	private JButton createNextButton(String text){
 		JButton nextButton = new JButton(text);
 		
 	    nextButton.addActionListener(new ActionListener(){	    	
@@ -206,7 +211,7 @@ public class ktpFrame extends JFrame {
 	 * @param text The text of the button
 	 */
 
-	public JButton createPrevButton(String text){
+	private JButton createPrevButton(String text){
 		
 		JButton prevButton = new JButton(text);
 		prevButton.addActionListener(new ActionListener()
@@ -219,9 +224,23 @@ public class ktpFrame extends JFrame {
 	    			  System.out.println("No previous panel");
 	    		  }
 	    	  }
-	    	});
+	    });
 	    return prevButton;
 		
+	}
+	
+	
+	private JButton createInfoButton(String text){
+		JButton bt = new JButton(text);
+		bt.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e){
+				String s = panelList.get(currentPanel).getQuestion().extraExplanation;
+				JOptionPane.showMessageDialog(new JFrame(), s);
+			}
+		});
+		
+		return bt;
 	}
 
 }
