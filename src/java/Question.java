@@ -15,6 +15,7 @@ public class Question {
 	public String question;
 	public List<KTPJComponent> componentList;
 	private String answer;
+	// TODO Add an extra button to show extra explanation for this question
 	
 
 	/**

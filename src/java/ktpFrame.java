@@ -60,7 +60,7 @@ public class ktpFrame extends JFrame {
 	    //second example question
 	    List<KTPJComponent> lst2 = new ArrayList<KTPJComponent>();
 	    KTPJRadioButton man = new KTPJRadioButton("Man");
-	    man.setSelected(true);
+	    //man.setSelected(true);
 	    KTPJRadioButton woman = new KTPJRadioButton("Woman");
 	    
 	    ButtonGroup group = new ButtonGroup();
@@ -115,8 +115,6 @@ public class ktpFrame extends JFrame {
 	 * @param toAdd	Panel to be shown next
 	 */
 	public void changePanel(ktpPanel toRemove, ktpPanel toAdd){
-		//System.out.println("changePanel() is called");
-		
 		this.remove(toRemove);
 		this.add(toAdd);
 		this.currentPanel = this.panelList.indexOf(toAdd);
@@ -130,9 +128,6 @@ public class ktpFrame extends JFrame {
 	
 	public void sendQuestionData(int current){
 		ktpPanel p = this.panelList.get(current);
-		//System.out.println("Current panel = " + current);
-		
-		//System.out.println("sendQuestionData is called, calling get answer");
 		answerList.add(p.getQuestion().getAnswer());
 		for(String s : this.answerList){
 			System.out.println(s);
@@ -142,7 +137,6 @@ public class ktpFrame extends JFrame {
 	
 	/**
 	 * Removes the last answer from the answerlist
-	 * 
 	 */
 	public void removeLastAnswer(){
 		this.answerList.remove(this.answerList.size() - 1);
@@ -151,11 +145,16 @@ public class ktpFrame extends JFrame {
 	
 	/**
 	 * Checks the input bounds of the current panel before sending the data to the controller.
-	 * @param current
-	 * @return
+	 * True is returned when every component has a legal value. 
+	 * @param current The current panel
+	 * @return Whether the inputs are within bounds.
 	 */
 	public boolean checkInputBounds(int current){
-		//TODO implement
+		for(KTPJComponent comp : this.panelList.get(current).getQuestion().componentList){
+			if(!comp.isWithinBounds()){
+				return false;
+			}
+		}
 		return true;
 	}
 	
@@ -175,9 +174,16 @@ public class ktpFrame extends JFrame {
 	    	public void actionPerformed(ActionEvent e){
 	    		
 	    		if(currentPanel + 1 < panelList.size()){	// check if there is a next panel
-	    			if(checkInputBounds(currentPanel)){
+	    			if(checkInputBounds(currentPanel)){		// check if the input is within bounds
 	    				sendQuestionData(currentPanel);
 	    				changePanel(panelList.get(currentPanel), panelList.get(currentPanel+1));
+	    			}
+	    			else{
+	    				// The input is not within bounds
+	    				JOptionPane.showMessageDialog(new JFrame(),
+	    					    "Either you did not enter a value or the value is not whithin the bounds",
+	    					    "Input error",
+	    					    JOptionPane.WARNING_MESSAGE);
 	    			}
 	    		}else{
 	    			System.out.println("No next panel");
