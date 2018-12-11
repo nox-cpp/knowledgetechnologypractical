@@ -36,9 +36,16 @@ public class MainController{
 			System.out.println(floraController.queryModel("?X:person@knowledgebase."));
 			// Query the model for persons that fit a specific profile
 			System.out.println(floraController.queryModel("?X:person[age -> 21]@knowledgebase."));
-
-			System.out.println(floraController.queryModel("?X.relatives[self->?Y]@knowledgebase."));
-
+			// Trying a complex query
+			System.out.println("A complex response\n" + floraController.queryModel("?X[relatives->?Y]@knowledgebase.", true));
+			// Now we modify one of the instances using a command and afterwards we check the values again
+			String command = "delete{Marietje[relatives->{Tim}]}.";
+			floraController.commandModel(command);
+			System.out.println("A complex response\n" + floraController.queryModel("?X[relatives->?Y]@knowledgebase.", true));
+			// Listing all entities in the kb
+			System.out.println(floraController.listEntities());
+			// Listing all methods to an entity (NOTE: it must be one that exists, for now)
+			System.out.println(floraController.listMethods("Tim"));
 			// Close the FloraSession prior to exiting the program
 			floraController.closeSession();
 		}

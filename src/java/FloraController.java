@@ -27,12 +27,14 @@ public class FloraController {
 
   // Sends a given query to the model and returns the results as a string
   public String queryModel(String query) {
-    Iterator<FloraObject> response = this.session.ExecuteQuery(query);
+    ArrayList<FloraObject> response = iteratorToList(this.session.executeQuery(query));
     String answervals = "";
-    if(response.hasNext())
-      answervals = response.next().toString();
-    while(response.hasNext())
-      answervals += ","+response.next().toString();
+    for (FloraObject obj : response) {
+      answervals += obj.toString() + ", ";
+    }
+    // Weird way of doing this but w/e
+    if(answervals.length() > 1)
+      answervals = answervals.substring(0, answervals.length() - 2);
     return answervals;
   }
 
@@ -47,7 +49,23 @@ public class FloraController {
     return response;
   }
 
+  // Converts an iterator to a list.
+  private ArrayList<FloraObject> iteratorToList(Iterator<FloraObject> iter) {
+    ArrayList<FloraObject> list = new ArrayList<FloraObject>();
+    while(iter.hasNext())
+      list.add(iter.next());
+    return list;
+  }
+
+  public String listEntities() {
+    return queryModel("?X:person@knowledgebase.");
+  }
+
+  public String listMethods(String name) {
+    return queryModel(name + "[?M -> ?].");
+  }
+
   public void commandModel(String command) {
-    this.session.command(query);
+    this.session.executeCommand(command);
   }
 }
