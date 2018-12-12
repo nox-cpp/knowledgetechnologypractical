@@ -26,7 +26,7 @@ public class KTPJSpinner extends JSpinner implements KTPJComponent {
 	 * 
 	 */
 	public String getAnswer() {
-		System.out.println("Found a value for the spinner = " + this.getValue());
+		//System.out.println("Found a value for the spinner = " + this.getValue());
 		return this.getValue().toString();
 	}
 

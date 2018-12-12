@@ -12,7 +12,7 @@ public class KTPJRadioButton extends JRadioButton implements KTPJComponent {
 
 	public String getAnswer() {
 		if(this.isSelected()){
-			System.out.println("Found a selected radiobutton = "+ this.getText());
+			//System.out.println("Found a selected radiobutton = "+ this.getText());
 			return this.getText();
 		}
 		return null;

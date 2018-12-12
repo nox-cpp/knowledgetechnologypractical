@@ -17,7 +17,7 @@ import javax.swing.*;
 
 public class ktpFrame extends JFrame {
 	public List<ktpPanel> panelList;
-	public List<String> answerList;
+	public List<Question> answeredQuestions;
 	public int currentPanel;
 
 	
@@ -28,7 +28,7 @@ public class ktpFrame extends JFrame {
 	ktpFrame(){
 		super("Genetic disorder risk assesment");
 		panelList = new ArrayList<ktpPanel>();
-		answerList = new ArrayList<String>();
+		answeredQuestions = new ArrayList<Question>();
 		this.currentPanel = 0;
 		initGUI();
 		
@@ -153,23 +153,24 @@ public class ktpFrame extends JFrame {
 	
 	
 	/**
-	 * Adds the new data from the panel to the answerList
+	 * Adds the new data from the panel to the answered questions
 	 * @param current
 	 */
 	public void sendQuestionData(int current){
-		ktpPanel p = this.panelList.get(current);
-		answerList.add(p.getQuestion().getAnswer());
-		for(String s : this.answerList){
-			System.out.println(s);
-		}
+		Question currentQ = this.panelList.get(current).getQuestion();
+		currentQ.setAnswers();
+		this.answeredQuestions.add(currentQ);
+		this.printAnswerList();
 		
 	}
 	
 	/**
-	 * Removes the last answer from the answerlist
+	 * Removes the last answer from the answered questions
+	 * and removes the answer from the question object.
 	 */
 	public void removeLastAnswer(){
-		this.answerList.remove(this.answerList.size() - 1);
+		this.answeredQuestions.get(this.answeredQuestions.size() -1).resetAnswers();
+		this.answeredQuestions.remove(this.answeredQuestions.size() -1);
 	}
 	
 	
@@ -237,6 +238,7 @@ public class ktpFrame extends JFrame {
 	    		  if(currentPanel - 1 >= 0 ){		// check if there is a previous panel
 	    			  removeLastAnswer();
 	    			  changePanel(panelList.get(currentPanel), panelList.get(currentPanel-1));
+	    			  printAnswerList();
 	    		  }else{
 	    			  System.out.println("No previous panel");
 	    		  }
@@ -258,6 +260,23 @@ public class ktpFrame extends JFrame {
 		});
 		
 		return bt;
+	}
+	
+	
+	
+	/**
+	 * Helper function to print the current list of given answers
+	 */
+	public void printAnswerList(){
+		
+		System.out.println("\n\nThe list so far: " + this.answeredQuestions.size());
+		for(Question q : this.answeredQuestions){
+			System.out.println(q.getAnswers());
+			for (String s : q.getAnswers()){
+				
+				//System.out.println("the answer list of q = " + q.getAnswers().size() + s + "\t" + q.toString());
+			}
+		}
 	}
 
 }

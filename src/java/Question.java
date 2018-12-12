@@ -4,6 +4,7 @@
 package src.java;
 
 import java.util.*;
+
 import javax.swing.*;
 
 /**
@@ -14,7 +15,7 @@ public class Question {
 	
 	public String question;
 	public List<KTPJComponent> componentList;
-	private String answer;
+	private List<String> answer;
 	public String extraExplanation;
 	// TODO Add an extra button to show extra explanation for this question
 	
@@ -28,7 +29,7 @@ public class Question {
 		this.question = question;
 		this.extraExplanation = extra;
 		this.componentList = componentList;
-		this.answer = null;
+		this.answer = new ArrayList<String>();
 	}
 	
 	/**
@@ -47,27 +48,37 @@ public class Question {
 	}
 	
 	
-	public void setAnswer(String a){
+	private void setAnswer(List<String> a){
 		this.answer = a;
 	}
 	
+	public void resetAnswers(){
+		this.answer.clear();
+		
+	}
+	
+	
+	public void setAnswers(){
+		for(KTPJComponent item : componentList){
+			//System.out.println("answer = " + item.getAnswer());
+			//System.out.println("getAnswer is called from question current component = " + item);
+			if(item.getAnswer() != null){
+				this.answer.add(item.getAnswer());
+			}
+		}
+		
+	}
 	
 	/**
 	 * Returns the Answer currently given by the components in the componentList.
 	 * @return String with the answer
 	 */
-	public String getAnswer(){
+	public List<String> getAnswers(){
 		
 		//System.out.println("The current question = " + this.question + "\n" +
 		//		"This question has " + this.componentList.size() + " items");
 		
-		for(KTPJComponent item : componentList){
-			//System.out.println("answer = " + item.getAnswer());
-			//System.out.println("getAnswer is called from question current component = " + item);
-			if(item.getAnswer() != null){
-				this.answer = item.getAnswer();
-			}			
-		}
+		
 		
 		
 		return this.answer;
