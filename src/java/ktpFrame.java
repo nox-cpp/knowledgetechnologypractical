@@ -72,6 +72,20 @@ public class ktpFrame extends JFrame {
 	    ktpPanel second = new ktpPanel(secondq);
 	    
 	    
+	    //fourth example question
+	    List<KTPJComponent> lst4 = new ArrayList<KTPJComponent>();
+	    KTPJCheckBox cancer = new KTPJCheckBox("Cancer");
+	    KTPJCheckBox heart = new KTPJCheckBox("Heart and vascular disease");
+	    KTPJCheckBox mental = new KTPJCheckBox("Mental illness");
+		lst4.add(cancer);
+		lst4.add(heart);
+		lst4.add(mental);
+		Question fourthq = new Question("Which type of disease?", "blah blah blah" , lst4);
+	    ktpPanel fourth = new ktpPanel(fourthq);
+	    
+	    
+	    
+	    
 	    
 	    //third example question
 	    List<KTPJComponent> lst3 = new ArrayList<KTPJComponent>();
@@ -84,6 +98,8 @@ public class ktpFrame extends JFrame {
 		lst3.add(no);
 		Question thirdq = new Question("Do you have disease in the family?", "Diseases include: cancer blah" , lst3);
 	    ktpPanel third = new ktpPanel(thirdq);
+	    
+	    
 
 	    
 	    
@@ -91,6 +107,7 @@ public class ktpFrame extends JFrame {
 	    // add the panels to the panel list
 	    this.panelList.add(first);
 	    this.panelList.add(second);
+	    this.panelList.add(fourth);
 	    this.panelList.add(third);
 	    
 	    
@@ -158,17 +175,17 @@ public class ktpFrame extends JFrame {
 	
 	/**
 	 * Checks the input bounds of the current panel before sending the data to the controller.
-	 * True is returned when every component has a legal value. 
+	 * True is returned when a component has a legal value. 
 	 * @param current The current panel
 	 * @return Whether the inputs are within bounds.
 	 */
 	public boolean checkInputBounds(int current){
 		for(KTPJComponent comp : this.panelList.get(current).getQuestion().componentList){
-			if(!comp.isWithinBounds()){
-				return false;
+			if(comp.isWithinBounds()){
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	
