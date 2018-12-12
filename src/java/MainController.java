@@ -18,7 +18,7 @@ package src.java;
 import java.util.*;
 import net.sf.flora2.API.*;
 import net.sf.flora2.API.util.*;
-import src.java.FloraController;
+import src.java.*;
 
 import javax.swing.*;	//swing
 

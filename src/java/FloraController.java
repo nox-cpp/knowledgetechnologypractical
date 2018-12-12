@@ -27,15 +27,9 @@ public class FloraController {
 
   // Sends a given query to the model and returns the results as a string
   public String queryModel(String query) {
-    ArrayList<FloraObject> response = iteratorToList(this.session.executeQuery(query));
+    Response response = new Response(this.session.executeQuery(query));
     String answervals = "";
-    for (FloraObject obj : response) {
-      answervals += obj.toString() + ", ";
-    }
-    // Weird way of doing this but w/e
-    if(answervals.length() > 1)
-      answervals = answervals.substring(0, answervals.length() - 2);
-    return answervals;
+    return response.toString();
   }
 
   // Returns a List of Strings with answers to the query
@@ -49,6 +43,10 @@ public class FloraController {
     return response;
   }
 
+  public ArrayList<FloraObject> queryModelToList(String query) {
+    return iteratorToList(this.session.executeQuery(query));
+  }
+
   // Converts an iterator to a list.
   private ArrayList<FloraObject> iteratorToList(Iterator<FloraObject> iter) {
     ArrayList<FloraObject> list = new ArrayList<FloraObject>();
@@ -57,12 +55,21 @@ public class FloraController {
     return list;
   }
 
+  private ArrayList<FloraObject> getClassInstances(String className) {
+    return queryModelToList("?X:" + className + "@knowledgebase.");
+  }
+
   public String listEntities() {
-    return queryModel("?X:person@knowledgebase.");
+    ArrayList<FloraObject> response = getClassInstances("person");
+    String entities = "";
+    for (FloraObject obj : response) {
+      entities += obj.toString() + "\n";
+    }
+    return entities;
   }
 
   public String listMethods(String name) {
-    return queryModel(name + "[?M -> ?].");
+    return queryModel(name + "[?X -> ?]@knowledgebase.");
   }
 
   public void commandModel(String command) {
