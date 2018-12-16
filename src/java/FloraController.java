@@ -25,53 +25,34 @@ public class FloraController {
     session.close();
   }
 
-  // Sends a given query to the model and returns the results as a string
-  public String queryModel(String query) {
-    Response response = new Response(this.session.executeQuery(query));
-    String answervals = "";
+  // Sends a given query to the model and returns it as a Response type
+  public Response queryModel(String query) {
+    return new Response(this.session.executeQuery(query));
+  }
+
+  // Returns all Instances of a class in a Response type
+  // Should return an empty list if the class does not exist
+  private Response getClassInstances(String className) {
+    return queryModel("?X:" + className + "@knowledgebase.");
+  }
+
+  // Returns a String that lists the names of ALL entities in the knowledgebase
+  public String listEntities() {
+    Response response = new Response(this.session.executeQuery("?X[]."));
     return response.toString();
   }
 
-  // Returns a List of Strings with answers to the query
-  // If the query is not `complex' this calls the base function
-  public List<String> queryModel(String query, boolean complex) {
-    ArrayList<String> response = new ArrayList<>();
-    if (complex == false) {
-      response.add(queryModel(query));
-      return response;
-    }
-    return response;
+  // Returns a String that lists the names of all entities that match the given type
+  public String listEntities(String type) {
+    return getClassInstances(type).toString();
   }
 
-  public ArrayList<FloraObject> queryModelToList(String query) {
-    return iteratorToList(this.session.executeQuery(query));
-  }
-
-  // Converts an iterator to a list.
-  private ArrayList<FloraObject> iteratorToList(Iterator<FloraObject> iter) {
-    ArrayList<FloraObject> list = new ArrayList<FloraObject>();
-    while(iter.hasNext())
-      list.add(iter.next());
-    return list;
-  }
-
-  private ArrayList<FloraObject> getClassInstances(String className) {
-    return queryModelToList("?X:" + className + "@knowledgebase.");
-  }
-
-  public String listEntities() {
-    ArrayList<FloraObject> response = getClassInstances("person");
-    String entities = "";
-    for (FloraObject obj : response) {
-      entities += obj.toString() + "\n";
-    }
-    return entities;
-  }
-
+  // Lists all methods attached to a entity that goes by that name
   public String listMethods(String name) {
-    return queryModel(name + "[?X -> ?]@knowledgebase.");
+    return queryModel(name + "[?X -> ?]@knowledgebase.").toString();
   }
 
+  // Sends a command to the inference engine. Does not return any value.
   public void commandModel(String command) {
     this.session.executeCommand(command);
   }
