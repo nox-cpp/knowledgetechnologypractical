@@ -27,19 +27,40 @@ public class FloraController {
 
   // Sends a given query to the model and returns it as a Response type
   public Response queryModel(String query) {
-    return new Response(this.session.executeQuery(query));
+    // We add the module name here, to avoid redundancy
+    return new Response(this.session.executeQuery(query + "@knowledgebase."));
   }
 
   // Returns all Instances of a class in a Response type
   // Should return an empty list if the class does not exist
-  private Response getClassInstances(String className) {
-    return queryModel("?X:" + className + "@knowledgebase.");
+  public Response getClassInstances(String className) {
+    return queryModel("?X:" + className);
+  }
+
+  // Returns all methods attached to an entity in response type.
+  public Response getMethods(String name) {
+    return queryModel(name + "[?X -> ?]");
+  }
+
+  // Returns true if an entity exists in the knowledgebase
+  // This works for reasons
+  public Boolean isEntity(String name) {
+    return queryModel(name + "[]").toString().contains("Var");
+  }
+
+  // Returns a new FloraEntity by the given name
+  public FloraEntity getEntity(String name) {
+    return new FloraEntity(this, name);
+  }
+
+  // Returns the values for each method of an entity
+  public Response getValues(String name) {
+    return queryModel(name + "[? -> ?X]");
   }
 
   // Returns a String that lists the names of ALL entities in the knowledgebase
   public String listEntities() {
-    Response response = new Response(this.session.executeQuery("?X[]."));
-    return response.toString();
+    return queryModel("?X[]").toString();
   }
 
   // Returns a String that lists the names of all entities that match the given type
@@ -49,7 +70,7 @@ public class FloraController {
 
   // Lists all methods attached to a entity that goes by that name
   public String listMethods(String name) {
-    return queryModel(name + "[?X -> ?]@knowledgebase.").toString();
+    return getMethods(name).toString();
   }
 
   // Sends a command to the inference engine. Does not return any value.

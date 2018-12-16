@@ -23,6 +23,11 @@ System.out.println(floraController.listEntities());
 System.out.println(floraController.listMethods("Tim"));
 // Close the FloraSession prior to exiting the program
 floraController.closeSession();
+
+////
+System.out.println(floraController.getMethods("Tim"));
+System.out.println(floraController.getValues("Tim"));
+System.out.println(floraController.getEntity("Tim").toString());
 ```
 
 This should get you something like the following output:
@@ -56,4 +61,30 @@ age
 relatives
 risk_level
 has_disease
+
+
+//////
+
+age
+relatives
+risk_level
+has_disease
+
+17
+Marietje
+overwhelming
+true
+Tim
+[
+age
+relatives
+risk_level
+has_disease
+]
+[
+17
+Marietje
+overwhelming
+true
+]
 ```
