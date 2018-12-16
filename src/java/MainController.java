@@ -18,7 +18,7 @@ package src.java;
 import java.util.*;
 import net.sf.flora2.API.*;
 import net.sf.flora2.API.util.*;
-import src.java.FloraController;
+import src.java.*;
 
 import javax.swing.*;	//swing
 
@@ -29,14 +29,9 @@ public class MainController{
 			System.out.println("Flora-2 session started");
 			// Load the knowledgebase into the Flora session
 			floraController.loadModel();
-			// Create a frame for the prgram
+			// Create a frame for the program
 			ktpFrame frame = new ktpFrame();
 			System.out.println("Made a Frame");
-			// Ask the model to give info on all its persons
-			System.out.println(floraController.queryModel("?X:person@knowledgebase."));
-			// Query the model for persons that fit a specific profile
-			System.out.println(floraController.queryModel("?X:person[age -> 21]@knowledgebase."));
-			// Close the FloraSession prior to exiting the program
 			floraController.closeSession();
 		}
 
