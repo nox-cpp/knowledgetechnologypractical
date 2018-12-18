@@ -5,19 +5,17 @@ package src.java;
 
 import java.util.*;
 
-import javax.swing.*;
-
 /**
  * @author s2410540
  *
  */
 public class Question {
 	
+	public String keyword;
 	public String question;
 	public List<KTPJComponent> componentList;
 	private List<String> answer;
 	public String extraExplanation;
-	// TODO Add an extra button to show extra explanation for this question
 	
 
 	/**
@@ -25,7 +23,9 @@ public class Question {
 	 * @param question The string that contains the question itself.
 	 * @param componentList List of KTPJComponents that you want to show. (Radiobuttons etc)
 	 */
-	Question(String question, String extra, List<KTPJComponent> componentList){
+	Question(String keyword, String question, String extra, List<KTPJComponent> componentList){
+		// TODO check if keyword is unique
+		this.keyword = keyword;
 		this.question = question;
 		this.extraExplanation = extra;
 		this.componentList = componentList;

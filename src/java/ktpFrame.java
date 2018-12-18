@@ -1,6 +1,7 @@
 /*
  * 
  * TODO Use grouplayout?
+ * TODO JSON reading questions
  * 
  */
 
@@ -10,13 +11,16 @@ package src.java;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.Format;
-import java.text.NumberFormat;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
-import javax.swing.*;
+
+import javax.swing.*;	
 
 public class ktpFrame extends JFrame {
-	public List<ktpPanel> panelList;
+	public List<KTPPanel> panelList;
 	public List<Question> answeredQuestions;
 	public int currentPanel;
 
@@ -27,7 +31,7 @@ public class ktpFrame extends JFrame {
 	 */
 	ktpFrame(){
 		super("Genetic disorder risk assesment");
-		panelList = new ArrayList<ktpPanel>();
+		panelList = new ArrayList<KTPPanel>();
 		answeredQuestions = new ArrayList<Question>();
 		this.currentPanel = 0;
 		initGUI();
@@ -52,9 +56,9 @@ public class ktpFrame extends JFrame {
 		SpinnerModel model = new SpinnerNumberModel(18, 18, 120, 1);     
 		KTPJSpinner spinner = new KTPJSpinner(model);
 		lst.add(spinner);
-		Question firstq = new Question("What is your age?", "" ,lst);
+		Question firstq = new Question("age", "What is your age?", "" ,lst);
 		System.out.println("lst size = " + lst.size());
-	    ktpPanel first = new ktpPanel(firstq);
+	    KTPPanel first = new KTPPanel(firstq);
 	    
 	    
 	    
@@ -68,8 +72,8 @@ public class ktpFrame extends JFrame {
 	    group.add(woman);
 		lst2.add(man);
 		lst2.add(woman);
-		Question secondq = new Question("What is your gender?", "", lst2);
-	    ktpPanel second = new ktpPanel(secondq);
+		Question secondq = new Question("gender","What is your gender?", "", lst2);
+	    KTPPanel second = new KTPPanel(secondq);
 	    
 	    
 	    //fourth example question
@@ -80,8 +84,8 @@ public class ktpFrame extends JFrame {
 		lst4.add(cancer);
 		lst4.add(heart);
 		lst4.add(mental);
-		Question fourthq = new Question("Which type of disease?", "blah blah blah" , lst4);
-	    ktpPanel fourth = new ktpPanel(fourthq);
+		Question fourthq = new Question("type", "Which type of disease?", "blah blah blah" , lst4);
+	    KTPPanel fourth = new KTPPanel(fourthq);
 	    
 	    
 	    
@@ -96,11 +100,11 @@ public class ktpFrame extends JFrame {
 	    group2.add(no);
 		lst3.add(yes);
 		lst3.add(no);
-		Question thirdq = new Question("Do you have disease in the family?", "Diseases include: cancer blah" , lst3);
-	    ktpPanel third = new ktpPanel(thirdq);
+		Question thirdq = new Question("family", "Do you have disease in the family?", "Diseases include: cancer blah" , lst3);
+	    KTPPanel third = new KTPPanel(thirdq);
 	    
 	    
-
+	    
 	    
 	    
 
@@ -136,12 +140,95 @@ public class ktpFrame extends JFrame {
 	}
 	
 	
+	
+	
+	
+	/**
+	 * Adds all the questions for the model to the panels and add those to the panel list.
+	 */
+	private void readQuestions(){
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * !!!!!!!!!!!!!!!
+	 * THIS FUNCTION DOES NOT WORK YET
+	 * !!!!!!!!!!!!!!!
+	 * 
+	 * probally xml is better for this
+	 * TODO covert to xml and finish this
+	 * 
+	 * 
+	 * Reads the questions from questions.csv and convert them to question objects
+	 */
+	private void readQuestionsCSV(){
+		String csvFile = "src/resource/questions.csv";
+		BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+
+        try {
+
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+            	String[] arr = line.split(cvsSplitBy);
+                System.out.println(Arrays.toString(arr)); //print each line
+                
+                List<KTPJComponent> compList = null;
+                
+                Question q = new Question(arr[0], arr[1], arr[2], compList);
+                //String question, String extra, List<KTPJComponent> componentList
+                
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Removes one panel, and replaces with another
 	 * @param toRemove Panel to be removed
 	 * @param toAdd	Panel to be shown next
 	 */
-	public void changePanel(ktpPanel toRemove, ktpPanel toAdd){
+	public void changePanel(KTPPanel toRemove, KTPPanel toAdd){
 		this.remove(toRemove);
 		this.add(toAdd);
 		this.currentPanel = this.panelList.indexOf(toAdd);
