@@ -13,12 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
+
 import javax.swing.*;
 import org.jdom2.*;
-import org.jdom2.Attribute;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 public class KTPFrame extends JFrame {
@@ -161,7 +158,7 @@ public class KTPFrame extends JFrame {
 		
 		System.out.println("starting xml jdom");
 		
-		try {
+		/*try {
 	         File inputFile = new File("src/resource/questions.xml");
 	         SAXBuilder saxBuilder = new SAXBuilder();
 	         Document document = saxBuilder.build(inputFile);
@@ -191,7 +188,73 @@ public class KTPFrame extends JFrame {
 	         e.printStackTrace();
 	      } catch(IOException ioe) {
 	         ioe.printStackTrace();
-	      }
+	      }*/
+		
+		try{
+			File inputFile = new File("src/resource/questions.xml");
+	        SAXBuilder saxBuilder = new SAXBuilder();
+	        Document document = saxBuilder.build(inputFile);
+	        Element classElement = document.getRootElement();					// get root
+	        System.out.println("Root element :" + classElement.getName());		// print root
+	        List<Element> qList = classElement.getChildren();					// get list of questions
+	        System.out.println("Found " + qList.size() + " questions in " + inputFile.getAbsolutePath());
+	        
+	        for(int temp = 0; temp< qList.size(); temp++){
+	        	Element q = qList.get(temp);
+	        	// make a new question
+	        	String keyword = q.getChild("keyword").getText();
+	        	String question = q.getChild("question").getText();
+	        	String extra = null;
+	        	if(q.getChild("extra") != null){
+	        		extra = q.getChild("extra").getText();
+	        	}
+	        	List<KTPJComponent> componentList = new ArrayList<KTPJComponent>();
+	        	
+	        	//System.out.println(q.getAttribute("inputtype").toString());
+	        	
+
+	        	
+	        	
+	        	if(q.getAttribute("inputtype").toString().equals(new Attribute("inputtype", "spinner").toString())){
+	        		//System.out.println("spinner");
+	        		String[] strings = q.getChild("spinner").getText().split(",");
+	        		int[] ints = new int[4];
+	        		int i = 0;
+	        		for(String str: strings){
+	        			ints[i] = Integer.parseInt(str); 
+	        			i++;
+	        		}
+	        		
+	        		SpinnerModel model = new SpinnerNumberModel(ints[0], ints[1], ints[2], ints[3]);     
+	        		KTPJSpinner spinner = new KTPJSpinner(model);
+	        		componentList.add(spinner);
+	        		
+	        	}else if(q.getAttribute("inputtype").toString().equals(new Attribute("inputtype", "checkbox").toString())){
+	        		//System.out.println("checkbox");
+	        		
+	        	}else if(q.getAttribute("inputtype").toString().equals(new Attribute("inputtype", "radiobutton").toString())){
+	        		//System.out.println("radiobutton");
+	        		
+	        	}else{
+	        		System.out.println("Something went wrong");
+	        	}
+	        	
+	        	
+	        	
+	        	
+	        	
+	        	Question newq = new Question(keyword, question, extra, componentList);
+	        	//String keyword, String question, String extra, List<KTPJComponent> componentList
+	        }
+	        
+	        
+	        
+		}catch(JDOMException e) {
+			e.printStackTrace();
+	    }catch(IOException ioe) {
+	    	ioe.printStackTrace();
+	    }
+		
 		
 	}
 	

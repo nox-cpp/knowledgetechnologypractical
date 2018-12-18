@@ -1,23 +1,31 @@
-<?xml version = "1.0"?>
-<class>
-   <student rollno = "393">
-      <firstname>dinkar</firstname>
-      <lastname>kad</lastname>
-      <nickname>dinkar</nickname>
-      <marks>85</marks>
-   </student>
-   
-   <student rollno = "493">
-      <firstname>Vaneet</firstname>
-      <lastname>Gupta</lastname>
-      <nickname>vinni</nickname>
-      <marks>95</marks>
-   </student>
-   
-   <student rollno = "593">
-      <firstname>jasvir</firstname>
-      <lastname>singn</lastname>
-      <nickname>jazz</nickname>
-      <marks>90</marks>
-   </student>
-</class>
+<?xml version = "1.0" encoding="UTF-8"?>
+<!-- This is made with 
+https://www.tutorialspoint.com/online_xml_editor.htm
+-->
+<questionList>
+    <question inputtype = "spinner">
+        <keyword>numberFamilyH</keyword>
+        <question>How many family members have a disability?</question>
+        <extra>Examples include down syndrome and Fragile X syndrome</extra>
+        <spinner>0,0,10,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageSelf</keyword>
+        <question>What is your age?</question>
+        <spinner>18,18,120,1</spinner>
+    </question>
+    <question inputtype = "radiobutton">
+        <keyword>genderSelf</keyword>
+        <question>What is your gender?</question>
+        <radiobutton selected="true">Man</radiobutton>
+        <radiobutton selected="false">Woman</radiobutton>
+    </question>
+    <question inputtype = "checkbox">
+        <keyword>diseaseType</keyword>
+        <question>Which type of diseas(es) run in your family?</question>
+        <extra>Your family is your biological family, like parents, siblings, children and grandparents.</extra>
+        <checkbox>Cancer</checkbox>
+        <checkbox>Heart and vasculair disease</checkbox>
+        <checkbox>Mental disability</checkbox>
+    </question>
+</questionList>
