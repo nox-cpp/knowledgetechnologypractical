@@ -33,7 +33,7 @@ public class FloraController {
 
   // Adds a frame (entity) to the knowledgebase with specified id and values for the fields
   // If the values list is too short, the missing values will default to void
-  public Boolean addFact(String name,ArrayList<String> methods, ArrayList<String> values) {
+  public Boolean addFact(String name, ArrayList<String> methods, ArrayList<String> values) {
     // If the given name is invalid or it already exists in the knowledgebase this will fail
     if(name == "" | this.isEntity(name)) {
       return false;
@@ -55,10 +55,41 @@ public class FloraController {
     return this.insertKnowledge(addition);
   }
 
+  //// NOTE: Function proves difficult to implement. Needs looking into
+  // public Boolean addFact(FloraEntity fe) {
+  //   // If the given name is invalid or it already exists in the knowledgebase this will fail
+  //   if(fe.getName() == "" | this.isEntity(fe.getName())) {
+  //     return false;
+  //   }
+  //   String addition = fe.getName() + "[";
+  //   for(FloraObject method : fe.getMethods()) {
+  //     addition += method.toString() + "->";
+  //     if((fe.getMethods().indexOf(method) + 1) <= fe.getValues().size()) {
+  //       // pff lelijk zeg
+  //       addition += fe.getValues().get(fe.getMethods().indexOf(method)).toString();
+  //     } else {
+  //       addition += "false";
+  //     }
+  //     addition += ",";
+  //   }
+  //   // This removes the trailing comma and finishes the command
+  //   if (addition.endsWith(","))
+  //     addition = addition.substring(0, addition.length() - 1);
+  //   addition +=  "]";
+  //   return this.insertKnowledge(addition);
+  // }
+
   public Boolean addFact(String name) {
     if (name == "" | this.isEntity(name))
       return false;
     return this.insertKnowledge(name + "[]");
+  }
+
+  // Changes a fact, but only if it already exists.
+  public Boolean changeFact(String name, ArrayList<String> methods, ArrayList<String> values) {
+    if (!this.isEntity(name))
+      return false;
+    return false;
   }
 
   private Boolean insertKnowledge(String knowledge) {

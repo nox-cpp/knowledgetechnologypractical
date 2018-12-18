@@ -15,6 +15,7 @@ public class FloraEntity {
 
   private FloraController fc;
 
+  // Creates a FloraEntity by looking for an entity by a specified name in the module
   public FloraEntity(FloraController fc, String name) {
     if (fc.isEntity(name)) {
       this.name = name;
@@ -23,12 +24,28 @@ public class FloraEntity {
     }
   }
 
+  //// NOTE: Unfinished functionality. Not sure if this can be.
+  // // Creates a FloraEntity from two ArrayList<String> objects
+  // public FloraEntity(FloraController fc, String Name, ArrayList<String> methods, ArrayList<String> values) {
+  //   this.name = name;
+  //   this.methods = methods;
+  //   this.values = values;
+  // }
+
   @Override
   public String toString() {
     if (this.methods.size() == 0 | this.values.size() == 0) {
       return this.name;
     }
     return this.name + "\n[" + this.methods.toString() + "\n]\n[" + this.values.toString() + "\n]\n";
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return this.name;
   }
 
   public Response getMethods() {
