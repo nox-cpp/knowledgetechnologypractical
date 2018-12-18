@@ -31,6 +31,40 @@ public class FloraController {
     return new Response(this.session.executeQuery(query + "@knowledgebase."));
   }
 
+  // Adds a frame (entity) to the knowledgebase with specified id and values for the fields
+  // If the values list is too short, the missing values will default to void
+  public Boolean addFact(String name,ArrayList<String> methods, ArrayList<String> values) {
+    // If the given name is invalid or it already exists in the knowledgebase this will fail
+    if(name == "" | this.isEntity(name)) {
+      return false;
+    }
+    String addition = name + "[";
+    for(String method : methods) {
+      addition += method + "->";
+      if((methods.indexOf(method) + 1) <= values.size()) {
+        addition += values.get(methods.indexOf(method));
+      } else {
+        addition += "false";
+      }
+      addition += ",";
+    }
+    // This removes the trailing comma and finishes the command
+    if (addition.endsWith(","))
+      addition = addition.substring(0, addition.length() - 1);
+    addition +=  "]";
+    return this.insertKnowledge(addition);
+  }
+
+  public Boolean addFact(String name) {
+    if (name == "" | this.isEntity(name))
+      return false;
+    return this.insertKnowledge(name + "[]");
+  }
+
+  private Boolean insertKnowledge(String knowledge) {
+    return this.session.executeCommand("insert{" + knowledge + "}@knowledgebase.");
+  }
+
   // Returns all Instances of a class in a Response type
   // Should return an empty list if the class does not exist
   public Response getClassInstances(String className) {

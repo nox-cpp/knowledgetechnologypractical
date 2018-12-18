@@ -23,7 +23,11 @@ public class FloraEntity {
     }
   }
 
+  @Override
   public String toString() {
+    if (this.methods.size() == 0 | this.values.size() == 0) {
+      return this.name;
+    }
     return this.name + "\n[" + this.methods.toString() + "\n]\n[" + this.values.toString() + "\n]\n";
   }
 
