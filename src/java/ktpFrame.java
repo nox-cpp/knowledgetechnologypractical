@@ -20,7 +20,7 @@ import java.util.*;
 import javax.swing.*;	
 
 public class ktpFrame extends JFrame {
-	public List<KTPPanel> panelList;
+	public List<Question> questionsList;
 	public List<Question> answeredQuestions;
 	public int currentPanel;
 
@@ -31,7 +31,7 @@ public class ktpFrame extends JFrame {
 	 */
 	ktpFrame(){
 		super("Genetic disorder risk assesment");
-		panelList = new ArrayList<KTPPanel>();
+		questionsList = new ArrayList<Question>();
 		answeredQuestions = new ArrayList<Question>();
 		this.currentPanel = 0;
 		initGUI();
@@ -58,14 +58,13 @@ public class ktpFrame extends JFrame {
 		lst.add(spinner);
 		Question firstq = new Question("age", "What is your age?", "" ,lst);
 		System.out.println("lst size = " + lst.size());
-	    KTPPanel first = new KTPPanel(firstq);
 	    
 	    
 	    
 	    //second example question
 	    List<KTPJComponent> lst2 = new ArrayList<KTPJComponent>();
 	    KTPJRadioButton man = new KTPJRadioButton("Man");
-	    //man.setSelected(true);
+	    man.setSelected(true);
 	    KTPJRadioButton woman = new KTPJRadioButton("Woman");
 	    ButtonGroup group = new ButtonGroup();
 	    group.add(man);
@@ -73,7 +72,6 @@ public class ktpFrame extends JFrame {
 		lst2.add(man);
 		lst2.add(woman);
 		Question secondq = new Question("gender","What is your gender?", "", lst2);
-	    KTPPanel second = new KTPPanel(secondq);
 	    
 	    
 	    //fourth example question
@@ -85,7 +83,6 @@ public class ktpFrame extends JFrame {
 		lst4.add(heart);
 		lst4.add(mental);
 		Question fourthq = new Question("type", "Which type of disease?", "blah blah blah" , lst4);
-	    KTPPanel fourth = new KTPPanel(fourthq);
 	    
 	    
 	    
@@ -101,19 +98,19 @@ public class ktpFrame extends JFrame {
 		lst3.add(yes);
 		lst3.add(no);
 		Question thirdq = new Question("family", "Do you have disease in the family?", "Diseases include: cancer blah" , lst3);
-	    KTPPanel third = new KTPPanel(thirdq);
 	    
 	    
 	    
 	    
 	    
 
-	    // add the panels to the panel list
-	    this.panelList.add(first);
-	    this.panelList.add(second);
-	    this.panelList.add(fourth);
-	    this.panelList.add(third);
-	    
+
+		//add the questions to the list
+		this.questionsList.add(firstq);
+		this.questionsList.add(secondq);
+		this.questionsList.add(fourthq);
+		this.questionsList.add(thirdq);
+		
 	    
 	    // create next and previous buttons
 	    JButton nextButton = createNextButton("Next");
@@ -125,7 +122,7 @@ public class ktpFrame extends JFrame {
 	    buttonPanel.add(infoButton);
 	    buttonPanel.add(nextButton);
 	    this.add(buttonPanel);
-	    this.add(panelList.get(0));		// add the first panel
+	    this.add(this.questionsList.get(0).getPanel()); // add the panel of the first question
 
 	    
 	    
@@ -223,15 +220,29 @@ public class ktpFrame extends JFrame {
 	
 	
 	
+	
 	/**
-	 * Removes one panel, and replaces with another
-	 * @param toRemove Panel to be removed
-	 * @param toAdd	Panel to be shown next
+	 * Shows the next panel in the question list.	 * 
+	 * Beware, checks if this is possible must be done before!
 	 */
-	public void changePanel(KTPPanel toRemove, KTPPanel toAdd){
-		this.remove(toRemove);
-		this.add(toAdd);
-		this.currentPanel = this.panelList.indexOf(toAdd);
+	public void showNextPanel(){
+		this.remove(this.questionsList.get(currentPanel).getPanel());	// remove current panel
+		this.currentPanel++;
+		this.add(this.questionsList.get(currentPanel).getPanel());		// add next panel
+		invalidate();
+		validate();
+		repaint();
+		
+	}
+	
+	/**
+	 * Shows the previous panel in the question list.
+	 * Beware, checks if this is possible must be done before!
+	 */	
+	public void showPrevPanel(){
+		this.remove(this.questionsList.get(currentPanel).getPanel());	// remove current panel
+		this.currentPanel--;
+		this.add(this.questionsList.get(currentPanel).getPanel());		// add next panel
 		invalidate();
 		validate();
 		repaint();
@@ -239,12 +250,14 @@ public class ktpFrame extends JFrame {
 	}
 	
 	
+	
 	/**
 	 * Adds the new data from the panel to the answered questions
 	 * @param current
 	 */
 	public void sendQuestionData(int current){
-		Question currentQ = this.panelList.get(current).getQuestion();
+		//TODO update to flora
+		Question currentQ = this.questionsList.get(current);
 		currentQ.setAnswers();
 		this.answeredQuestions.add(currentQ);
 		this.printAnswerList();
@@ -256,6 +269,7 @@ public class ktpFrame extends JFrame {
 	 * and removes the answer from the question object.
 	 */
 	public void removeLastAnswer(){
+		//TODO update to flora
 		this.answeredQuestions.get(this.answeredQuestions.size() -1).resetAnswers();
 		this.answeredQuestions.remove(this.answeredQuestions.size() -1);
 	}
@@ -268,7 +282,7 @@ public class ktpFrame extends JFrame {
 	 * @return Whether the inputs are within bounds.
 	 */
 	public boolean checkInputBounds(int current){
-		for(KTPJComponent comp : this.panelList.get(current).getQuestion().componentList){
+		for(KTPJComponent comp : this.questionsList.get(current).componentList){
 			if(comp.isWithinBounds()){
 				return true;
 			}
@@ -291,10 +305,10 @@ public class ktpFrame extends JFrame {
 	    nextButton.addActionListener(new ActionListener(){	    	
 	    	public void actionPerformed(ActionEvent e){
 	    		
-	    		if(currentPanel + 1 < panelList.size()){	// check if there is a next panel
+	    		if(currentPanel + 1 < questionsList.size()){	// check if there is a next panel
 	    			if(checkInputBounds(currentPanel)){		// check if the input is within bounds
 	    				sendQuestionData(currentPanel);
-	    				changePanel(panelList.get(currentPanel), panelList.get(currentPanel+1));
+	    				showNextPanel();
 	    			}
 	    			else{
 	    				// The input is not within bounds
@@ -315,7 +329,6 @@ public class ktpFrame extends JFrame {
 	/** Creates the previous button with action listener
 	 * @param text The text of the button
 	 */
-
 	private JButton createPrevButton(String text){
 		
 		JButton prevButton = new JButton(text);
@@ -323,9 +336,9 @@ public class ktpFrame extends JFrame {
 	    {
 	    	  public void actionPerformed(ActionEvent e){
 	    		  if(currentPanel - 1 >= 0 ){		// check if there is a previous panel
-	    			  removeLastAnswer();
-	    			  changePanel(panelList.get(currentPanel), panelList.get(currentPanel-1));
-	    			  printAnswerList();
+	    			  removeLastAnswer();			// remove answer from the answerList
+	    			  showPrevPanel();				// show previous panel
+	    			  printAnswerList();			// print the answer list so far
 	    		  }else{
 	    			  System.out.println("No previous panel");
 	    		  }
@@ -336,12 +349,18 @@ public class ktpFrame extends JFrame {
 	}
 	
 	
+	/**
+	 * Creates the information button which, when clicked shows the extra information 
+	 * provided by the question object.
+	 * @param text The explanation to be shown.
+	 * @return Retruns the button
+	 */
 	private JButton createInfoButton(String text){
 		JButton bt = new JButton(text);
 		bt.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e){
-				String s = panelList.get(currentPanel).getQuestion().extraExplanation;
+				String s = questionsList.get(currentPanel).extraExplanation;
 				JOptionPane.showMessageDialog(new JFrame(), s);
 			}
 		});
@@ -352,7 +371,7 @@ public class ktpFrame extends JFrame {
 	
 	
 	/**
-	 * Helper function to print the current list of given answers
+	 * Helper function to print the current list of given answers. Used for debug.
 	 */
 	public void printAnswerList(){
 		
