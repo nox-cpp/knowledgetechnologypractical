@@ -11,13 +11,15 @@ package src.java;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
-
-import javax.swing.*;	
+import javax.swing.*;
+import org.jdom2.*;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 public class KTPFrame extends JFrame {
 	public List<Question> questionsList;
@@ -51,13 +53,59 @@ public class KTPFrame extends JFrame {
 			    JOptionPane.WARNING_MESSAGE);*/
 		
 		
+		
+	    
+	    
+		readQuestions();
+	    
+	    
+
+
+		
+		
+	    
+	    // create next and previous buttons
+	    JButton nextButton = createNextButton("Next");
+	    JButton prevButton = createPrevButton("Previous");
+	    JButton infoButton = createInfoButton("Extra explanation");
+	    JPanel buttonPanel = new JPanel();
+	    buttonPanel.setLayout(new GridLayout(0,3));
+	    buttonPanel.add(prevButton);
+	    buttonPanel.add(infoButton);
+	    buttonPanel.add(nextButton);
+	    this.add(buttonPanel);
+	    this.add(this.questionsList.get(0).getPanel()); // add the panel of the first question
+
+	    
+	    
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    GridLayout layout = new GridLayout(0,1);
+	    this.setLayout(layout);
+	    this.setSize(1000, 500);
+	    this.setLocation(200, 200);
+	    //this.pack();
+	    this.setVisible(true);
+	    
+	    
+	    this.readQuestionsXML();
+	    
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Adds all the questions for the model to the panels and add those to the panel list.
+	 * TODO make this less ugly
+	 */
+	private void readQuestions(){
 		// first example question
 		List<KTPJComponent> lst = new ArrayList<KTPJComponent>();
 		SpinnerModel model = new SpinnerNumberModel(18, 18, 120, 1);     
 		KTPJSpinner spinner = new KTPJSpinner(model);
 		lst.add(spinner);
 		Question firstq = new Question("age", "What is your age?", "" ,lst);
-		System.out.println("lst size = " + lst.size());
 	    
 	    
 	    
@@ -85,9 +133,6 @@ public class KTPFrame extends JFrame {
 		Question fourthq = new Question("type", "Which type of disease?", "blah blah blah" , lst4);
 	    
 	    
-	    
-	    
-	    
 	    //third example question
 	    List<KTPJComponent> lst3 = new ArrayList<KTPJComponent>();
 	    KTPJRadioButton yes = new KTPJRadioButton("Yes");
@@ -98,63 +143,57 @@ public class KTPFrame extends JFrame {
 		lst3.add(yes);
 		lst3.add(no);
 		Question thirdq = new Question("family", "Do you have disease in the family?", "Diseases include: cancer blah" , lst3);
-	    
-	    
-	    
-	    
-	    
-
-
+		
 		//add the questions to the list
 		this.questionsList.add(firstq);
 		this.questionsList.add(secondq);
 		this.questionsList.add(fourthq);
 		this.questionsList.add(thirdq);
-		
-	    
-	    // create next and previous buttons
-	    JButton nextButton = createNextButton("Next");
-	    JButton prevButton = createPrevButton("Previous");
-	    JButton infoButton = createInfoButton("Extra explanation");
-	    JPanel buttonPanel = new JPanel();
-	    buttonPanel.setLayout(new GridLayout(0,3));
-	    buttonPanel.add(prevButton);
-	    buttonPanel.add(infoButton);
-	    buttonPanel.add(nextButton);
-	    this.add(buttonPanel);
-	    this.add(this.questionsList.get(0).getPanel()); // add the panel of the first question
 
-	    
-	    
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    GridLayout layout = new GridLayout(0,1);
-	    this.setLayout(layout);
-	    this.setSize(1000, 500);
-	    this.setLocation(200, 200);
-	    //this.pack();
-	    this.setVisible(true);
-	    
-	}
-	
-	
-	
-	
-	
-	/**
-	 * Adds all the questions for the model to the panels and add those to the panel list.
-	 */
-	private void readQuestions(){
-		
-		
-		
-		
 		
 	}
 	
 	
 	
 	
-	
+	private void readQuestionsXML(){
+		
+		
+		System.out.println("starting xml jdom");
+		
+		try {
+	         File inputFile = new File("src/resource/questions.xml");
+	         SAXBuilder saxBuilder = new SAXBuilder();
+	         Document document = saxBuilder.build(inputFile);
+	         System.out.println("Root element :" + document.getRootElement().getName());
+	         Element classElement = document.getRootElement();
+
+	         List<Element> studentList = classElement.getChildren();
+	         System.out.println("----------------------------");
+
+	         for (int temp = 0; temp < studentList.size(); temp++) {    
+	            Element student = studentList.get(temp);
+	            System.out.println("\nCurrent Element :" 
+	               + student.getName());
+	            Attribute attribute =  student.getAttribute("rollno");
+	            System.out.println("Student roll no : " 
+	               + attribute.getValue() );
+	            System.out.println("First Name : "
+	               + student.getChild("firstname").getText());
+	            System.out.println("Last Name : "
+	               + student.getChild("lastname").getText());
+	            System.out.println("Nick Name : "
+	               + student.getChild("nickname").getText());
+	            System.out.println("Marks : "
+	               + student.getChild("marks").getText());
+	         }
+	      } catch(JDOMException e) {
+	         e.printStackTrace();
+	      } catch(IOException ioe) {
+	         ioe.printStackTrace();
+	      }
+		
+	}
 	
 	
 	/**

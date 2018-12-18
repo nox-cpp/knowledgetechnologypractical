@@ -1,1 +1,1 @@
-  java -DPROLOGDIR="${PROLOGDIR}" -DFLORADIR="$FLORADIR" -classpath "$FLORADIR"/java/flora2java.jar:"${FLORADIR}"/java/interprolog.jar:./build/main/:./src/ src/java/MainController
+java -DPROLOGDIR="${PROLOGDIR}" -DFLORADIR="$FLORADIR" -classpath src/jdom/jdom-2.0.6.jar:"$FLORADIR"/java/flora2java.jar:"${FLORADIR}"/java/interprolog.jar:./build/main/:./src/ src/java/MainController
