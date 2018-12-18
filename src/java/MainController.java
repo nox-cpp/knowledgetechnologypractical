@@ -30,7 +30,7 @@ public class MainController{
 			// Load the knowledgebase into the Flora session
 			floraController.loadModel();
 			// Create a frame for the program
-			ktpFrame frame = new ktpFrame();
+			KTPFrame frame = new KTPFrame();
 			System.out.println("Made a Frame");
 			floraController.closeSession();
 		}

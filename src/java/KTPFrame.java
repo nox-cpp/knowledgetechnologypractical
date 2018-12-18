@@ -19,7 +19,7 @@ import java.util.*;
 
 import javax.swing.*;	
 
-public class ktpFrame extends JFrame {
+public class KTPFrame extends JFrame {
 	public List<Question> questionsList;
 	public List<Question> answeredQuestions;
 	public int currentPanel;
@@ -29,7 +29,7 @@ public class ktpFrame extends JFrame {
 	/**
 	 * Constructor of ktpFrame. Sets the title and initializes fields.
 	 */
-	ktpFrame(){
+	KTPFrame(){
 		super("Genetic disorder risk assesment");
 		questionsList = new ArrayList<Question>();
 		answeredQuestions = new ArrayList<Question>();
