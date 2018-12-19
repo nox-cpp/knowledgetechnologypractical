@@ -42,19 +42,19 @@ public class KTPFrame extends JFrame {
 	 */
 	public void initGUI(){
 		
-		/*JOptionPane.showMessageDialog(this,
+		
+		// Show warning
+		JOptionPane.showMessageDialog(this,
 			    "This application is made by students for a course as an exercise in Knowledge systems.\n" +
 			    "Medical professionals where consulted during the making of this application,\n" +
 			    "however any advice should be treated as given by some AI students (which it is).",
 			    "Risk warning",
-			    JOptionPane.WARNING_MESSAGE);*/
+			    JOptionPane.WARNING_MESSAGE);
 		
 		
 		
-	    
-	    
-		//readQuestions();
-	    
+
+	    // read questions from file
 		this.readQuestionsXML();
 
 
@@ -94,7 +94,7 @@ public class KTPFrame extends JFrame {
 	
 	/**
 	 * Adds all the questions for the model to the panels and add those to the panel list.
-	 * TODO make this less ugly
+	 * This function is now replaced by readQuestionsXML()
 	 */
 	private void readQuestions(){
 		// first example question
@@ -152,44 +152,13 @@ public class KTPFrame extends JFrame {
 	
 	
 	
-	
+	/**
+	 * Reads the questions from the xml file located in src/resource/questions.xml
+	 */
 	private void readQuestionsXML(){
 		
 		
 		System.out.println("starting xml jdom");
-		
-		/*try {
-	         File inputFile = new File("src/resource/questions.xml");
-	         SAXBuilder saxBuilder = new SAXBuilder();
-	         Document document = saxBuilder.build(inputFile);
-	         System.out.println("Root element :" + document.getRootElement().getName());
-	         Element classElement = document.getRootElement();
-
-	         List<Element> studentList = classElement.getChildren();
-	         System.out.println("----------------------------");
-
-	         for (int temp = 0; temp < studentList.size(); temp++) {    
-	            Element student = studentList.get(temp);
-	            System.out.println("\nCurrent Element :" 
-	               + student.getName());
-	            Attribute attribute =  student.getAttribute("rollno");
-	            System.out.println("Student roll no : " 
-	               + attribute.getValue() );
-	            System.out.println("First Name : "
-	               + student.getChild("firstname").getText());
-	            System.out.println("Last Name : "
-	               + student.getChild("lastname").getText());
-	            System.out.println("Nick Name : "
-	               + student.getChild("nickname").getText());
-	            System.out.println("Marks : "
-	               + student.getChild("marks").getText());
-	         }
-	      } catch(JDOMException e) {
-	         e.printStackTrace();
-	      } catch(IOException ioe) {
-	         ioe.printStackTrace();
-	      }*/
-		
 		try{
 			File inputFile = new File("src/resource/questions.xml");			// new file
 	        SAXBuilder saxBuilder = new SAXBuilder();
@@ -270,9 +239,7 @@ public class KTPFrame extends JFrame {
 	        	
 	        	
 	        	Question newq = new Question(keyword, question, extra, componentList);			// construct the new question
-	        	this.questionsList.add(newq);
-	        	
-	        	//String keyword, String question, String extra, List<KTPJComponent> componentList
+	        	this.questionsList.add(newq);													// add question to the questionsList
 	        }
 	        
 	        
@@ -285,66 +252,6 @@ public class KTPFrame extends JFrame {
 		
 		
 	}
-	
-	
-	/**
-	 * !!!!!!!!!!!!!!!
-	 * THIS FUNCTION DOES NOT WORK YET
-	 * !!!!!!!!!!!!!!!
-	 * 
-	 * probally xml is better for this
-	 * TODO covert to xml and finish this
-	 * 
-	 * 
-	 * Reads the questions from questions.csv and convert them to question objects
-	 */
-	private void readQuestionsCSV(){
-		String csvFile = "src/resource/questions.csv";
-		BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ",";
-
-        try {
-
-            br = new BufferedReader(new FileReader(csvFile));
-            while ((line = br.readLine()) != null) {
-
-                // use comma as separator
-            	String[] arr = line.split(cvsSplitBy);
-                System.out.println(Arrays.toString(arr)); //print each line
-                
-                List<KTPJComponent> compList = null;
-                
-                Question q = new Question(arr[0], arr[1], arr[2], compList);
-                //String question, String extra, List<KTPJComponent> componentList
-                
-
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

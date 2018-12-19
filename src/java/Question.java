@@ -11,7 +11,25 @@ import javax.swing.*;
 
 /**
  * @author s2410540
- *
+ * The question class is very important for our project.
+ * The questions are read from a xml file.
+ * It contains the following important fields:
+ * 
+ * keyword			: 	the keyword corresponding to the question, used for interaction between
+ * 						flora and java.
+ * 
+ * question			: 	the string that is displayed.
+ * 
+ * componentList	:	The list of all Swing components that are used to answer the question,
+ * 						they can only be of one type (KTPJCheckBox, KTPJSpinner or KTPJRadioButton).
+ * 						They also implement the KTPJComponent interface.
+ * 
+ * extraExplanation	:	The string that is displayed in a dialog when the user asks for extra
+ * 						information to clarify the question.
+ * 
+ * panel			:	JPanel generated in the question object itself to display components.
+ * 
+ * answer			:	List of Strings that contain the answer(s) to this question.
  */
 public class Question {
 	
@@ -73,18 +91,21 @@ public class Question {
 	 * Returns a string representing of the object
 	 */
 	public String toString(){
-		return "Question object: " + this.question + " with "+ this.componentList.size() + " components" ;
+		return "Question object: " + this.question + " with "+ this.componentList.size() + " components of type: " + this.componentList.get(0).toString();
 	}
 	
 	
-	
+	/**
+	 * Clears the answerList. This is called when the previous button is clicked.
+	 */
 	public void resetAnswers(){
 		this.answer.clear();
 	}
 	
 	
 	/**
-	 * Sets the answer list to the current answers in the component list
+	 * Sets the answer list to the current answers in the component list.
+	 * This is called when the next button is clicked.
 	 */
 	public void setAnswers(){
 		for(KTPJComponent item : componentList){
@@ -94,6 +115,9 @@ public class Question {
 		}
 	}
 
+	/**
+	 * @return The current answers to this question.
+	 */
 	public List<String> getAnswers(){
 		return this.answer;
 	}

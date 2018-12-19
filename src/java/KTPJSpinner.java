@@ -16,15 +16,14 @@ public class KTPJSpinner extends JSpinner implements KTPJComponent {
 
 
 	/**
-	 * @param arg0
+	 * Constructor
+	 * @param arg0 SpinnerModel that determines behavior of the spinner
 	 */
 	public KTPJSpinner(SpinnerModel arg0) {
 		super(arg0);
 	}
 
-	/**
-	 * 
-	 */
+
 	public String getAnswer() {
 		//System.out.println("Found a value for the spinner = " + this.getValue());
 		return this.getValue().toString();

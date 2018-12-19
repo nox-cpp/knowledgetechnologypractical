@@ -27,7 +27,7 @@ public class KTPJCheckBox extends JCheckBox implements KTPJComponent {
 	}
 
 	/**
-	 * Returns wheter this is selected
+	 * Returns whether this checkbox is selected
 	 */
 	public boolean isWithinBounds() {
 		return this.isSelected();
