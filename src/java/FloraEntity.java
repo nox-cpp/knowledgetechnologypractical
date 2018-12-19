@@ -24,13 +24,12 @@ public class FloraEntity {
     }
   }
 
-  //// NOTE: Unfinished functionality. Not sure if this can be.
-  // // Creates a FloraEntity from two ArrayList<String> objects
-  // public FloraEntity(FloraController fc, String Name, ArrayList<String> methods, ArrayList<String> values) {
-  //   this.name = name;
-  //   this.methods = methods;
-  //   this.values = values;
-  // }
+  // Creates a FloraEntity from two Response objects
+  public FloraEntity(FloraController fc, String Name, Response methods, Response values) {
+    this.name = name;
+    this.methods = methods;
+    this.values = values;
+  }
 
   @Override
   public String toString() {

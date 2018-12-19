@@ -33,11 +33,13 @@ public class MainController{
 			// Create a frame for the program
 			ktpFrame frame = new ktpFrame();
 			System.out.println("Made a Frame");
-			// FloraEntity fe = floraController.getEntity("Tim");
-			// fe.setName("Peter");
-			// floraController.addFact(fe);
-			// System.out.println(floraController.isEntity("Peter"));
-			// System.out.println(floraController.getEntity("Peter"));
+			FloraEntity fe = floraController.getEntity("Tim");
+			fe.setName("Peter");
+			floraController.addFact(fe);
+			System.out.println(floraController.isEntity("Peter"));
+			System.out.println(floraController.getEntity("Peter"));
+			floraController.deleteFact("Tim");
+			System.out.println(floraController.listEntities("person"));
 			floraController.closeSession();
 		}
 

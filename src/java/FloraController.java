@@ -31,18 +31,29 @@ public class FloraController {
     return new Response(this.session.executeQuery(query + "@knowledgebase."));
   }
 
+
+
   // Adds a frame (entity) to the knowledgebase with specified id and values for the fields
   // If the values list is too short, the missing values will default to void
   public Boolean addFact(String name, ArrayList<String> methods, ArrayList<String> values) {
+    Response rMethods = new Response(methods);
+    Response rValues = new Response(values);
+    FloraEntity fe = new FloraEntity(this, name, rMethods, rValues);
+    return addFact(fe);
+  }
+
+  //// NOTE: Function proves difficult to implement. Needs looking into
+  public Boolean addFact(FloraEntity fe) {
     // If the given name is invalid or it already exists in the knowledgebase this will fail
-    if(name == "" | this.isEntity(name)) {
+    if(fe.getName() == "" | this.isEntity(fe.getName())) {
+      System.out.println(fe.getName());
       return false;
     }
-    String addition = name + "[";
-    for(String method : methods) {
+    String addition = fe.getName() + "[";
+    for(String method : fe.getMethods()) {
       addition += method + "->";
-      if((methods.indexOf(method) + 1) <= values.size()) {
-        addition += values.get(methods.indexOf(method));
+      if((fe.getMethods().indexOf(method) + 1) <= fe.getValues().size()) {
+        addition += fe.getValues().get(fe.getMethods().indexOf(method));
       } else {
         addition += "false";
       }
@@ -55,34 +66,19 @@ public class FloraController {
     return this.insertKnowledge(addition);
   }
 
-  //// NOTE: Function proves difficult to implement. Needs looking into
-  // public Boolean addFact(FloraEntity fe) {
-  //   // If the given name is invalid or it already exists in the knowledgebase this will fail
-  //   if(fe.getName() == "" | this.isEntity(fe.getName())) {
-  //     return false;
-  //   }
-  //   String addition = fe.getName() + "[";
-  //   for(FloraObject method : fe.getMethods()) {
-  //     addition += method.toString() + "->";
-  //     if((fe.getMethods().indexOf(method) + 1) <= fe.getValues().size()) {
-  //       // pff lelijk zeg
-  //       addition += fe.getValues().get(fe.getMethods().indexOf(method)).toString();
-  //     } else {
-  //       addition += "false";
-  //     }
-  //     addition += ",";
-  //   }
-  //   // This removes the trailing comma and finishes the command
-  //   if (addition.endsWith(","))
-  //     addition = addition.substring(0, addition.length() - 1);
-  //   addition +=  "]";
-  //   return this.insertKnowledge(addition);
-  // }
-
   public Boolean addFact(String name) {
     if (name == "" | this.isEntity(name))
       return false;
     return this.insertKnowledge(name + "[]");
+  }
+
+  // NOTE: This does not delete the entity from the knowledgebase, only the facts attached to it.
+  // Deleting names is currently impossible
+  public Boolean deleteFact(String name) {
+    if (name == "" | !this.isEntity(name))
+      return false;
+    System.out.print("delete{" + name + "}@knowledgebase.");
+    return this.commandModel("deleteall{" + name + "[]}@knowledgebase.");
   }
 
   // Changes a fact, but only if it already exists.
@@ -139,7 +135,7 @@ public class FloraController {
   }
 
   // Sends a command to the inference engine. Does not return any value.
-  public void commandModel(String command) {
-    this.session.executeCommand(command);
+  public Boolean commandModel(String command) {
+    return this.session.executeCommand(command);
   }
 }
