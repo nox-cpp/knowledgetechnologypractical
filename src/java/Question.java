@@ -6,7 +6,6 @@ package src.java;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.*;
-
 import javax.swing.*;
 
 /**
