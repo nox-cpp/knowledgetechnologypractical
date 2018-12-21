@@ -7,14 +7,14 @@ public class FloraController {
   private FloraSession session;
 
   public FloraController() {
-    session = new FloraSession();
+    this.session = new FloraSession();
   }
 
   public void loadModel() {
     /** The path here refers to the file location in the source files
      * Ideally, when we want to demo the program it is included with the rest of the files
      *  */
-    if(session.loadFile("src/flora/knowledgebase.flr", "knowledgebase"))
+    if(this.session.loadFile("src/flora/knowledgebase.flr", "knowledgebase"))
       System.out.println("Knowledgebase loaded successfully.");
     else
       System.out.println("Knowledgebase loading failed.");
@@ -22,7 +22,7 @@ public class FloraController {
   }
 
   public void closeSession() {
-    session.close();
+    this.session.close();
   }
 
   // Sends a given query to the model and returns it as a Response type
@@ -42,11 +42,9 @@ public class FloraController {
     return addFact(fe);
   }
 
-  //// NOTE: Function proves difficult to implement. Needs looking into
   public Boolean addFact(FloraEntity fe) {
     // If the given name is invalid or it already exists in the knowledgebase this will fail
-    if(fe.getName() == "" | this.isEntity(fe.getName())) {
-      System.out.println(fe.getName());
+    if(fe.getName() == "" | !this.isEntity(fe.getName())) {
       return false;
     }
     String addition = fe.getName() + "[";
@@ -66,6 +64,7 @@ public class FloraController {
     return this.insertKnowledge(addition);
   }
 
+  // Creates an empty frame (entity without methods/values)
   public Boolean addFact(String name) {
     if (name == "" | this.isEntity(name))
       return false;
@@ -77,14 +76,16 @@ public class FloraController {
   public Boolean deleteFact(String name) {
     if (name == "" | !this.isEntity(name))
       return false;
-    System.out.print("delete{" + name + "}@knowledgebase.");
-    return this.commandModel("deleteall{" + name + "[]}@knowledgebase.");
+    return this.commandModel("deleteall{" + name + "[?X->?Y], " + name + "[?X->?Y]" + "}@knowledgebase.");
   }
 
-  // Changes a fact, but only if it already exists.
-  public Boolean changeFact(String name, ArrayList<String> methods, ArrayList<String> values) {
-    if (!this.isEntity(name))
-      return false;
+  //
+  public Boolean updateFact(FloraEntity fe) {
+    if (this.isEntity(fe.getName())) {
+      this.deleteFact(fe.getName());
+      this.addFact(fe);
+      return true;
+    }
     return false;
   }
 

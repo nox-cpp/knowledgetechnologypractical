@@ -10,10 +10,10 @@
 * NOTE: Don't forget to always end any statement with a '.'
 */
 person[|
-  age => integer,
+  age => \integer,
   relatives => person,
-  risk_level => string,
-  has_disease => boolean
+  risk_level => \string,
+  has_disease => \boolean
 |].
 
 Marnix:person[

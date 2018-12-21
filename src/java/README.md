@@ -88,3 +88,63 @@ overwhelming
 true
 ]
 ```
+
+## Updating and changing the knowledgebase using the floraController class
+```java
+// Load the information about an entity into a variable
+FloraEntity fe = floraController.getEntity("Tim");
+// Modify the information
+fe.setName("Peter");
+// Add new information to the kb
+floraController.addFact(fe);
+System.out.println(floraController.isEntity("Peter"));
+System.out.println(floraController.getEntity("Peter"));
+System.out.println(floraController.getEntity("Tim"));
+// Delete information from the kb (NOTE: This does not delete the name/id from the kb, so far this seems impossible)
+floraController.deleteFact("Tim");
+System.out.println(floraController.getEntity("Tim").toString());
+fe.setName("Tim");
+// Change the information of some fact
+floraController.updateFact(fe);
+System.out.println(floraController.updateFact(fe));
+System.out.println(floraController.getEntity("Tim").toString());
+```
+
+```bash
+false
+null
+Tim
+[
+age
+relatives
+risk_level
+has_disease
+]
+[
+17
+Marietje
+overwhelming
+true
+]
+
+Tim
+[
+]
+[
+]
+
+true
+Tim
+[
+age
+relatives
+risk_level
+has_disease
+]
+[
+17
+Marietje
+overwhelming
+true
+]
+```
