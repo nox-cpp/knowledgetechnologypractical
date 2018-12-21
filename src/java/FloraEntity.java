@@ -8,6 +8,7 @@ import net.sf.flora2.API.util.*;
 import src.java.FloraController;
 
 // This class can hold all information available for an object in the knowledgebase
+// NOTE: There seems to be an error sometimes with retrieving methods and values
 public class FloraEntity {
   private String name;
   private Response methods;
@@ -15,6 +16,7 @@ public class FloraEntity {
 
   private FloraController fc;
 
+  // Creates a FloraEntity by looking for an entity by a specified name in the module
   public FloraEntity(FloraController fc, String name) {
     if (fc.isEntity(name)) {
       this.name = name;
@@ -23,8 +25,27 @@ public class FloraEntity {
     }
   }
 
+  // Creates a FloraEntity from two Response objects
+  public FloraEntity(FloraController fc, String name, Response methods, Response values) {
+    this.name = name;
+    this.methods = methods;
+    this.values = values;
+  }
+
+  @Override
   public String toString() {
+    if (this.methods == null | this.values == null) {
+      return this.name;
+    }
     return this.name + "\n[" + this.methods.toString() + "\n]\n[" + this.values.toString() + "\n]\n";
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return this.name;
   }
 
   public Response getMethods() {
