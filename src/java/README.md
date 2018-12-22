@@ -148,3 +148,50 @@ overwhelming
 true
 ]
 ```
+
+## Changing an entity in the knowledgebase
+```java
+FloraEntity fe = floraController.getEntity("Tim");
+System.out.println(fe);
+fe.setMethod("age", "18");
+floraController.updateFact(fe);
+System.out.println(fe);
+```
+```bash
+Tim
+[
+age
+relatives
+risk_level
+has_disease
+]
+[
+17
+Marietje
+overwhelming
+true
+]
+
+Tim
+[
+age
+relatives
+risk_level
+has_disease
+]
+[
+18
+Marietje
+overwhelming
+true
+]
+```
+Adding a field is done in a similar fashing using the ` fe.addMethod(String name, String value)` method.
+## Getting the value of a field
+```java
+FloraEntity fe = floraController.getEntity("Tim");
+System.out.println(fe.getValue("has_disease"));
+```
+```bash
+true
+```
