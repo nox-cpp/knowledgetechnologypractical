@@ -31,12 +31,7 @@ public class MainController{
 			System.out.println("Flora-2 session started");
 			floraController.loadModel();							// Load the knowledgebase into the Flora session
 			
-<<<<<<< HEAD
-			
-			KTPFrame frame = new KTPFrame(readQuestionsXML());		// Create a frame for the program and give the questions as an argument
-=======
 			KTPFrame frame = new KTPFrame(readQuestionsXML());		// Create a frame for the program
->>>>>>> floraInteraction
 			System.out.println("Made a Frame");
 			
 			floraController.closeSession();							// close session
