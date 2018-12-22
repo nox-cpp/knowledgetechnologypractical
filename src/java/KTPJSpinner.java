@@ -30,17 +30,10 @@ public class KTPJSpinner extends JSpinner implements KTPJComponent {
 	}
 
 	/**
-	 * TODO This does not work yet!!
+	 * This function always returns true, because a spinner always has a valid value.
 	 */
 	public boolean isWithinBounds() {
-		try {
-			this.commitEdit();
-			return true;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+		return true;
 	}
 
 }

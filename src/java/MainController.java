@@ -33,25 +33,29 @@ public class MainController{
 			floraController.loadModel();							// Load the knowledgebase into the Flora session
 			
 			
-			KTPFrame frame = new KTPFrame(readQuestionsXML());		// Create a frame for the program
+			KTPFrame frame = new KTPFrame(readQuestionsXML());		// Create a frame for the program and give the questions as an argument
 			System.out.println("Made a Frame");
 			
 			floraController.closeSession();							// close session
 		}
 	
 	
-	
-private static List<Question> readQuestionsXML(){
+
+	/**
+	 * This functions reads the questions from the file questions.xml
+	 * @return A list of question objects.
+	 */
+	private static List<Question> readQuestionsXML(){
+			
 		
-		
-		System.out.println("starting xml jdom");
+		System.out.println("Starting xml jdom");
 		try{
 			List<Question> questionsList = new ArrayList<Question>();
 			File inputFile = new File("src/resource/questions.xml");			// new file
 	        SAXBuilder saxBuilder = new SAXBuilder();
 	        Document document = saxBuilder.build(inputFile);
 	        Element classElement = document.getRootElement();					// get root
-	        System.out.println("Root element :" + classElement.getName());		// print root
+	        System.out.println("Found root element : " + classElement.getName());		// print root
 	        List<Element> qList = classElement.getChildren();					// get list of questions
 	        System.out.println("Found " + qList.size() + " questions in " + inputFile.getAbsolutePath());
 	        
@@ -65,14 +69,10 @@ private static List<Question> readQuestionsXML(){
 	        		extra = q.getChild("extra").getText();
 	        	}
 	        	List<KTPJComponent> componentList = new ArrayList<KTPJComponent>();
-	        	
-	        	//System.out.println(q.getAttribute("inputtype").toString());
-	        	
 
 	        	
 	        	// if attribute inputtype == spinner
 	        	if(q.getAttribute("inputtype").toString().equals(new Attribute("inputtype", "spinner").toString())){
-	        		//System.out.println("spinner");
 	        		String[] strings = q.getChild("spinner").getText().split(",");		// split into strings
 	        		int[] ints = new int[4];											// make new int array
 	        		int i = 0;
@@ -89,7 +89,6 @@ private static List<Question> readQuestionsXML(){
 	        		
 	        	// if attribute inputtype == checkbox
 	        	}else if(q.getAttribute("inputtype").toString().equals(new Attribute("inputtype", "checkbox").toString())){
-	        		//System.out.println("checkbox");
 	        		
 	        		List<Element> list = q.getChildren("checkbox"); 				// get all checkboxes
 	        		for (Element e : list){					// for each checkbox
@@ -104,7 +103,6 @@ private static List<Question> readQuestionsXML(){
 	        	
 	        	// if attribute inputtype == radiobutton
 	        	}else if(q.getAttribute("inputtype").toString().equals(new Attribute("inputtype", "radiobutton").toString())){
-	        		//System.out.println("radiobutton");
 	        		
 	        		List<Element> list = q.getChildren("radiobutton"); 				// get all radiobuttons
 	        		ButtonGroup group = new ButtonGroup();							// make new button group
@@ -126,7 +124,23 @@ private static List<Question> readQuestionsXML(){
 	        	
 	        	
 	        	Question newq = new Question(keyword, question, extra, componentList);			// construct the new question
+	        	
+	        	// check if keyword is unique
+	        	for(Question i : questionsList){
+	        		if(i.getKeyword().equals(newq.getKeyword())){
+	        			System.err.println("\n\n=============" +
+	        					"There is a duplicate keyword in the questions.xml file." +
+	        					"\nPlease resolve this to start the program.\n" +
+	        					i.getKeyword() + " is used twice." +
+	        							"\nExiting the program.");
+	        			System.exit(0);
+	        		}
+	        	}
+	        	
 	        	questionsList.add(newq);														// add question to the questionsList
+	        	
+	        	
+	        	
 	        }
 	    
 	    return questionsList;

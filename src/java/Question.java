@@ -32,7 +32,7 @@ import javax.swing.*;
  */
 public class Question {
 	
-	public String keyword;
+	private String keyword;
 	public String question;
 	public List<KTPJComponent> componentList;
 	public String extraExplanation;
@@ -44,18 +44,21 @@ public class Question {
 	 * Constructor for Question object
 	 * @param keyword the keyword used for the flora, java interaction.
 	 * @param question The string that contains the question itself.
-	 * @param extra The string that has extra explanation about the question. TODO what if null -> standard message?
+	 * @param extra The string that has extra explanation about the question.
 	 * @param componentList List of KTPJComponents that you want to show. (Radiobuttons etc)
 	 */
 	Question(String keyword, String question, String extra, List<KTPJComponent> componentList){
 		// TODO check if keyword is unique
 		this.keyword = keyword;
 		this.question = question;
-		this.extraExplanation = extra;
+		if (extra != null){
+			this.extraExplanation = extra;
+		} else{
+			this.extraExplanation = "There is no extra information for this question.";
+		}
 		this.componentList = componentList;
 		this.panel = new JPanel();
 		this.answer = new ArrayList<String>();
-		
 		initPanel();
 	}
 	
@@ -91,6 +94,13 @@ public class Question {
 	 */
 	public String toString(){
 		return "Question object: " + this.question + " with "+ this.componentList.size() + " components of type: " + this.componentList.get(0).toString();
+	}
+	
+	
+	
+	
+	public String getKeyword(){
+		return this.keyword;
 	}
 	
 	

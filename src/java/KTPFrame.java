@@ -1,7 +1,6 @@
 /*
  * 
- * TODO Use grouplayout?
- * TODO JSON reading questions
+ * TODO Use other layout?
  * 
  */
 
