@@ -7,6 +7,8 @@
 
 
 package src.java;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +23,7 @@ public class KTPFrame extends JFrame {
 	public List<Question> questionsList;
 	public List<Question> answeredQuestions;
 	public int currentPanel;
+	private JScrollPane histScrollPane;
 	private JTextArea histTextArea;
 
 	
@@ -56,7 +59,11 @@ public class KTPFrame extends JFrame {
 		
 		
 		//set layoutmanager
-		this.setLayout(new GridLayout(0,2));
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		
+		this.setLayout(layout);
+		//this.setLayout(new GridLayout(0,2));
 	    
 	    // create previous, extra information and next buttons
 	    JButton nextButton = createNextButton("Next");
@@ -67,18 +74,29 @@ public class KTPFrame extends JFrame {
 	    buttonPanel.add(prevButton);
 	    buttonPanel.add(infoButton);
 	    buttonPanel.add(nextButton);
-	    this.add(buttonPanel);
+	    // add the panel to the top left
+	    c.gridx = 0;
+	    c.gridy = 0;
+	    this.add(buttonPanel, c);
 	    
 	    //add history panel
 	    histTextArea = new JTextArea(10, 50);
-	    JScrollPane scrollPane = new JScrollPane(histTextArea); 
+	    histScrollPane = new JScrollPane(histTextArea);
+	    histScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	    histTextArea.setEditable(false);
 	    JPanel textPanel = new JPanel();
-	    textPanel.add(scrollPane);
-	    this.add(textPanel);
+	    textPanel.add(histScrollPane);
+	    // add the panel to the top right
+	    c.gridx = 1;
+	    c.gridy = 0;
+	    c.gridheight = 2;
+	    this.add(textPanel,c);
 	    
-	    
-	    this.add(this.questionsList.get(0).getPanel()); // add the panel of the first question
+	    // add the panel of the first question
+	    c.gridx = 0;
+	    c.gridy = 1;
+	    c.gridheight = 1;
+	    this.add(this.questionsList.get(0).getPanel(), c); 
 
 	    
 	    
@@ -100,7 +118,7 @@ public class KTPFrame extends JFrame {
 	/**
 	 * @deprecated
 	 * Adds all the questions for the model to the panels and add those to the panel list.
-	 * This function is now replaced by readQuestionsXML()
+	 * This function is now replaced by readQuestionsXML() in Main Controller.java
 	 */
 	private void readQuestions(){
 		// first example question
@@ -165,7 +183,17 @@ public class KTPFrame extends JFrame {
 	public void showNextPanel(){
 		this.remove(this.questionsList.get(currentPanel).getPanel());	// remove current panel
 		this.currentPanel++;
-		this.add(this.questionsList.get(currentPanel).getPanel());		// add next panel
+		
+		
+		// add next panel
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+	    c.gridy = 1;
+	    c.gridheight = 1;
+		this.add(this.questionsList.get(currentPanel).getPanel(), c);
+		
+		
+		
 		invalidate();
 		validate();
 		repaint();
@@ -179,7 +207,14 @@ public class KTPFrame extends JFrame {
 	public void showPrevPanel(){
 		this.remove(this.questionsList.get(currentPanel).getPanel());	// remove current panel
 		this.currentPanel--;
-		this.add(this.questionsList.get(currentPanel).getPanel());		// add next panel
+		
+		// add prev panel
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+	    c.gridy = 1;
+	    c.gridheight = 1;
+		this.add(this.questionsList.get(currentPanel).getPanel(), c);
+		
 		invalidate();
 		validate();
 		repaint();
@@ -187,22 +222,7 @@ public class KTPFrame extends JFrame {
 	}
 	
 	
-	/**
-	 * Returns a string to be displayed.
-	 * This string shows all the currently given answers.
-	 * @return
-	 */
-	public String currentHist(){
-		String s = "";
-		
-		for (Question q : this.answeredQuestions){
-			for(String ans : q.getAnswers()){
-				s += q.question + "\t" + ans + "\n";
-			}
-			
-		}
-		return s;
-	}
+
 	
 	
 	/**
@@ -212,12 +232,14 @@ public class KTPFrame extends JFrame {
 	 */
 	public void sendQuestionData(int current){
 		//TODO update to flora
-		Question currentQ = this.questionsList.get(current);
-		currentQ.setAnswers();
-		this.answeredQuestions.add(currentQ);
-		//this.printAnswerList();
-		System.out.println(this.currentHist());
-		this.histTextArea.setText(this.currentHist());
+		Question currentQ = this.questionsList.get(current);		// get current question
+		currentQ.setAnswers();										// set the answers of that question
+		this.answeredQuestions.add(currentQ);						// add answers to answer list
+		this.histTextArea.setText(this.currentHist());				// set the history text panel
+		JScrollBar vertical = this.histScrollPane.getVerticalScrollBar();
+		vertical.setValue( vertical.getMaximum() );					// scroll the pane down
+		
+		this.printAnswerList();										// print answers for debug
 		
 	}
 	
@@ -231,6 +253,10 @@ public class KTPFrame extends JFrame {
 		this.answeredQuestions.get(this.answeredQuestions.size() -1).resetAnswers();
 		this.answeredQuestions.remove(this.answeredQuestions.size() -1);
 		this.histTextArea.setText(this.currentHist());
+		JScrollBar vertical = this.histScrollPane.getVerticalScrollBar();
+		vertical.setValue( vertical.getMaximum() );					// scroll the pane down
+		
+		this.printAnswerList();										// print answers for debug
 	}
 	
 	
@@ -297,7 +323,6 @@ public class KTPFrame extends JFrame {
 	    		  if(currentPanel - 1 >= 0 ){		// check if there is a previous panel
 	    			  removeLastAnswer();			// remove answer from the answerList
 	    			  showPrevPanel();				// show previous panel
-	    			  printAnswerList();			// print the answer list so far
 	    		  }else{
 	    			  System.out.println("No previous panel");
 	    		  }
@@ -330,18 +355,29 @@ public class KTPFrame extends JFrame {
 	
 	
 	/**
+	 * Returns a string to be displayed.
+	 * This string shows all the currently given answers.
+	 * @return
+	 */
+	public String currentHist(){
+		String s = "";
+		
+		for (Question q : this.answeredQuestions){
+			for(String ans : q.getAnswers()){
+				s += q.question + "\t" + ans + "\n";
+			}
+			
+		}
+		return s;
+	}
+	
+	/**
 	 * Helper function to print the current list of given answers. Used for debug.
 	 */
 	public void printAnswerList(){
 		
-		System.out.println("\n\nThe list so far: " + this.answeredQuestions.size());
-		for(Question q : this.answeredQuestions){
-			System.out.println(q.getAnswers());
-			for (String s : q.getAnswers()){
-				
-				//System.out.println("the answer list of q = " + q.getAnswers().size() + s + "\t" + q.toString());
-			}
-		}
+		System.out.println("\n\nThe list so far: " + this.answeredQuestions.size() + "\n");
+		System.out.println(this.currentHist());
 	}
 
 }
