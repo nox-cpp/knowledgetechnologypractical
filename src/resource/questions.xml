@@ -3,6 +3,14 @@
 https://www.tutorialspoint.com/online_xml_editor.htm
 -->
 <questionList>
+	<question inputtype = "checkbox">
+        <keyword>diseaseType</keyword>
+        <question>Which type of diseas(es) run in your family?</question>
+        <extra>Your family is your biological family, like parents, siblings, children and grandparents.</extra>
+        <checkbox>Cancer</checkbox>
+        <checkbox>Heart and vasculair disease</checkbox>
+        <checkbox>Mental disability</checkbox>
+    </question>
     <question inputtype = "spinner">
         <keyword>numberFamilyH</keyword>
         <question>How many family members have a disability?</question>
@@ -20,12 +28,5 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <radiobutton selected="true">Man</radiobutton>
         <radiobutton selected="false">Woman</radiobutton>
     </question>
-    <question inputtype = "checkbox">
-        <keyword>diseaseType</keyword>
-        <question>Which type of diseas(es) run in your family?</question>
-        <extra>Your family is your biological family, like parents, siblings, children and grandparents.</extra>
-        <checkbox>Cancer</checkbox>
-        <checkbox>Heart and vasculair disease</checkbox>
-        <checkbox>Mental disability</checkbox>
-    </question>
+    
 </questionList>

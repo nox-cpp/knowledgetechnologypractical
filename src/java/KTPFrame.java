@@ -21,6 +21,7 @@ public class KTPFrame extends JFrame {
 	public List<Question> questionsList;
 	public List<Question> answeredQuestions;
 	public int currentPanel;
+	private JTextArea histTextArea;
 
 	
 	 
@@ -54,15 +55,10 @@ public class KTPFrame extends JFrame {
 		
 		
 		
-
-	    // read questions from file
-		//this.readQuestionsXML();
-
-
-		
-		
+		//set layoutmanager
+		this.setLayout(new GridLayout(0,2));
 	    
-	    // create next and previous buttons
+	    // create previous, extra information and next buttons
 	    JButton nextButton = createNextButton("Next");
 	    JButton prevButton = createPrevButton("Previous");
 	    JButton infoButton = createInfoButton("Extra explanation");
@@ -72,16 +68,24 @@ public class KTPFrame extends JFrame {
 	    buttonPanel.add(infoButton);
 	    buttonPanel.add(nextButton);
 	    this.add(buttonPanel);
+	    
+	    //add history panel
+	    histTextArea = new JTextArea(10, 50);
+	    JScrollPane scrollPane = new JScrollPane(histTextArea); 
+	    histTextArea.setEditable(false);
+	    JPanel textPanel = new JPanel();
+	    textPanel.add(scrollPane);
+	    this.add(textPanel);
+	    
+	    
 	    this.add(this.questionsList.get(0).getPanel()); // add the panel of the first question
 
 	    
 	    
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    GridLayout layout = new GridLayout(0,1);
-	    this.setLayout(layout);
-	    this.setSize(1000, 500);
+	    //this.setSize(1000, 500);
 	    this.setLocation(200, 200);
-	    //this.pack();
+	    this.pack();
 	    this.setVisible(true);
 	    
 	    
@@ -183,9 +187,27 @@ public class KTPFrame extends JFrame {
 	}
 	
 	
+	/**
+	 * Returns a string to be displayed.
+	 * This string shows all the currently given answers.
+	 * @return
+	 */
+	public String currentHist(){
+		String s = "";
+		
+		for (Question q : this.answeredQuestions){
+			for(String ans : q.getAnswers()){
+				s += q.question + "\t" + ans + "\n";
+			}
+			
+		}
+		return s;
+	}
+	
 	
 	/**
-	 * Adds the new data from the panel to the answered questions
+	 * Adds the new data from the panel to the answered questions.
+	 * Also adds this to the history panel.
 	 * @param current
 	 */
 	public void sendQuestionData(int current){
@@ -193,18 +215,22 @@ public class KTPFrame extends JFrame {
 		Question currentQ = this.questionsList.get(current);
 		currentQ.setAnswers();
 		this.answeredQuestions.add(currentQ);
-		this.printAnswerList();
+		//this.printAnswerList();
+		System.out.println(this.currentHist());
+		this.histTextArea.setText(this.currentHist());
 		
 	}
 	
 	/**
 	 * Removes the last answer from the answered questions
 	 * and removes the answer from the question object.
+	 * Also removes the answers from the history panel.
 	 */
 	public void removeLastAnswer(){
 		//TODO update to flora
 		this.answeredQuestions.get(this.answeredQuestions.size() -1).resetAnswers();
 		this.answeredQuestions.remove(this.answeredQuestions.size() -1);
+		this.histTextArea.setText(this.currentHist());
 	}
 	
 	
