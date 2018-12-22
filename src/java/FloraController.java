@@ -2,7 +2,11 @@ package src.java;
 import java.util.*;
 import net.sf.flora2.API.*;
 import net.sf.flora2.API.util.*;
-
+/**
+ * This class contains a FloraSession, and all the functions required to interact with it.
+ * - querying
+ * - updating
+ */
 public class FloraController {
   private FloraSession session;
 
@@ -10,12 +14,38 @@ public class FloraController {
     this.session = new FloraSession();
   }
 
+  /**
+   * Loads the default model (knowledgebase) from the flora folder.
+   * It is loaded into a new module called `knowledgebase'
+   */
   public void loadModel() {
     /** The path here refers to the file location in the source files
      * Ideally, when we want to demo the program it is included with the rest of the files
      *  */
     if(this.session.loadFile("src/flora/knowledgebase.flr", "knowledgebase"))
       System.out.println("Knowledgebase loaded successfully.");
+    else
+      System.out.println("Knowledgebase loading failed.");
+    return;
+  }
+
+  /**
+   * Loads a model from a specified path into the main module.
+   * The overloaded function loads it into a specific given module.
+   */
+  public void loadModel(String pathToFile) {
+    if(this.session.loadFile(pathToFile, "main"))
+      System.out.println("Knowledgebase from: `"
+      + pathToFile + "' loaded successfully into the main module.");
+    else
+      System.out.println("Knowledgebase loading failed.");
+    return;
+  }
+
+  public void loadModel(String pathToFile, String module) {
+    if(this.session.loadFile(pathToFile, module))
+      System.out.println("Knowledgebase from: `"
+       + pathToFile + "'  loaded successfully into module: `" + module + "'.");
     else
       System.out.println("Knowledgebase loading failed.");
     return;
@@ -42,6 +72,7 @@ public class FloraController {
     return addFact(fe);
   }
 
+  // Adds a frame from a floraEntity, but only if it does not yet exist.
   public Boolean addFact(FloraEntity fe) {
     // If the given name is invalid or it already exists in the knowledgebase this will fail
     if(fe.getName() == "" | !this.isEntity(fe.getName())) {
@@ -79,7 +110,7 @@ public class FloraController {
     return this.commandModel("deleteall{" + name + "[?X->?Y], " + name + "[?X->?Y]" + "}@knowledgebase.");
   }
 
-  //
+  // Updates the methods of a named fact in the knowledgebase, given it exists.
   public Boolean updateFact(FloraEntity fe) {
     if (this.isEntity(fe.getName())) {
       this.deleteFact(fe.getName());
@@ -89,6 +120,7 @@ public class FloraController {
     return false;
   }
 
+  // Adds a fact or rule into the knowledgebase
   private Boolean insertKnowledge(String knowledge) {
     return this.session.executeCommand("insert{" + knowledge + "}@knowledgebase.");
   }

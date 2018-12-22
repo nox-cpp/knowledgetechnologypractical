@@ -17,7 +17,6 @@
 package src.java;
 import java.io.File;
 import java.io.IOException;
-// import java.awt.List;
 import java.util.*;
 import net.sf.flora2.API.*;
 import net.sf.flora2.API.util.*;
@@ -31,7 +30,6 @@ public class MainController{
 			FloraController floraController = new FloraController();
 			System.out.println("Flora-2 session started");
 			floraController.loadModel();							// Load the knowledgebase into the Flora session
-			
 			
 			KTPFrame frame = new KTPFrame(readQuestionsXML());		// Create a frame for the program
 			System.out.println("Made a Frame");
