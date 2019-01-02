@@ -1,56 +1,30 @@
+?- [knowledgebase >> knowledgebase].
+
+
 // If the person filling out the test is above 70, it's not useful anymore to check
-goToDoctor(false) :- user[age->70].
+goToDoctor(false) :- user[age->70] @knowledgebase.
 
-// Lung
-?X[risk->2] :- ?X[type->lung, age->50, relation->1, smoking->false].
-?X[risk->2] :- ?X[type->lung, age->60, relation->1, smoking->false, drinking->false].
-?X[risk->2] :- ?X[type->lung, age->55, relation->1, smoking->false, overweight->false].
-?X[risk->2] :- ?X[type->lung, age->65, relation->1, smoking->false, drinking->false, overweight->false].
-
-?X[risk->2] :- ?X[type->lung, age->30, relation->2, smoking->false].
-?X[risk->2] :- ?X[type->lung, age->30, relation->2, smoking->false, overweight->false].
-?X[risk->2] :- ?X[type->lung, age->30, relation->2, smoking->false, drinking->false].
-?X[risk->2] :- ?X[type->lung, age->30, relation->2, smoking->false, drinking->false, overweight->false].
-
-?X[risk->1] :- ?X[type->lung, age->50, relation->1, smoking->false].
-?X[risk->1] :- ?X[type->lung, age->60, relation->1, smoking->false, drinking->false].
-?X[risk->1] :- ?X[type->lung, age->55, relation->1, smoking->false, overweight->false].
-?X[risk->1] :- ?X[type->lung, age->65, relation->1, smoking->false, drinking->false, overweight->false].
+?X[risk->2] :- ?X[age->25, \+type->child] @knowledgebase.
 
 // Breast
-?X[risk->2] :- ?X[type->breast, age->55, relation->1].
-?X[risk->2] :- ?X[type->breast, age->65, relation->1, gender->male].
-?X[risk->2] :- ?X[type->breast, age->65, relation->1, gender->female, children->true].
+?X[risk->2] :- ?X[type->breast, gender->male] @knowledgebase.
 
-?X[risk->2] :- ?X[type->breast, age->35, relation->2].
-?X[risk->2] :- ?X[type->breast, age->45, relation->2, gender->male].
-?X[risk->2] :- ?X[type->breast, age->45, relation->2, gender->female, children->true].
+?X[risk->2] :- ?X[type->breast, age->55, relation->1] @knowledgebase.
+?X[risk->2] :- ?X[type->breast, age->65, relation->1, gender->female, children->true] @knowledgebase.
 
-?X[risk->1] :- ?X[type->breast, age->55, relation->2].
-?X[risk->1] :- ?X[type->breast, age->65, relation->2, gender->male].
-?X[risk->1] :- ?X[type->breast, age->65, relation->2, gender->female, children->true].
+?X[risk->2] :- ?X[type->breast, age->35, relation->2] @knowledgebase.
+?X[risk->2] :- ?X[type->breast, age->45, relation->2, gender->female, children->true] @knowledgebase.
 
-// Other
-?X[risk->2] :- ?X[type->other, age->45, relation->1].
-?X[risk->2] :- ?X[type->other, age->55, relation->1, smoking->false].
-?X[risk->2] :- ?X[type->other, age->55, relation->1, overweight->false].
-?X[risk->2] :- ?X[type->other, age->55, relation->1, drinking->false].
-?X[risk->2] :- ?X[type->other, age->65, relation->1, smoking->false, drinking->false, overweight->false].
+?X[risk->1] :- ?X[type->breast, age->55, relation->2] @knowledgebase.
+?X[risk->1] :- ?X[type->breast, age->65, relation->2, gender->female, children->true] @knowledgebase.
 
-?X[risk->2] :- ?X[type->other, age->30, relation->2].
-?X[risk->2] :- ?X[type->other, age->40, relation->2, smoking->false].
-?X[risk->2] :- ?X[type->other, age->40, relation->2, overweight->false].
-?X[risk->2] :- ?X[type->other, age->40, relation->2, drinking->false].
-?X[risk->2] :- ?X[type->other, age->50, relation->2, smoking->false, drinking->false, overweight->false].
-
-?X[risk->1] :- ?X[type->other, age->45, relation->2].
-?X[risk->1] :- ?X[type->other, age->55, relation->2, smoking->false].
-?X[risk->1] :- ?X[type->other, age->55, relation->2, overweight->false].
-?X[risk->1] :- ?X[type->other, age->55, relation->2, drinking->false].
-?X[risk->1] :- ?X[type->other, age->65, relation->2, smoking->false, drinking->false, overweight->false].
+// Colon
+?X[risk->2] :- ?X[type->colon, age->45, relation->1] @knowledgebase.
+?X[risk->2] :- ?X[type->colon, age->30, relation->2] @knowledgebase.
+?X[risk->1] :- ?X[type->colon, age->45, relation->2] @knowledgebase.
 
 goToDoctor(true) :- sum { ?Y | ?[risk->?Y]} >= 2.
 
-
-?- ?X[risk->?Y].
+//?- ?[danger->?Danger].
+//?- ?X[risk->?Y].
 ?- goToDoctor(?GTD).
