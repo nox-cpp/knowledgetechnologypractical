@@ -22,7 +22,7 @@ public class FloraController {
     /** The path here refers to the file location in the source files
      * Ideally, when we want to demo the program it is included with the rest of the files
      *  */
-    if(this.session.loadFile("src/flora/knowledgebase.flr", "knowledgebase"))
+    if(this.session.loadFile("src/flora/rules.flr", "rules"))
       System.out.println("Knowledgebase loaded successfully.");
     else
       System.out.println("Knowledgebase loading failed.");
@@ -55,13 +55,22 @@ public class FloraController {
     this.session.close();
   }
 
+  //queryModel, but returns a string instead of a Response.  
+  public String askQuery(String query) {
+   Iterator<FloraObject> response = session.ExecuteQuery(query + "@rules.");
+   String answervals = "";
+   if(response.hasNext())
+     answervals = response.next().toString();
+   while(response.hasNext())
+     answervals += ","+response.next().toString();
+   return answervals;
+  }
+  
   // Sends a given query to the model and returns it as a Response type
   public Response queryModel(String query) {
     // We add the module name here, to avoid redundancy
-    return new Response(this.session.executeQuery(query + "@knowledgebase."));
+    return new Response(this.session.executeQuery(query + "@rules."));
   }
-
-
 
   // Adds a frame (entity) to the knowledgebase with specified id and values for the fields
   // If the values list is too short, the missing values will default to void
