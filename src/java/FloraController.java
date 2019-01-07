@@ -14,6 +14,10 @@ public class FloraController {
     this.session = new FloraSession();
   }
 
+
+  public void show() {
+    this.session.showOutput();
+  }
   /**
    * Loads the default model (knowledgebase) from the flora folder.
    * It is loaded into a new module called `knowledgebase'
@@ -111,6 +115,12 @@ public class FloraController {
     return this.insertKnowledge(name + "[]");
   }
 
+  public Boolean removeFact(String name) {
+    if (name == "" | this.isEntity(name))
+      return false;
+    return this.deleteKnowledge(name + "[]");
+  }
+
   // NOTE: This does not delete the entity from the knowledgebase, only the facts attached to it.
   // Deleting names is currently impossible
   public Boolean deleteFact(String name) {
@@ -132,6 +142,10 @@ public class FloraController {
   // Adds a fact or rule into the knowledgebase
   private Boolean insertKnowledge(String knowledge) {
     return this.session.executeCommand("insert{" + knowledge + "}@knowledgebase.");
+  }
+
+  private Boolean deleteKnowledge(String knowledge) {
+    return this.session.executeCommand("delete{" + knowledge + "}@knowledgebase.");
   }
 
   // Returns all Instances of a class in a Response type

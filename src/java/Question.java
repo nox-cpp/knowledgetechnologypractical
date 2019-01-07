@@ -131,6 +131,20 @@ public class Question {
 		return this.answer;
 	}
 
+	public String getLatestAnswer(){
+		return this.answer.get(answer.size()-1);
+	}
+
+	public String getRecentAnswer(){
+		String recentAnswer = "";
+		for(KTPJComponent item : componentList){
+			if(item.getAnswer() != null){
+				recentAnswer = item.getAnswer();
+			}
+		}
+		return recentAnswer;
+	}
+
 	public JPanel getPanel() {
 		return panel;
 	}

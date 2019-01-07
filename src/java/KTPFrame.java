@@ -19,27 +19,28 @@ import javax.swing.*;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 
+import net.sf.flora2.API.*;
+import net.sf.flora2.API.util.*;
+
 public class KTPFrame extends JFrame {
 	public List<Question> questionsList;
 	public List<Question> answeredQuestions;
 	public int currentPanel;
 	private JScrollPane histScrollPane;
 	private JTextArea histTextArea;
-
+	private FloraController fc;
 	
 	 
 	/**
 	 * Constructor of ktpFrame. Sets the title and initializes fields.
 	 */
-	KTPFrame(List<Question> questionsList){
+	KTPFrame(List<Question> questionsList, FloraController fc){
 		super("Genetic disorder risk assesment");
 		this.questionsList = questionsList;
+		this.fc = fc;
 		answeredQuestions = new ArrayList<Question>();
-		
 		this.currentPanel = 0;
 		initGUI();
-		
-		
 	}
 	
 	/**
@@ -231,16 +232,27 @@ public class KTPFrame extends JFrame {
 	 * @param current
 	 */
 	public void sendQuestionData(int current){
-		//TODO update to flora
+		String s = "";
 		Question currentQ = this.questionsList.get(current);		// get current question
 		currentQ.setAnswers();										// set the answers of that question
 		this.answeredQuestions.add(currentQ);						// add answers to answer list
 		this.histTextArea.setText(this.currentHist());				// set the history text panel
 		JScrollBar vertical = this.histScrollPane.getVerticalScrollBar();
 		vertical.setValue( vertical.getMaximum() );					// scroll the pane down
-		
-		this.printAnswerList();										// print answers for debug
-		
+		// System.out.println(currentAnswer());
+		// System.out.println(currentKeyword());
+		if(currentKeyword().equals("ageSelf")){
+			s = "user[age->" + currentAnswer() + "]";
+			// System.out.println(s);
+			fc.addFact(s);
+			if(fc.askQuery("goToDoctor(?GTD)").equals("false")){
+				System.out.println("Don't go");
+			}
+			if(fc.askQuery("goToDoctor(?GTD)").equals("true")){
+				System.out.println("Go");
+			}
+		}
+//		this.printAnswerList();										// print answers for debug
 	}
 	
 	/**
@@ -249,7 +261,12 @@ public class KTPFrame extends JFrame {
 	 * Also removes the answers from the history panel.
 	 */
 	public void removeLastAnswer(){
-		//TODO update to flora
+		// System.out.println(currentAnswer());
+		String s ="s";
+		if(currentKeyword().equals("ageSelf")){
+			s = "user[age->" + currentAnswer() + "]";
+		}
+		fc.removeFact(s);
 		this.answeredQuestions.get(this.answeredQuestions.size() -1).resetAnswers();
 		this.answeredQuestions.remove(this.answeredQuestions.size() -1);
 		this.histTextArea.setText(this.currentHist());
@@ -262,7 +279,8 @@ public class KTPFrame extends JFrame {
 	
 	/**
 	 * Checks the input bounds of the current panel before sending the data to the controller.
-	 * True is returned when a component has a legal value. 
+	 * True is returned when a co	at src.java.KTPFrame$1.actionPerformed(KTPFrame.java:301)
+mponent has a legal value. 
 	 * @param current The current panel
 	 * @return Whether the inputs are within bounds.
 	 */
@@ -359,6 +377,24 @@ public class KTPFrame extends JFrame {
 	 * This string shows all the currently given answers.
 	 * @return
 	 */
+	public String currentAnswer(){
+		String s = "";
+		
+		for (Question q : this.answeredQuestions){
+			s = q.getLatestAnswer();			
+		}
+		return s;
+	}
+
+	public String currentKeyword(){
+		String s = "";
+		
+		for (Question q : this.answeredQuestions){
+			s = q.getKeyword();			
+		}
+		return s;
+	}
+
 	public String currentHist(){
 		String s = "";
 		
@@ -370,7 +406,7 @@ public class KTPFrame extends JFrame {
 		}
 		return s;
 	}
-	
+
 	/**
 	 * Helper function to print the current list of given answers. Used for debug.
 	 */

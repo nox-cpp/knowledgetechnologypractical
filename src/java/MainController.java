@@ -29,16 +29,18 @@ public class MainController{
 				
 			FloraController floraController = new FloraController();
 			System.out.println("Flora-2 session started");
+			floraController.show();
 			floraController.loadModel();							// Load the knowledgebase into the Flora session
-			floraController.addFact("user[age->70]");
+			// floraController.insertKnowledge("user[age->70]");
 			if(floraController.askQuery("goToDoctor(?GTD)").equals("false")){
 				System.out.println("Too old");
 			};
-			KTPFrame frame = new KTPFrame(readQuestionsXML());		// Create a frame for the program
+			KTPFrame frame = new KTPFrame(readQuestionsXML(), floraController);		// Create a frame for the program
 			System.out.println("Made a Frame");
 			
-			floraController.closeSession();							// close session
+			// floraController.closeSession();							// close session
 		}
+
 	
 	
 
