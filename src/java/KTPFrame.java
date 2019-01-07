@@ -212,10 +212,6 @@ public class KTPFrame extends JFrame {
 		this.invalidate();
 		this.validate();
 		this.repaint();
-		// TODO REMOVE THIS!!
-		// DEBUG
-		this.showResult(true);
-		
 	}
 	
 	
