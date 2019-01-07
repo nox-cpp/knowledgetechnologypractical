@@ -30,7 +30,7 @@ https://www.tutorialspoint.com/online_xml_editor.htm
     <question inputtype = "radiobutton">
         <keyword>ageCancer25</keyword>
         <type>cancer</type>
-        <question>Were any of your first or second degree family members diagnosed with cancer when they were less than 25 years old?</question>
+        <question>Were any of your first or second degree relatives diagnosed with cancer when they were less than 25 years old?</question>
         <radiobutton selected="false">Yes</radiobutton>
         <radiobutton selected="true">No</radiobutton>
     </question>
@@ -42,60 +42,88 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <radiobutton selected="true">No</radiobutton>
     </question>
     <question inputtype = "spinner">
-        <keyword>ageBreast401</keyword>
+        <keyword>ageBreast40</keyword>
         <type>Breastcancer</type>
         <question>How many of your 1st degree relatives with breast cancer were between 25 and 40 years old when they were diagnosed?</question>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
-        <keyword>ageBreast402</keyword>
-        <type>Breastcancer</type>
-        <question>How many of your 2nd degree relatives with breast cancer were between 25 and 40 years old when they were diagnosed?</question>
+        <keyword>ageBreast50</keyword>
+        <type>Breastcancer</type>        
+        <question>How many of your 1st degree relatives relatives with breast cancer were between 40 and 50 years old when they were diagnosed?</question>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
-        <keyword>ageBreast501</keyword>
-        <type>Breastcancer</type>        
-        <question>How many of your 1st degree relatives family members with breast cancer were between 40 and 50 years old when they were diagnosed?</question>
-        <spinner>0,0,120,1</spinner>
-    </question>
-    <question inputtype = "spinner">
-        <keyword>ageBreast502</keyword>
-        <type>Breastcancer</type>        
-        <question>How many of your 2nd degree relatives family members with breast cancer were between 40 and 50 years old when they were diagnosed?</question>
+        <keyword>restBreast</keyword>
+        <type>Breastcancer</type> 
+        <question>How many of your relatives have had breast cancer in total?</question>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageColon501</keyword>
         <type>Coloncancer</type>
-        <question>How many of your 1st degree family members with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
+        <question>How many of your 1st degree relatives with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageColon502</keyword>
         <type>Coloncancer</type>
-        <question>How many of your 2nd degree family members with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
+        <question>How many of your 2nd degree relatives with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageColon701</keyword>
         <type>Coloncancer</type>
-        <question>How many of your 1st degree family members with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
+        <question>How many of your 1st degree relatives with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageColon702</keyword>
         <type>Coloncancer</type>
-        <question>How many of your 2nd degree family members with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
+        <question>How many of your 2nd degree relatives with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
         <spinner>0,0,120,1</spinner>
     </question>
-    <!--     <question inputtype = "spinner">
-        <keyword>numberFamilyH</keyword>
-        <question>How many family members have a disability?</question>
+        <question inputtype = "spinner">
+        <keyword>ageColon80</keyword>
+        <type>Coloncancer</type>
+        <question>How many of your 1st degree relatives with colon cancer were between 70 and 80 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "radiobutton">
+        <keyword>ageHeart45</keyword>
+        <type>Heart_and_vasculair_disease</type>
+        <question>Did any of your 1st degree relatives die from a heart or vascular disease while he/she younger than 45?</question>
+        <radiobutton selected="false">Yes</radiobutton>
+        <radiobutton selected="true">No</radiobutton>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageHeart50</keyword>
+        <type>Heart_and_vasculair_disease</type>
+        <question>How many of your 1st degree relatives died from a heart or vascular disease while they were between 45 and 50 years old?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageHeart55</keyword>
+        <type>Heart_and_vasculair_disease</type>
+        <question>How many of your 1st or 2nd degree relatives died from a heart or vascular disease while they were younger than 55?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "radiobutton">
+        <keyword>disability1</keyword>
+        <type>Mental_disability</type>
+        <question>Do any of your 1st degree relatives have a disability?</question>
+        <extra>Examples include down syndrome and Fragile X syndrome</extra>
+        <radiobutton selected="false">Yes</radiobutton>
+        <radiobutton selected="true">No</radiobutton>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>disability2</keyword>
+        <type>Mental_disability</type>
+        <question>How many of your 2nd degree relatives have a disability?</question>
         <extra>Examples include down syndrome and Fragile X syndrome</extra>
         <spinner>0,0,10,1</spinner>
     </question>
- -->
+
 
 
 <!--     <question inputtype = "radiobutton">

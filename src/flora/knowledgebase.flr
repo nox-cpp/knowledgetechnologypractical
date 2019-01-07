@@ -4,16 +4,35 @@ goToDoctor(false) :- user[age->70].
 ?X[risk->2] :- ?X[age->25, \+type->child].
 
 // Breast
-?X[risk->2] :- ?X[type->breast, gender->male].
-?X[risk->2] :- ?X[type->breast, age->40, relation->1].
-?X[risk->1] :- ?X[type->breast, age->50, relation->1].
-?X[risk->0.5] :- ?X[type->breast].
+?X[breast_cancer_risk->2] :- ?X[type->breast, gender->male].
+?X[breast_cancer_risk->2] :- ?X[type->breast, age->40, relation->1].
+?X[breast_cancer_risk->1] :- ?X[type->breast, age->50, relation->1].
+?X[secondary_breast_cancer_risk->1] :- ?X[type->breast].
 
 // Colon
-?X[risk->2] :- ?X[type->colon, age->50, relation->1].
-?X[risk->1] :- ?X[type->colon, age->70, relation->1].
-?X[risk->1] :- ?X[type->colon, age->70, relation->2].
+?X[colon_cancer_risk->2] :- ?X[type->colon, age->50, relation->1].
+?X[colon_cancer_risk->1] :- ?X[type->colon, age->70, relation->1].
+?X[colon_cancer_risk->1] :- ?X[type->colon, age->80, relation->1].
+?X[secondary_colon_cancer_risk->1] :- ?X[type->colon, age->50, relation->2].
+?X[secondary_colon_cancer_risk->1] :- ?X[type->colon, age->70, relation->2].
 
+//Heart and vascular
+?X[heart_risk->2] :- ?X[type->heart_and_vasculair, age->45, relation->1].
+?X[heart_risk->1] :- ?X[type->heart_and_vasculair, age->50, relation->1].
+?X[secondary_heart_risk->1] :- ?X[type->heart_and_vasculair, age->55].
+
+//Mental Disability
+?X[mental_risk->2] :- ?X[type->mental_disability, relation->1].
+?X[mental_risk->1] :- ?X[type->mental_disability, relation->2].
+
+
+goToDoctor(true) :- sum { ?Y | ?[breast_cancer_risk->?Y]} >= 2.
+goToDoctor(true) :- sum { ?Y | ?[breast_cancer_risk->?Y]} >= 1, sum { ?X | ?[secondary_breast_cancer_risk->?X]} >= 2. 
+goToDoctor(true) :- sum { ?Y | ?[colon_cancer_risk->?Y]} >= 2.
+goToDoctor(true) :- sum { ?Y | ?[colon_cancer_risk->?Y]} >= 1, sum { ?X | ?[secondary_colon_cancer_risk->?X]} >= 1. 
+goToDoctor(true) :- sum { ?Y | ?[heart_risk->?Y]} >= 2.
+goToDoctor(true) :- sum { ?Y | ?[heart_risk->?Y]} >= 1, sum { ?X | ?[secondary_heart_risk->?X]} >= 1. 
+goToDoctor(true) :- sum { ?Y | ?[mental_risk->?Y]} >= 2.
 goToDoctor(true) :- sum { ?Y | ?[risk->?Y]} >= 2.
 
 //?- ?[danger->?Danger].

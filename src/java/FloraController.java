@@ -118,7 +118,7 @@ public class FloraController {
   public Boolean removeFact(String name) {
     if (name == "" | this.isEntity(name))
       return false;
-    return this.deleteKnowledge(name + "[]");
+    return this.deleteKnowledge(name);
   }
 
   // NOTE: This does not delete the entity from the knowledgebase, only the facts attached to it.

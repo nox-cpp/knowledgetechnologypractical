@@ -29,6 +29,10 @@ public class KTPFrame extends JFrame {
 	private JScrollPane histScrollPane;
 	private JTextArea histTextArea;
 	private FloraController fc;
+	private int familyMember;
+	private boolean previous;
+	private List<Question> originalQuestionsList;
+
 	
 	 
 	/**
@@ -37,9 +41,13 @@ public class KTPFrame extends JFrame {
 	KTPFrame(List<Question> questionsList, FloraController fc){
 		super("Genetic disorder referal assesment");
 		this.questionsList = questionsList;
+    this.originalQuestionsList = new ArrayList<Question>();
+		this.originalQuestionsList.addAll(questionsList);
 		this.fc = fc;
 		answeredQuestions = new ArrayList<Question>();
 		this.currentPanel = 0;
+		this.familyMember = 0;
+		this.previous = false;
 		initGUI();
 	}
 	
@@ -105,10 +113,6 @@ public class KTPFrame extends JFrame {
 	    this.pack();												// size frame
 	    this.setLocationByPlatform(true);							// set the frame in the middle of the screen
 	    this.setVisible(true);										// show the frame
-	    
-	    
-	    
-	    
 	}
 	
 	
@@ -172,9 +176,11 @@ public class KTPFrame extends JFrame {
 	    		getContentPane().removeAll();			//remove all components
 	    		answeredQuestions.clear();				//remove all answers
 	    		currentPanel = 0;						//reset currenPanel counter
+	    		fc.loadModel();
+					questionsList.clear();
+					questionsList.addAll(originalQuestionsList);
 	    		setTitle("Genetic disorder risk assesment");	// reset the title of the frame
 	    		initGUI();								// re-init GUI
-	    		// TODO reset kb flora
 	    	}
 	    });
 	    
@@ -217,9 +223,6 @@ public class KTPFrame extends JFrame {
 	
 	
 	
-	
-	
-	
 	/**
 	 * Shows the previous panel in the question list.
 	 * Beware, checks if this is possible must be done before!
@@ -241,17 +244,13 @@ public class KTPFrame extends JFrame {
 		
 	}
 	
-	
-
-	
-	
 	/**
 	 * Adds the new data from the panel to the answered questions.
 	 * Also adds this to the history panel.
 	 * @param current
 	 */
 	public boolean sendQuestionData(int current){
-		String s = "";
+		previous = false;
 		Question currentQ = this.questionsList.get(current);		// get current question
 		currentQ.setAnswers();										// set the answers of that question
 		this.answeredQuestions.add(currentQ);						// add answers to answer list
@@ -260,12 +259,12 @@ public class KTPFrame extends JFrame {
 		vertical.setValue( vertical.getMaximum() );					// scroll the pane down
 		transformKeyword(currentKeyword());
 		updateQuestions();
-		if(fc.askQuery("goToDoctor(?GTD)").equals("false")){
-			showResult(false);
-			return true;
-		}
 		if(fc.askQuery("goToDoctor(?GTD)").equals("true")){
 			showResult(true);
+			return true;
+		}
+		if(fc.askQuery("goToDoctor(?GTD)").equals("false") || questionsList.size()==answeredQuestions.size()){
+			showResult(false);
 			return true;
 		}
 //		this.printAnswerList();										// print answers for debug
@@ -275,32 +274,45 @@ public class KTPFrame extends JFrame {
 
 	private void transformKeyword(String keyword){
 		switch (keyword){
-			case "ageSelf": fc.addFact("user[age->" + currentAnswer() + "]");
-			break;
-			case "ageCancer25": ifKnowledge("1[age->25]");
-			break;
-			case "ageBreast401": loopKnowledge(40, "breast", 1);
-			break;
-			case "ageBreast402": loopKnowledge(40, "breast", 2);
-			break;
-			case "ageBreast501": loopKnowledge(50, "breast", 1);
-			break;
-			case "ageBreast502": loopKnowledge(50, "breast", 2);
-			break;
-			case "ageColon501": loopKnowledge(50, "colon", 1);
-			break;
-			case "ageColon502": loopKnowledge(50, "colon", 2);
-			break;
-			case "ageColon701": loopKnowledge(70, "colon", 1);
-			break;
-			case "ageColon702": loopKnowledge(70, "colon", 2);
-			break;
-			case "genderBreast": ifKnowledge("1[gender->male, type->breast]");
-			break;
+			case "ageSelf": 
+				if(Integer.parseInt(currentAnswer())>70){
+					fc.addFact("user[age->70]");
+				}
+				break;
 			case "diseaseType": addType("Cancer" ,"Heart_and_vasculair_disease" ,"Mental_disability");
-			break;
+				break;
 			case "cancerType": addType("Breastcancer", "Coloncancer", "Other_types_of_cancer");
-			break;
+				break;
+			case "ageCancer25": ifKnowledge("[age->25]");
+				break;
+			case "genderBreast": ifKnowledge("[gender->male, type->breast]");
+				break;
+			case "ageBreast40": loopKnowledge(40, "breast", 1);
+				break;
+			case "ageBreast50": loopKnowledge(50, "breast", 1);
+				break;
+			case "restBreast": loopKnowledge("breast");
+				break;
+			case "ageColon501": loopKnowledge(50, "colon", 1);
+				break;
+			case "ageColon502": loopKnowledge(50, "colon", 2);
+				break;
+			case "ageColon701": loopKnowledge(70, "colon", 1);
+				break;
+			case "ageColon702": loopKnowledge(70, "colon", 2);
+				break;
+			case "ageColon80": loopKnowledge(80, "colon", 1);
+				break;
+			case "ageHeart45": ifKnowledge("[age->45, type->heart_and_vasculair], relation->1");
+				break;
+			case "ageHeart50": loopKnowledge(50, "heart_and_vasculair", 1);
+				break;
+			case "ageHeart55": loopKnowledge(55, "heart_and_vasculair");
+				break;
+			case "disability1": ifKnowledge("[type->mental_disability, relation->1]");
+				break;
+			case "disability2": loopKnowledge("mental_disability", 2);
+				break;
 		}
 	}
 
@@ -309,6 +321,14 @@ public class KTPFrame extends JFrame {
   		for (Iterator<Question> iter = questionsList.listIterator(); iter.hasNext(); ) {
     		Question q = iter.next();
     		if (q.getType().equals("cancer") || q.getType().equals("Breastcancer") || q.getType().equals("Coloncancer")){
+    	    iter.remove();
+    		}
+  		}
+  	}
+  	if(fc.askQuery("Heart_and_vasculair_disease(?C)").equals("false")){
+  		for (Iterator<Question> iter = questionsList.listIterator(); iter.hasNext(); ) {
+    		Question q = iter.next();
+    		if (q.getType().equals("Heart_and_vasculair_disease")){
     	    iter.remove();
     		}
   		}
@@ -329,40 +349,127 @@ public class KTPFrame extends JFrame {
     		}
   		}
  		}
+  	if(fc.askQuery("Mental_disability(?C)").equals("false")){
+  		for (Iterator<Question> iter = questionsList.listIterator(); iter.hasNext(); ) {
+    		Question q = iter.next();
+    		if (q.getType().equals("Mental_disability")){
+    	    iter.remove();
+    		}
+  		}
+ 		}
 	}
 
 	private void addType(String opt1, String opt2, String opt3){
 		int x=0;
 		List<String> results = recentAnswer();
-		while(results.size()>x){
-			fc.addFact(results.get(results.size()-1-x) +"(true)");
-			System.out.println(results.get(results.size()-1-x) +"(true)");
-			x++;
-		}
-	 	if(!fc.askQuery(opt1+"(?C)").equals("true")){
-	 		fc.addFact(opt1 + "(false)");
-	 		System.out.println(opt1 + "(false)");
-		}
-		if(!fc.askQuery(opt2+"(?C)").equals("true")){
-	 		fc.addFact(opt2 + "(false)");
-	 		System.out.println(opt2 + "(false)");
-		}
-		if(!fc.askQuery(opt3+"(?C)").equals("true")){
-	 		fc.addFact(opt3 + "(false)");
-	 		System.out.println(opt3 + "(false)");
-		}
+		if(previous==false){
+			while(results.size()>x){
+				fc.addFact(results.get(results.size()-1-x) +"(true)");
+				System.out.println(results.get(results.size()-1-x) +"(true)");
+				x++;
+			}
+		 	if(!fc.askQuery(opt1+"(?C)").equals("true")){
+		 		fc.addFact(opt1 + "(false)");
+		 		System.out.println(opt1 + "(false)");
+			}
+			if(!fc.askQuery(opt2+"(?C)").equals("true")){
+		 		fc.addFact(opt2 + "(false)");
+		 		System.out.println(opt2 + "(false)");
+			}
+			if(!fc.askQuery(opt3+"(?C)").equals("true")){
+		 		fc.addFact(opt3 + "(false)");
+		 		System.out.println(opt3 + "(false)");
+			}
+		} else {
+			 	if(fc.askQuery(opt1+"(?C)").equals("true")){
+					fc.removeFact(opt1 + "(true)");
+		 			System.out.println(opt1 + "(true)");
+				} else {
+					fc.removeFact(opt1 + "(false)");
+			 		System.out.println(opt3 + "(false)");
+				}
+			 	if(fc.askQuery(opt2 + "(?C)").equals("true")){
+					fc.removeFact(opt2 + "(true)");
+		 			System.out.println(opt2 + "(true)");
+				} else {
+					fc.removeFact(opt2 + "(false)");
+		 			System.out.println(opt2 + "(false)");
+				}
+			 	if(fc.askQuery(opt3 + "(?C)").equals("true")){
+					fc.removeFact(opt3 + "(true)");
+		 			System.out.println(opt3 + "(true)");
+
+				} else {
+					fc.removeFact(opt3 + "(false)");
+		 			System.out.println(opt3 + "(false)");
+				}
+				questionsList.clear();
+				questionsList.addAll(originalQuestionsList);
+			}
 	}
 	
 	private void loopKnowledge(int age, String type, int relationship){
 		int total=Integer.parseInt(currentAnswer());
 		for(int x=0; x<total; x++){
-			fc.addFact(x+"[age->" + age + ", type->" + type +",relation->" + relationship + "]");
+			if(previous==false){
+				fc.addFact(familyMember +"[age->" + age + ", type->" + type +",relation->" + relationship + "]");
+				familyMember++;
+			} else {
+				familyMember--;					
+				fc.removeFact(familyMember +"[age->" + age + ", type->" + type +",relation->" + relationship + "]");
+			}
+		}
+	}
+
+	private void loopKnowledge(int age, String type){
+		int total=Integer.parseInt(currentAnswer());
+		for(int x=0; x<total; x++){
+			if(previous==false){
+				fc.addFact(familyMember +"[age->" + age + ", type->" + type + "]");
+				familyMember++;
+			} else {
+				familyMember--;					
+				fc.removeFact(familyMember +"[age->" + age + ", type->" + type + "]");
+			}
+		}
+	}
+
+
+	private void loopKnowledge(String type, int relationship){
+		int total=Integer.parseInt(currentAnswer());
+		for(int x=0; x<total; x++){
+			if(previous==false){
+				fc.addFact(familyMember +"[type->" + type +",relation->" + relationship + "]");
+				familyMember++;
+			} else {
+				familyMember--;					
+				fc.removeFact(familyMember +"[type->" + type +",relation->" + relationship + "]");
+			}
+		}
+	}
+
+	private void loopKnowledge(String type){
+		int total=Integer.parseInt(currentAnswer());
+		for(int x=0; x<total; x++){
+			if(previous==false){
+				fc.addFact(familyMember +"[type->" + type + "]");
+				familyMember++;
+			} else {
+				familyMember--;					
+				fc.removeFact(familyMember +"[type->" + type + "]");
+			}
 		}
 	}
 
 	private void ifKnowledge(String yes){
 		if(currentAnswer().equals("Yes")){
-			fc.addFact(yes);
+			if(previous==false){
+				fc.addFact(familyMember + "" + yes);
+				familyMember++;
+			} else {
+				familyMember--;
+				fc.removeFact(familyMember + "" + yes);
+			}
 		}
 	}
 	/**
@@ -371,12 +478,15 @@ public class KTPFrame extends JFrame {
 	 * Also removes the answers from the history panel.
 	 */
 	public void removeLastAnswer(){
-		// System.out.println(currentAnswer());
-		String s ="s";
-		if(currentKeyword().equals("ageSelf")){
-			s = "user[age->" + currentAnswer() + "]";
-		}
-		fc.removeFact(s);
+		previous=true;
+		transformKeyword(currentKeyword());
+		updateQuestions();
+		// // System.out.println(currentAnswer());
+		// String s ="s";
+		// if(currentKeyword().equals("ageSelf")){
+		// 	s = "user[age->" + currentAnswer() + "]";
+		// }
+		// fc.removeFact(s);
 		this.answeredQuestions.get(this.answeredQuestions.size() -1).resetAnswers();
 		this.answeredQuestions.remove(this.answeredQuestions.size() -1);
 		this.histTextArea.setText(this.currentHist());
@@ -420,9 +530,9 @@ mponent has a legal value.
 	    		
 	    		if(currentPanel + 1 < questionsList.size()){	// check if there is a next panel
 	    			if(checkInputBounds(currentPanel)){		// check if the input is within bounds
-	    				if(!sendQuestionData(currentPanel)){
+ 							if(!sendQuestionData(currentPanel)){
 	    				showNextPanel();
-	    			}
+	    				}
 	    			}
 	    			else{
 	    				// The input is not within bounds
@@ -432,7 +542,9 @@ mponent has a legal value.
 	    					    JOptionPane.WARNING_MESSAGE);
 	    			}
 	    		}else{
-	    			System.out.println("No next panel");
+						if(!sendQuestionData(currentPanel)){
+		    			showResult(false);
+		    		}
 	    		}
 	    	}
 	    });
@@ -450,8 +562,8 @@ mponent has a legal value.
 	    {
 	    	  public void actionPerformed(ActionEvent e){
 	    		  if(currentPanel - 1 >= 0 ){		// check if there is a previous panel
-	    			  removeLastAnswer();			// remove answer from the answerList
 	    			  showPrevPanel();				// show previous panel
+	    			  removeLastAnswer();			// remove answer from the answerList
 	    		  }else{
 	    			  System.out.println("No previous panel");
 	    		  }
