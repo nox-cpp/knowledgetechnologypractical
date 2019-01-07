@@ -112,7 +112,7 @@ public class FloraController {
   public Boolean addFact(String name) {
     if (name == "" | this.isEntity(name))
       return false;
-    return this.insertKnowledge(name + "[]");
+    return this.insertKnowledge(name);
   }
 
   public Boolean removeFact(String name) {

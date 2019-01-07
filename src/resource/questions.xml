@@ -3,7 +3,12 @@
 https://www.tutorialspoint.com/online_xml_editor.htm
 -->
 <questionList>
-	<question inputtype = "checkbox">
+    <question inputtype = "spinner">
+        <keyword>ageSelf</keyword>
+        <question>What is your age?</question>
+        <spinner>18,18,120,1</spinner>
+    </question>
+<!--     <question inputtype = "checkbox">
         <keyword>diseaseType</keyword>
         <question>Which type of diseas(es) run in your family?</question>
         <extra>Your family is your biological family, like parents, siblings, children and grandparents.</extra>
@@ -11,22 +16,80 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <checkbox>Heart and vasculair disease</checkbox>
         <checkbox>Mental disability</checkbox>
     </question>
+    <question inputtype = "checkbox">
+        <keyword>cancerType</keyword>
+        <question>Which types of cancer run in your family?</question>
+        <extra>Your family is your biological family, like parents, siblings, children and grandparents.</extra>
+        <checkbox>Breast cancer</checkbox>
+        <checkbox>Colon cancer</checkbox>
+        <checkbox>Other types of cancer</checkbox>
+    </question>
+ -->        <question inputtype = "spinner">
+        <keyword>ageCancer25</keyword>
+        <question>Were any of your first or second degree family members diagnosed with cancer when they were less than 25 years old?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "radiobutton">
+        <keyword>genderBreast</keyword>
+        <question>Was any of your relatives diagnosed with breast cancer a male?</question>
+        <radiobutton selected="false">Yes</radiobutton>
+        <radiobutton selected="true">No</radiobutton>
+    </question>
     <question inputtype = "spinner">
+        <keyword>ageBreast401</keyword>
+        <question>How many of your 1st degree relatives with breast cancer were between 25 and 40 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageBreast402</keyword>
+        <question>How many of your 2nd degree relatives with breast cancer were between 25 and 40 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageBreast501</keyword>
+        <question>How many of your 1st degree relatives family members with breast cancer were between 40 and 50 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageBreast502</keyword>
+        <question>How many of your 2nd degree relatives family members with breast cancer were between 40 and 50 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageColon501</keyword>
+        <question>How many of your 1st degree family members with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageColon502</keyword>
+        <question>How many of your 2nd degree family members with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageColon701</keyword>
+        <question>How many of your 1st degree family members with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <question inputtype = "spinner">
+        <keyword>ageColon702</keyword>
+        <question>How many of your 2nd degree family members with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
+        <spinner>0,0,120,1</spinner>
+    </question>
+    <!--     <question inputtype = "spinner">
         <keyword>numberFamilyH</keyword>
         <question>How many family members have a disability?</question>
         <extra>Examples include down syndrome and Fragile X syndrome</extra>
         <spinner>0,0,10,1</spinner>
     </question>
-    <question inputtype = "spinner">
-        <keyword>ageSelf</keyword>
-        <question>What is your age?</question>
-        <spinner>18,18,120,1</spinner>
-    </question>
-    <question inputtype = "radiobutton">
+ -->
+
+
+<!--     <question inputtype = "radiobutton">
         <keyword>genderSelf</keyword>
         <question>What is your gender?</question>
         <radiobutton selected="true">Man</radiobutton>
         <radiobutton selected="false">Woman</radiobutton>
-    </question>
+    </question> -->
+
     
 </questionList>

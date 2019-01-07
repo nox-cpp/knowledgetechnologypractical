@@ -29,7 +29,7 @@ public class MainController{
 				
 			FloraController floraController = new FloraController();
 			System.out.println("Flora-2 session started");
-			floraController.show();
+			// floraController.show();
 			floraController.loadModel();							// Load the knowledgebase into the Flora session
 			// floraController.insertKnowledge("user[age->70]");
 			if(floraController.askQuery("goToDoctor(?GTD)").equals("false")){

@@ -241,20 +241,52 @@ public class KTPFrame extends JFrame {
 		vertical.setValue( vertical.getMaximum() );					// scroll the pane down
 		// System.out.println(currentAnswer());
 		// System.out.println(currentKeyword());
-		if(currentKeyword().equals("ageSelf")){
-			s = "user[age->" + currentAnswer() + "]";
+		// fc.addFact(transformKeyword(currentKeyword()));
+		transformKeyword(currentKeyword());
+		// if(currentKeyword().equals("ageSelf")){
+			// s = "user[age->" + currentAnswer() + "]";
 			// System.out.println(s);
-			fc.addFact(s);
-			if(fc.askQuery("goToDoctor(?GTD)").equals("false")){
-				System.out.println("Don't go");
-			}
-			if(fc.askQuery("goToDoctor(?GTD)").equals("true")){
-				System.out.println("Go");
-			}
+			// fc.addFact(s);
+		if(fc.askQuery("goToDoctor(?GTD)").equals("false")){
+			System.out.println("Don't go");
 		}
+		if(fc.askQuery("goToDoctor(?GTD)").equals("true")){
+			showResult();
+		}
+		// }
 //		this.printAnswerList();										// print answers for debug
 	}
-	
+
+	private void transformKeyword(String keyword){
+		switch (keyword){
+			case "ageSelf": fc.addFact("user[age->" + currentAnswer() + "]");
+			case "ageCancer25": loopRelatives(25, "cancer");
+			case "ageCancer25": loopRelatives(25, "cancer");
+			case "ageBreast40": loopRelatives(40, "breast");
+			case "ageBreast50": loopRelatives(50, "breast");
+			case "ageColon50": loopRelatives(50, "colon");
+			case "ageColon70": loopRelatives(70, "colon");
+			case "ageBreast40": loopRelatives(40, "breast");
+			case "ageBreast50": loopRelatives(50, "breast");
+			case "ageColon50": loopRelatives(50, "colon");
+			case "ageColon70": loopRelatives(70, "colon");
+			case "genderBreast": if(currentAnswer().equals("Yes")){
+				fc.addFact("1[gender->male, type->breast]");
+				System.out.println("male");
+			} else {
+				fc.addFact("1[gender->female, type->breast]");
+			}
+			case "diseaseType": fc.addFact("General[type->" +currentAnswer() +"]");
+			case "cancerType": fc.addFact("General[cancerType->" +currentAnswer() +"]");
+		}
+	}
+
+	private void loopRelatives(int age, String type){
+		int total=Integer.parseInt(currentAnswer());
+		for(int x=0; x<total; x++){
+			fc.addFact(x+"[age->" + age + ", type->" + type + "]");
+		}
+	}
 	/**
 	 * Removes the last answer from the answered questions
 	 * and removes the answer from the question object.
