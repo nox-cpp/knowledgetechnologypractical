@@ -35,7 +35,7 @@ public class KTPFrame extends JFrame {
 	 * Constructor of ktpFrame. Sets the title and initializes fields.
 	 */
 	KTPFrame(List<Question> questionsList, FloraController fc){
-		super("Genetic disorder risk assesment");
+		super("Genetic disorder referal assesment");
 		this.questionsList = questionsList;
 		this.fc = fc;
 		answeredQuestions = new ArrayList<Question>();
@@ -52,7 +52,7 @@ public class KTPFrame extends JFrame {
 		// Show warning
 		JOptionPane.showMessageDialog(this,
 			    "This application is made by students for a course as an exercise in Knowledge systems.\n" +
-			    "Medical professionals where consulted during the making of this application,\n" +
+			    "Medical professionals were consulted during the making of this application,\n" +
 			    "however any advice should be treated as given by some AI students (which it is).",
 			    "Risk warning",
 			    JOptionPane.WARNING_MESSAGE);
@@ -101,79 +101,93 @@ public class KTPFrame extends JFrame {
 
 	    
 	    
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    //this.setSize(1000, 500);
-	    this.setLocation(200, 200);
-	    this.pack();
-	    this.setVisible(true);
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		// exit application on closing
+	    this.pack();												// size frame
+	    this.setLocationByPlatform(true);							// set the frame in the middle of the screen
+	    this.setVisible(true);										// show the frame
 	    
 	    
 	    
 	    
 	}
-	
-	
-	
 	
 	
 	/**
-	 * @deprecated
-	 * Adds all the questions for the model to the panels and add those to the panel list.
-	 * This function is now replaced by readQuestionsXML() in Main Controller.java
+	 * Shows the result in the interface.
+	 * @param result Whether to go to the doctor
 	 */
-	private void readQuestions(){
-		// first example question
-		List<KTPJComponent> lst = new ArrayList<KTPJComponent>();
-		SpinnerModel model = new SpinnerNumberModel(18, 18, 120, 1);     
-		KTPJSpinner spinner = new KTPJSpinner(model);
-		lst.add(spinner);
-		Question firstq = new Question("age", "What is your age?", "" ,lst);
-	    
-	    
-	    
-	    //second example question
-	    List<KTPJComponent> lst2 = new ArrayList<KTPJComponent>();
-	    KTPJRadioButton man = new KTPJRadioButton("Man");
-	    man.setSelected(true);
-	    KTPJRadioButton woman = new KTPJRadioButton("Woman");
-	    ButtonGroup group = new ButtonGroup();
-	    group.add(man);
-	    group.add(woman);
-		lst2.add(man);
-		lst2.add(woman);
-		Question secondq = new Question("gender","What is your gender?", "", lst2);
-	    
-	    
-	    //fourth example question
-	    List<KTPJComponent> lst4 = new ArrayList<KTPJComponent>();
-	    KTPJCheckBox cancer = new KTPJCheckBox("Cancer");
-	    KTPJCheckBox heart = new KTPJCheckBox("Heart and vascular disease");
-	    KTPJCheckBox mental = new KTPJCheckBox("Mental illness");
-		lst4.add(cancer);
-		lst4.add(heart);
-		lst4.add(mental);
-		Question fourthq = new Question("type", "Which type of disease?", "blah blah blah" , lst4);
-	    
-	    
-	    //third example question
-	    List<KTPJComponent> lst3 = new ArrayList<KTPJComponent>();
-	    KTPJRadioButton yes = new KTPJRadioButton("Yes");
-	    KTPJRadioButton no = new KTPJRadioButton("No");
-	    ButtonGroup group2 = new ButtonGroup();
-	    group2.add(yes);
-	    group2.add(no);
-		lst3.add(yes);
-		lst3.add(no);
-		Question thirdq = new Question("family", "Do you have disease in the family?", "Diseases include: cancer blah" , lst3);
+	public void showResult(boolean result){
 		
-		//add the questions to the list
-		this.questionsList.add(firstq);
-		this.questionsList.add(secondq);
-		this.questionsList.add(fourthq);
-		this.questionsList.add(thirdq);
+		this.setTitle("Result of test");
+		this.getContentPane().removeAll();			//remove all components
+		
+		JPanel containerPanel = new JPanel();
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		containerPanel.setLayout(layout);
 
 		
+		// Label with result
+		String text;
+		if(result)
+			text = "Based on the answers you have given we advise you to seek contact with your doctor.\n" +
+					"Tell him you did this test and ask if he can refer you to a clinical geneticist.\n" +
+					"Please keep in mind this is not the advice of a professional and should be taken\n" +
+					"with a grain of salt.";
+		else
+			text = 	"Base on the answers you have given we have not found sufficient evidence to suggest you\n" +
+					"need to seek professional help.\n" +
+					"Please keep in mind this is not the advice of a professional and should be taken\n" +
+					"with a grain of salt.";
+		JTextArea textLabel = new JTextArea(text);
+		c.gridx = 0;
+	    c.gridy = 0;
+	    c.gridwidth = GridBagConstraints.REMAINDER;				// last component in this row
+	    containerPanel.add(textLabel, c);
+	    
+	    
+	  //button to exit the program
+	    JButton exitButton = new JButton("Exit");
+	    
+	    c.gridx = 1;
+	    c.gridy = 1;
+	    c.gridwidth = GridBagConstraints.REMAINDER;
+	    containerPanel.add(exitButton, c);
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	System.err.println("Goodbye!");
+                System.exit(0);
+            }
+        });
+	    
+	    //button to go back to the beginning
+	    JButton startOverButton = new JButton("Start over");
+	    c.gridx = 0;
+	    c.gridy = 1;
+	    c.gridwidth = 1;
+	    c.anchor = GridBagConstraints.LINE_END;
+	    containerPanel.add(startOverButton, c);
+	    startOverButton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		getContentPane().removeAll();			//remove all components
+	    		answeredQuestions.clear();				//remove all answers
+	    		currentPanel = 0;						//reset currenPanel counter
+	    		setTitle("Genetic disorder risk assesment");	// reset the title of the frame
+	    		initGUI();								// re-init GUI
+	    	}
+	    });
+	    
+	    
+	    
+		this.add(containerPanel);
+		this.pack();
+		//this.setLocationByPlatform(true);
+		this.repaint();
 	}
+	
+	
+	
+
 	
 	
 	
@@ -195,11 +209,19 @@ public class KTPFrame extends JFrame {
 		
 		
 		
-		invalidate();
-		validate();
-		repaint();
+		this.invalidate();
+		this.validate();
+		this.repaint();
+		// TODO REMOVE THIS!!
+		// DEBUG
+		this.showResult(true);
 		
 	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * Shows the previous panel in the question list.
