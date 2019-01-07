@@ -303,7 +303,7 @@ public class KTPFrame extends JFrame {
 				break;
 			case "ageColon80": loopKnowledge(80, "colon", 1);
 				break;
-			case "ageHeart45": ifKnowledge("[age->45, type->heart_and_vasculair], relation->1");
+			case "ageHeart45": ifKnowledge("[age->45, type->heart_and_vasculair, relation->1]");
 				break;
 			case "ageHeart50": loopKnowledge(50, "heart_and_vasculair", 1);
 				break;
