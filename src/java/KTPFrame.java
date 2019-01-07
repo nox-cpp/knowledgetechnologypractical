@@ -180,6 +180,7 @@ public class KTPFrame extends JFrame {
 					questionsList.clear();
 					questionsList.addAll(originalQuestionsList);
 	    		setTitle("Genetic disorder risk assesment");	// reset the title of the frame
+			    setVisible(false);										// show the frame
 	    		initGUI();								// re-init GUI
 	    	}
 	    });
@@ -188,7 +189,7 @@ public class KTPFrame extends JFrame {
 	    
 		this.add(containerPanel);
 		this.pack();
-		//this.setLocationByPlatform(true);
+		// this.setLocationByPlatform(true);
 		this.repaint();
 	}
 	
@@ -267,7 +268,7 @@ public class KTPFrame extends JFrame {
 			showResult(false);
 			return true;
 		}
-//		this.printAnswerList();										// print answers for debug
+		this.printAnswerList();										// print answers for debug
 		return false;
 	}
 
@@ -275,7 +276,7 @@ public class KTPFrame extends JFrame {
 	private void transformKeyword(String keyword){
 		switch (keyword){
 			case "ageSelf": 
-				if(Integer.parseInt(currentAnswer())>70){
+				if(Integer.parseInt(currentAnswer())>=70){
 					fc.addFact("user[age->70]");
 				}
 				break;
