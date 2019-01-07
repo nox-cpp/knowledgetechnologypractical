@@ -8,20 +8,14 @@ goToDoctor(false) :- user[age->70] @knowledgebase.
 
 // Breast
 ?X[risk->2] :- ?X[type->breast, gender->male] @knowledgebase.
-
-?X[risk->2] :- ?X[type->breast, age->55, relation->1] @knowledgebase.
-?X[risk->2] :- ?X[type->breast, age->65, relation->1, gender->female, children->true] @knowledgebase.
-
-?X[risk->2] :- ?X[type->breast, age->35, relation->2] @knowledgebase.
-?X[risk->2] :- ?X[type->breast, age->45, relation->2, gender->female, children->true] @knowledgebase.
-
-?X[risk->1] :- ?X[type->breast, age->55, relation->2] @knowledgebase.
-?X[risk->1] :- ?X[type->breast, age->65, relation->2, gender->female, children->true] @knowledgebase.
+?X[risk->2] :- ?X[type->breast, age->40, relation->1] @knowledgebase.
+?X[risk->1] :- ?X[type->breast, age->50, relation->1] @knowledgebase.
+?X[risk->0.5] :- ?X[type->breast] @knowledgebase.
 
 // Colon
-?X[risk->2] :- ?X[type->colon, age->45, relation->1] @knowledgebase.
-?X[risk->2] :- ?X[type->colon, age->30, relation->2] @knowledgebase.
-?X[risk->1] :- ?X[type->colon, age->45, relation->2] @knowledgebase.
+?X[risk->2] :- ?X[type->colon, age->50, relation->1] @knowledgebase.
+?X[risk->1] :- ?X[type->colon, age->70, relation->1] @knowledgebase.
+?X[risk->1] :- ?X[type->colon, age->70, relation->2] @knowledgebase.
 
 goToDoctor(true) :- sum { ?Y | ?[risk->?Y]} >= 2.
 
