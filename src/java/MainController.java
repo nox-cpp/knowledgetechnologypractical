@@ -66,6 +66,7 @@ public class MainController{
 	        	Element q = qList.get(temp);
 	        	// make a new question object
 	        	String keyword = q.getChild("keyword").getText();
+	        	String type = q.getChild("type").getText();
 	        	String question = q.getChild("question").getText();
 	        	String extra = null;
 	        	if(q.getChild("extra") != null){
@@ -126,7 +127,7 @@ public class MainController{
 	        	
 	        	
 	        	
-	        	Question newq = new Question(keyword, question, extra, componentList);			// construct the new question
+	        	Question newq = new Question(type, keyword, question, extra, componentList);			// construct the new question
 	        	
 	        	// check if keyword is unique
 	        	for(Question i : questionsList){

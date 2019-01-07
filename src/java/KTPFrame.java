@@ -174,6 +174,7 @@ public class KTPFrame extends JFrame {
 	    		currentPanel = 0;						//reset currenPanel counter
 	    		setTitle("Genetic disorder risk assesment");	// reset the title of the frame
 	    		initGUI();								// re-init GUI
+	    		// TODO reset kb flora
 	    	}
 	    });
 	    
@@ -208,7 +209,7 @@ public class KTPFrame extends JFrame {
 		this.add(this.questionsList.get(currentPanel).getPanel(), c);
 		
 		
-		
+		this.pack();
 		this.invalidate();
 		this.validate();
 		this.repaint();
@@ -249,7 +250,7 @@ public class KTPFrame extends JFrame {
 	 * Also adds this to the history panel.
 	 * @param current
 	 */
-	public void sendQuestionData(int current){
+	public boolean sendQuestionData(int current){
 		String s = "";
 		Question currentQ = this.questionsList.get(current);		// get current question
 		currentQ.setAnswers();										// set the answers of that question
@@ -257,52 +258,111 @@ public class KTPFrame extends JFrame {
 		this.histTextArea.setText(this.currentHist());				// set the history text panel
 		JScrollBar vertical = this.histScrollPane.getVerticalScrollBar();
 		vertical.setValue( vertical.getMaximum() );					// scroll the pane down
-		// System.out.println(currentAnswer());
-		// System.out.println(currentKeyword());
-		// fc.addFact(transformKeyword(currentKeyword()));
 		transformKeyword(currentKeyword());
-		// if(currentKeyword().equals("ageSelf")){
-			// s = "user[age->" + currentAnswer() + "]";
-			// System.out.println(s);
-			// fc.addFact(s);
+		updateQuestions();
 		if(fc.askQuery("goToDoctor(?GTD)").equals("false")){
-			System.out.println("Don't go");
+			showResult(false);
+			return true;
 		}
 		if(fc.askQuery("goToDoctor(?GTD)").equals("true")){
-			showResult();
+			showResult(true);
+			return true;
 		}
-		// }
 //		this.printAnswerList();										// print answers for debug
+		return false;
 	}
+
 
 	private void transformKeyword(String keyword){
 		switch (keyword){
 			case "ageSelf": fc.addFact("user[age->" + currentAnswer() + "]");
-			case "ageCancer25": loopRelatives(25, "cancer");
-			case "ageCancer25": loopRelatives(25, "cancer");
-			case "ageBreast40": loopRelatives(40, "breast");
-			case "ageBreast50": loopRelatives(50, "breast");
-			case "ageColon50": loopRelatives(50, "colon");
-			case "ageColon70": loopRelatives(70, "colon");
-			case "ageBreast40": loopRelatives(40, "breast");
-			case "ageBreast50": loopRelatives(50, "breast");
-			case "ageColon50": loopRelatives(50, "colon");
-			case "ageColon70": loopRelatives(70, "colon");
-			case "genderBreast": if(currentAnswer().equals("Yes")){
-				fc.addFact("1[gender->male, type->breast]");
-				System.out.println("male");
-			} else {
-				fc.addFact("1[gender->female, type->breast]");
-			}
-			case "diseaseType": fc.addFact("General[type->" +currentAnswer() +"]");
-			case "cancerType": fc.addFact("General[cancerType->" +currentAnswer() +"]");
+			break;
+			case "ageCancer25": ifKnowledge("1[age->25]");
+			break;
+			case "ageBreast401": loopKnowledge(40, "breast", 1);
+			break;
+			case "ageBreast402": loopKnowledge(40, "breast", 2);
+			break;
+			case "ageBreast501": loopKnowledge(50, "breast", 1);
+			break;
+			case "ageBreast502": loopKnowledge(50, "breast", 2);
+			break;
+			case "ageColon501": loopKnowledge(50, "colon", 1);
+			break;
+			case "ageColon502": loopKnowledge(50, "colon", 2);
+			break;
+			case "ageColon701": loopKnowledge(70, "colon", 1);
+			break;
+			case "ageColon702": loopKnowledge(70, "colon", 2);
+			break;
+			case "genderBreast": ifKnowledge("1[gender->male, type->breast]");
+			break;
+			case "diseaseType": addType("Cancer" ,"Heart_and_vasculair_disease" ,"Mental_disability");
+			break;
+			case "cancerType": addType("Breastcancer", "Coloncancer", "Other_types_of_cancer");
+			break;
 		}
 	}
 
-	private void loopRelatives(int age, String type){
+  private void updateQuestions(){
+  	if(fc.askQuery("Cancer(?C)").equals("false")){
+  		for (Iterator<Question> iter = questionsList.listIterator(); iter.hasNext(); ) {
+    		Question q = iter.next();
+    		if (q.getType().equals("cancer") || q.getType().equals("Breastcancer") || q.getType().equals("Coloncancer")){
+    	    iter.remove();
+    		}
+  		}
+  	}
+  	if(fc.askQuery("Breastcancer(?C)").equals("false")){
+  		for (Iterator<Question> iter = questionsList.listIterator(); iter.hasNext(); ) {
+    		Question q = iter.next();
+    		if (q.getType().equals("Breastcancer")){
+    	    iter.remove();
+    		}
+  		}
+  	}
+  	if(fc.askQuery("Coloncancer(?C)").equals("false")){
+  		for (Iterator<Question> iter = questionsList.listIterator(); iter.hasNext(); ) {
+    		Question q = iter.next();
+    		if (q.getType().equals("Coloncancer")){
+    	    iter.remove();
+    		}
+  		}
+ 		}
+	}
+
+	private void addType(String opt1, String opt2, String opt3){
+		int x=0;
+		List<String> results = recentAnswer();
+		while(results.size()>x){
+			fc.addFact(results.get(results.size()-1-x) +"(true)");
+			System.out.println(results.get(results.size()-1-x) +"(true)");
+			x++;
+		}
+	 	if(!fc.askQuery(opt1+"(?C)").equals("true")){
+	 		fc.addFact(opt1 + "(false)");
+	 		System.out.println(opt1 + "(false)");
+		}
+		if(!fc.askQuery(opt2+"(?C)").equals("true")){
+	 		fc.addFact(opt2 + "(false)");
+	 		System.out.println(opt2 + "(false)");
+		}
+		if(!fc.askQuery(opt3+"(?C)").equals("true")){
+	 		fc.addFact(opt3 + "(false)");
+	 		System.out.println(opt3 + "(false)");
+		}
+	}
+	
+	private void loopKnowledge(int age, String type, int relationship){
 		int total=Integer.parseInt(currentAnswer());
 		for(int x=0; x<total; x++){
-			fc.addFact(x+"[age->" + age + ", type->" + type + "]");
+			fc.addFact(x+"[age->" + age + ", type->" + type +",relation->" + relationship + "]");
+		}
+	}
+
+	private void ifKnowledge(String yes){
+		if(currentAnswer().equals("Yes")){
+			fc.addFact(yes);
 		}
 	}
 	/**
@@ -360,8 +420,9 @@ mponent has a legal value.
 	    		
 	    		if(currentPanel + 1 < questionsList.size()){	// check if there is a next panel
 	    			if(checkInputBounds(currentPanel)){		// check if the input is within bounds
-	    				sendQuestionData(currentPanel);
+	    				if(!sendQuestionData(currentPanel)){
 	    				showNextPanel();
+	    			}
 	    			}
 	    			else{
 	    				// The input is not within bounds
@@ -416,7 +477,6 @@ mponent has a legal value.
 				JOptionPane.showMessageDialog(new JFrame(), s);
 			}
 		});
-		
 		return bt;
 	}
 	
@@ -427,6 +487,10 @@ mponent has a legal value.
 	 * This string shows all the currently given answers.
 	 * @return
 	 */
+	public List<String> recentAnswer(){
+		return answeredQuestions.get(answeredQuestions.size()-1).getAnswers();
+	}
+
 	public String currentAnswer(){
 		String s = "";
 		
@@ -435,6 +499,7 @@ mponent has a legal value.
 		}
 		return s;
 	}
+
 
 	public String currentKeyword(){
 		String s = "";

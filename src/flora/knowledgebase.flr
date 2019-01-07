@@ -1,38 +1,21 @@
-/** File: knowledgebase.flr
-* Author: Marnix Jansma
-*
-*/
+// If the person filling out the test is above 70, it's not useful anymore to check
+goToDoctor(false) :- user[age->70].
 
-/** Class declaration */
-/**
-* The values for the class attributes use primitive data types available in Flora
-* (See page 202 of the Flora manual)
-* NOTE: Don't forget to always end any statement with a '.'
-*/
-person[|
-  age => \integer,
-  relatives => person,
-  risk_level => \string,
-  has_disease => \boolean
-|].
+?X[risk->2] :- ?X[age->25, \+type->child].
 
-Marnix:person[
-  age -> 21,
-  relatives -> {},
-  risk_level -> 'unknown',
-  has_disease -> false
-].
+// Breast
+?X[risk->2] :- ?X[type->breast, gender->male].
+?X[risk->2] :- ?X[type->breast, age->40, relation->1].
+?X[risk->1] :- ?X[type->breast, age->50, relation->1].
+?X[risk->0.5] :- ?X[type->breast].
 
-Tim:person[
-  age -> 17,
-  relatives -> {Marietje},
-  risk_level -> 'overwhelming',
-  has_disease -> true
-].
+// Colon
+?X[risk->2] :- ?X[type->colon, age->50, relation->1].
+?X[risk->1] :- ?X[type->colon, age->70, relation->1].
+?X[risk->1] :- ?X[type->colon, age->70, relation->2].
 
-Marietje:person[
-  age -> 18,
-  relatives -> {Tim},
-  risk_level -> 'unknown',
-  has_disease -> false
-].
+goToDoctor(true) :- sum { ?Y | ?[risk->?Y]} >= 2.
+
+//?- ?[danger->?Danger].
+//?- ?X[risk->?Y].
+?- goToDoctor(?GTD).

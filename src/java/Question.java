@@ -32,13 +32,13 @@ import javax.swing.*;
  */
 public class Question {
 	
+	private String type;
 	private String keyword;
 	public String question;
 	public List<KTPJComponent> componentList;
 	public String extraExplanation;
 	private JPanel panel;
 	private List<String> answer;
-	
 
 	/**
 	 * Constructor for Question object
@@ -47,8 +47,9 @@ public class Question {
 	 * @param extra The string that has extra explanation about the question.
 	 * @param componentList List of KTPJComponents that you want to show. (Radiobuttons etc)
 	 */
-	Question(String keyword, String question, String extra, List<KTPJComponent> componentList){
+	Question(String type, String keyword, String question, String extra, List<KTPJComponent> componentList){
 		// TODO check if keyword is unique
+		this.type = type;
 		this.keyword = keyword;
 		this.question = question;
 		if (extra != null){
@@ -103,6 +104,10 @@ public class Question {
 		return this.keyword;
 	}
 	
+	public String getType(){
+		return this.type;
+	}
+	
 	
 	/**
 	 * Clears the answerList. This is called when the previous button is clicked.
@@ -133,6 +138,11 @@ public class Question {
 
 	public String getLatestAnswer(){
 		return this.answer.get(answer.size()-1);
+	}
+
+	public String getSomeAnswer(int distance){
+		System.out.println("S=" + answer.size());
+		return this.answer.get(answer.size()-(1+distance));
 	}
 
 	public String getRecentAnswer(){
