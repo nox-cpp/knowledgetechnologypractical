@@ -368,8 +368,13 @@ public class KTPFrame extends JFrame {
 	}
 
 	private void addType(String opt1, String opt2, String opt3){
-		int x=0;
 		List<String> results = recentAnswer();
+		for(int x=0; results.size()>x; x++){
+			results.set(x, results.get(x).replace(" ", "_"));
+			// s = s.replace(" ", "_");
+			// results.set(x, s);
+		}
+		int x=0;
 		if(previous==false){
 			while(results.size()>x){
 				fc.addFact(results.get(results.size()-1-x) +"(true)");
