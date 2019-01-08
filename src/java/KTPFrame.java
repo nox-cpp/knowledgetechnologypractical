@@ -597,6 +597,7 @@ mponent has a legal value.
 		{
 			public void actionPerformed(ActionEvent e){
 				String s = questionsList.get(currentPanel).extraExplanation;
+				System.out.println(s);
 				JOptionPane.showMessageDialog(new JFrame(), s);
 			}
 		});

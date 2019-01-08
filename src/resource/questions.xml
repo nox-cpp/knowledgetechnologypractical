@@ -30,7 +30,9 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>ageCancer25</keyword>
         <type>cancer</type>
         <question>Were any of your first or second degree relatives diagnosed with cancer when they were less than 25 years old?</question>
-        <extra>First degree realatives include parents, children or siblings. Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
+        <extra>First degree realatives include parents, children or siblings.
+Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren,
+half-siblings, and double cousins.</extra>
         <radiobutton selected="false">Yes</radiobutton>
         <radiobutton selected="true">No</radiobutton>
     </question>
@@ -72,7 +74,8 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>ageColon502</keyword>
         <type>Coloncancer</type>
         <question>How many of your 2nd degree relatives with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
-        <extra>Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
+        <extra>Second degree relatives include uncles, aunts, nephews, nieces, grandparents,
+grandchildren, half-siblings, and double cousins.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
@@ -86,7 +89,8 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>ageColon702</keyword>
         <type>Coloncancer</type>
         <question>How many of your 2nd degree relatives with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
-        <extra>Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
+        <extra>Second degree relatives include uncles, aunts, nephews, nieces, grandparents,
+grandchildren, half-siblings, and double cousins.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
         <question inputtype = "spinner">
@@ -114,7 +118,8 @@ https://www.tutorialspoint.com/online_xml_editor.htm
     <question inputtype = "spinner">
         <keyword>ageHeart55</keyword>
         <type>Heart_and_vasculair_disease</type>
-        <extra>First degree realatives include parents, children or siblings. Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
+        <extra>First degree realatives include parents, children or siblings.
+Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
         <question>How many of your 1st or 2nd degree relatives died from a heart or vascular disease while they were younger than 55?</question>
         <spinner>0,0,120,1</spinner>
     </question>
@@ -122,7 +127,9 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>disability1</keyword>
         <type>Mental_disability</type>
         <question>Do any of your 1st degree relatives have a disability?</question>
-        <extra>First degree realatives include parents, children or siblings. Examples of mental disability include syndrome of down, any congenital abnormalities an IQ under 80 and/or an IQ difference with the parents over 15 points.</extra>
+        <extra>First degree realatives include parents, children or siblings.
+Examples of mental disability include syndrome of down, any congenital abnormalities,
+an IQ under 80 and/or an IQ difference with the parents over 15 points.</extra>
         <radiobutton selected="false">Yes</radiobutton>
         <radiobutton selected="true">No</radiobutton>
     </question>
@@ -130,7 +137,8 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>disability2</keyword>
         <type>Mental_disability</type>
         <question>How many of your 2nd degree relatives have a disability?</question>
-        <extra>econd degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins. Examples of mental disability include syndrome of down, any congenital abnormalities an IQ under 80 and/or an IQ difference with the parents over 15 points.</extra>
+        <extra>Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.
+Examples of mental disability include syndrome of down, any congenital abnormalities an IQ under 80 and/or an IQ difference with the parents over 15 points.</extra>
         <spinner>0,0,10,1</spinner>
     </question>
 
