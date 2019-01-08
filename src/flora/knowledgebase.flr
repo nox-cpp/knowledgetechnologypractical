@@ -27,7 +27,7 @@ goToDoctor(false) :- user[age->70].
 
 
 goToDoctor(true) :- sum { ?Y | ?[breast_cancer_risk->?Y]} >= 2.
-goToDoctor(true) :- sum { ?Y | ?[breast_cancer_risk->?Y]} >= 1, sum { ?X | ?[secondary_breast_cancer_risk->?X]} >= 2. 
+goToDoctor(true) :- sum { ?Y | ?[breast_cancer_risk->?Y]} >= 1, sum { ?X | ?[secondary_breast_cancer_risk->?X]} >= 3. 
 goToDoctor(true) :- sum { ?Y | ?[colon_cancer_risk->?Y]} >= 2.
 goToDoctor(true) :- sum { ?Y | ?[colon_cancer_risk->?Y]} >= 1, sum { ?X | ?[secondary_colon_cancer_risk->?X]} >= 1. 
 goToDoctor(true) :- sum { ?Y | ?[heart_risk->?Y]} >= 2.
