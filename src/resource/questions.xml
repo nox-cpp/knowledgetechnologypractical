@@ -22,7 +22,6 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>cancerType</keyword>
         <type>cancer</type>
         <question>Which types of cancer run in your family?</question>
-        <extra>Your family is your biological family, like parents, siblings, children and grandparents.</extra>
         <checkbox>Breastcancer</checkbox>
         <checkbox>Coloncancer</checkbox>
         <checkbox>Other_types_of_cancer</checkbox>
@@ -31,6 +30,7 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>ageCancer25</keyword>
         <type>cancer</type>
         <question>Were any of your first or second degree relatives diagnosed with cancer when they were less than 25 years old?</question>
+        <extra>First degree realatives include parents, children or siblings. Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
         <radiobutton selected="false">Yes</radiobutton>
         <radiobutton selected="true">No</radiobutton>
     </question>
@@ -45,12 +45,14 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>ageBreast40</keyword>
         <type>Breastcancer</type>
         <question>How many of your 1st degree relatives with breast cancer were between 25 and 40 years old when they were diagnosed?</question>
+        <extra>First degree realatives include parents, children or siblings.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageBreast50</keyword>
         <type>Breastcancer</type>        
         <question>How many of your 1st degree relatives relatives with breast cancer were between 40 and 50 years old when they were diagnosed?</question>
+        <extra>First degree realatives include parents, children or siblings.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
@@ -63,36 +65,42 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>ageColon501</keyword>
         <type>Coloncancer</type>
         <question>How many of your 1st degree relatives with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
+        <extra>First degree realatives include parents, children or siblings.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageColon502</keyword>
         <type>Coloncancer</type>
         <question>How many of your 2nd degree relatives with colon cancer were between 25 and 50 years old when they were diagnosed?</question>
+        <extra>Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageColon701</keyword>
         <type>Coloncancer</type>
         <question>How many of your 1st degree relatives with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
+        <extra>First degree realatives include parents, children or siblings.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageColon702</keyword>
         <type>Coloncancer</type>
         <question>How many of your 2nd degree relatives with colon cancer were between 50 and 70 years old when they were diagnosed?</question>
+        <extra>Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
         <question inputtype = "spinner">
         <keyword>ageColon80</keyword>
         <type>Coloncancer</type>
         <question>How many of your 1st degree relatives with colon cancer were between 70 and 80 years old when they were diagnosed?</question>
+        <extra>First degree realatives include parents, children or siblings.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "radiobutton">
         <keyword>ageHeart45</keyword>
         <type>Heart_and_vasculair_disease</type>
         <question>Did any of your 1st degree relatives die from a heart or vascular disease while he/she younger than 45?</question>
+        <extra>First degree realatives include parents, children or siblings.</extra>
         <radiobutton selected="false">Yes</radiobutton>
         <radiobutton selected="true">No</radiobutton>
     </question>
@@ -100,11 +108,13 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>ageHeart50</keyword>
         <type>Heart_and_vasculair_disease</type>
         <question>How many of your 1st degree relatives died from a heart or vascular disease while they were between 45 and 50 years old?</question>
+        <extra>First degree realatives include parents, children or siblings.</extra>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "spinner">
         <keyword>ageHeart55</keyword>
         <type>Heart_and_vasculair_disease</type>
+        <extra>First degree realatives include parents, children or siblings. Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
         <question>How many of your 1st or 2nd degree relatives died from a heart or vascular disease while they were younger than 55?</question>
         <spinner>0,0,120,1</spinner>
     </question>
@@ -112,7 +122,7 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>disability1</keyword>
         <type>Mental_disability</type>
         <question>Do any of your 1st degree relatives have a disability?</question>
-        <extra>Examples include down syndrome and Fragile X syndrome</extra>
+        <extra>First degree realatives include parents, children or siblings. Examples of mental disability include syndrome of down, any congenital abnormalities an IQ under 80 and/or an IQ difference with the parents over 15 points.</extra>
         <radiobutton selected="false">Yes</radiobutton>
         <radiobutton selected="true">No</radiobutton>
     </question>
@@ -120,7 +130,7 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <keyword>disability2</keyword>
         <type>Mental_disability</type>
         <question>How many of your 2nd degree relatives have a disability?</question>
-        <extra>Examples include down syndrome and Fragile X syndrome</extra>
+        <extra>econd degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins. Examples of mental disability include syndrome of down, any congenital abnormalities an IQ under 80 and/or an IQ difference with the parents over 15 points.</extra>
         <spinner>0,0,10,1</spinner>
     </question>
 
