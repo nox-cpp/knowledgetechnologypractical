@@ -176,6 +176,13 @@ public class KTPFrame extends JFrame {
 	    		getContentPane().removeAll();			//remove all components
 	    		answeredQuestions.clear();				//remove all answers
 	    		currentPanel = 0;						//reset currenPanel counter
+	    		
+	    		//remove answers from log
+	    		
+	    		for(Question q : originalQuestionsList){
+	    				q.resetAnswers();
+	    		}
+	    							
 	    		fc.loadModel();
 					questionsList.clear();
 					questionsList.addAll(originalQuestionsList);
