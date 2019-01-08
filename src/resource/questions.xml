@@ -120,7 +120,7 @@ grandchildren, half-siblings, and double cousins.</extra>
         <type>Heart_and_vasculair_disease</type>
         <extra>First degree realatives include parents, children or siblings.
 Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren, half-siblings, and double cousins.</extra>
-        <question>How many of your 1st or 2nd degree relatives died from a heart or vascular disease while they were younger than 55?</question>
+        <question>How many of your 1st or 2nd degree relatives, who didn't meet the previous question's requirements, died from a heart or vascular disease while they were younger than 55?</question>
         <spinner>0,0,120,1</spinner>
     </question>
     <question inputtype = "radiobutton">
