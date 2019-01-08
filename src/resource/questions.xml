@@ -15,8 +15,8 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <question>Which type of diseas(es) run in your family?</question>
         <extra>Your family is your biological family, like parents, siblings, children and grandparents.</extra>
         <checkbox>Cancer</checkbox>
-        <checkbox>Heart_and_vasculair_disease</checkbox>
-        <checkbox>Mental_disability</checkbox>
+        <checkbox>Heart and vasculair disease</checkbox>
+        <checkbox>Mental disability</checkbox>
     </question>
     <question inputtype = "checkbox">
         <keyword>cancerType</keyword>
@@ -24,7 +24,7 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <question>Which types of cancer run in your family?</question>
         <checkbox>Breastcancer</checkbox>
         <checkbox>Coloncancer</checkbox>
-        <checkbox>Other_types_of_cancer</checkbox>
+        <checkbox>Other types of cancer</checkbox>
     </question>
     <question inputtype = "radiobutton">
         <keyword>ageCancer25</keyword>

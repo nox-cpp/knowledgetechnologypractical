@@ -371,8 +371,6 @@ public class KTPFrame extends JFrame {
 		List<String> results = recentAnswer();
 		for(int x=0; results.size()>x; x++){
 			results.set(x, results.get(x).replace(" ", "_"));
-			// s = s.replace(" ", "_");
-			// results.set(x, s);
 		}
 		int x=0;
 		if(previous==false){
