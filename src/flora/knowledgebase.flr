@@ -25,7 +25,7 @@ goToDoctor(false) :- user[age->70].
 ?X[mental_risk->2] :- ?X[type->mental_disability, relation->1].
 ?X[mental_risk->1] :- ?X[type->mental_disability, relation->2].
 
-
+//Rules deciding whether or not someone should visit the doctor.
 goToDoctor(true) :- sum { ?Y | ?[breast_cancer_risk->?Y]} >= 2.
 goToDoctor(true) :- sum { ?Y | ?[breast_cancer_risk->?Y]} >= 1, sum { ?X | ?[secondary_breast_cancer_risk->?X]} >= 3. 
 goToDoctor(true) :- sum { ?Y | ?[colon_cancer_risk->?Y]} >= 2.
@@ -34,7 +34,3 @@ goToDoctor(true) :- sum { ?Y | ?[heart_risk->?Y]} >= 2.
 goToDoctor(true) :- sum { ?Y | ?[heart_risk->?Y]} >= 1, sum { ?X | ?[secondary_heart_risk->?X]} >= 1. 
 goToDoctor(true) :- sum { ?Y | ?[mental_risk->?Y]} >= 2.
 goToDoctor(true) :- sum { ?Y | ?[risk->?Y]} >= 2.
-
-//?- ?[danger->?Danger].
-//?- ?X[risk->?Y].
-?- goToDoctor(?GTD).

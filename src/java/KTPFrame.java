@@ -279,7 +279,11 @@ public class KTPFrame extends JFrame {
 		return false;
 	}
 
-
+	/**
+	* Takes the keyword from the most recent question.
+	* Calls the appropriate function based on the keyword.
+	* @param keyword
+	*/
 	private void transformKeyword(String keyword){
 		switch (keyword){
 			case "ageSelf": 
@@ -324,6 +328,9 @@ public class KTPFrame extends JFrame {
 		}
 	}
 
+	/**
+	* Updates the questionlist, based on the information in flora
+	*/
   private void updateQuestions(){
   	if(fc.askQuery("Cancer(?C)").equals("false")){
   		for (Iterator<Question> iter = questionsList.listIterator(); iter.hasNext(); ) {
@@ -367,6 +374,9 @@ public class KTPFrame extends JFrame {
  		}
 	}
 
+	/**
+	* Adds to flora whether the catagory of diseases or cancer has or has not been selected by the user.
+	*/
 	private void addType(String opt1, String opt2, String opt3){
 		List<String> results = recentAnswer();
 		for(int x=0; results.size()>x; x++){
@@ -419,6 +429,12 @@ public class KTPFrame extends JFrame {
 			}
 	}
 	
+	/**
+	* Adds the data given by the user via a spinner, to flora.
+	* @param age
+	* @param type
+	* @param relationship
+	*/
 	private void loopKnowledge(int age, String type, int relationship){
 		int total=Integer.parseInt(currentAnswer());
 		for(int x=0; x<total; x++){
@@ -432,6 +448,12 @@ public class KTPFrame extends JFrame {
 		}
 	}
 
+
+	/**
+	* Adds the data given by the user via a spinner, to flora.
+	* @param age
+	* @param type
+	*/
 	private void loopKnowledge(int age, String type){
 		int total=Integer.parseInt(currentAnswer());
 		for(int x=0; x<total; x++){
@@ -446,6 +468,11 @@ public class KTPFrame extends JFrame {
 	}
 
 
+	/**
+	* Adds the data given by the user via a spinner, to flora.
+	* @param type
+	* @param relationship
+	*/
 	private void loopKnowledge(String type, int relationship){
 		int total=Integer.parseInt(currentAnswer());
 		for(int x=0; x<total; x++){
@@ -459,6 +486,10 @@ public class KTPFrame extends JFrame {
 		}
 	}
 
+	/**
+	* Adds the data given by the user via a spinner, to flora.
+	* @param type
+	*/
 	private void loopKnowledge(String type){
 		int total=Integer.parseInt(currentAnswer());
 		for(int x=0; x<total; x++){
@@ -472,6 +503,9 @@ public class KTPFrame extends JFrame {
 		}
 	}
 
+	/**
+	* Adds the data given by the user via a yes/no question, to flora.
+	*/
 	private void ifKnowledge(String yes){
 		if(currentAnswer().equals("Yes")){
 			if(previous==false){
@@ -492,26 +526,18 @@ public class KTPFrame extends JFrame {
 		previous=true;
 		transformKeyword(currentKeyword());
 		updateQuestions();
-		// // System.out.println(currentAnswer());
-		// String s ="s";
-		// if(currentKeyword().equals("ageSelf")){
-		// 	s = "user[age->" + currentAnswer() + "]";
-		// }
-		// fc.removeFact(s);
 		this.answeredQuestions.get(this.answeredQuestions.size() -1).resetAnswers();
 		this.answeredQuestions.remove(this.answeredQuestions.size() -1);
 		this.histTextArea.setText(this.currentHist());
 		JScrollBar vertical = this.histScrollPane.getVerticalScrollBar();
 		vertical.setValue( vertical.getMaximum() );					// scroll the pane down
-		
 		this.printAnswerList();										// print answers for debug
 	}
 	
 	
 	/**
 	 * Checks the input bounds of the current panel before sending the data to the controller.
-	 * True is returned when a co	at src.java.KTPFrame$1.actionPerformed(KTPFrame.java:301)
-mponent has a legal value. 
+	 * True is returned when a component has a legal value. 
 	 * @param current The current panel
 	 * @return Whether the inputs are within bounds.
 	 */
@@ -615,6 +641,10 @@ mponent has a legal value.
 		return answeredQuestions.get(answeredQuestions.size()-1).getAnswers();
 	}
 
+	/**
+	* Gets the most recent list of answers given by the user.
+	* Used when a quesetion can return multiple answers.
+	*/
 	public String currentAnswer(){
 		String s = "";
 		
@@ -624,7 +654,9 @@ mponent has a legal value.
 		return s;
 	}
 
-
+	/**
+	* Get the keyword of the most recent answered question.
+	*/
 	public String currentKeyword(){
 		String s = "";
 		
@@ -634,6 +666,7 @@ mponent has a legal value.
 		return s;
 	}
 
+	
 	public String currentHist(){
 		String s = "";
 		
