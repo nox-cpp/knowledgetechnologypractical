@@ -41,7 +41,7 @@ public class KTPFrame extends JFrame {
 	KTPFrame(List<Question> questionsList, FloraController fc){
 		super("Genetic disorder referal assesment");
 		this.questionsList = questionsList;
-    this.originalQuestionsList = new ArrayList<Question>();
+		this.originalQuestionsList = new ArrayList<Question>();
 		this.originalQuestionsList.addAll(questionsList);
 		this.fc = fc;
 		answeredQuestions = new ArrayList<Question>();
