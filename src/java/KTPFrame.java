@@ -139,7 +139,7 @@ public class KTPFrame extends JFrame {
 					"Please keep in mind this is not the advice of a professional and should be taken\n" +
 					"with a grain of salt.";
 		else
-			text = 	"Base on the answers you have given we have not found sufficient evidence to suggest you\n" +
+			text = 	"Based on the answers you have given we have not found sufficient evidence to suggest you\n" +
 					"need to seek professional help.\n" +
 					"Please keep in mind this is not the advice of a professional and should be taken\n" +
 					"with a grain of salt.";
