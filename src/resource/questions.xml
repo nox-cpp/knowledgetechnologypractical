@@ -29,10 +29,11 @@ https://www.tutorialspoint.com/online_xml_editor.htm
     <question inputtype = "radiobutton">
         <keyword>ageCancer25</keyword>
         <type>cancer</type>
-        <question>Were any of your first or second degree relatives diagnosed with cancer when they were less than 25 years old?</question>
+        <question>Were any of your first or second degree relatives diagnosed with a not to children specific type of cancer when they were less than 25 years old?</question>
         <extra>First degree realatives include parents, children or siblings.
 Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren,
-half-siblings, and double cousins.</extra>
+half-siblings, and double cousins.
+Children specific types of cancer are e.g. leukemia, lymphoma and neuroblastoma</extra>
         <radiobutton selected="false">Yes</radiobutton>
         <radiobutton selected="true">No</radiobutton>
     </question>
