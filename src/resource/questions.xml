@@ -17,6 +17,7 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <checkbox>Cancer</checkbox>
         <checkbox>Heart and vascular disease</checkbox>
         <checkbox>Mental disability</checkbox>
+        <checkbox>None of the above</checkbox>
     </question>
     <question inputtype = "checkbox">
         <keyword>cancerType</keyword>
