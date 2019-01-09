@@ -339,7 +339,7 @@ public class KTPFrame extends JFrame {
     		}
   		}
   	}
-  	if(fc.askQuery("Heart_and_vasculair_disease(?C)").equals("false")){
+  	if(fc.askQuery("Heart_and_vascular_disease(?C)").equals("false")){
   		for (Iterator<Question> iter = questionsList.listIterator(); iter.hasNext(); ) {
     		Question q = iter.next();
     		if (q.getType().equals("Heart_and_vasculair_disease")){
