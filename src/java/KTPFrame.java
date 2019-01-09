@@ -303,7 +303,7 @@ public class KTPFrame extends JFrame {
 					fc.addFact("user[age->70]");
 				}
 				break;
-			case "diseaseType": addType("Cancer" ,"Heart_and_vasculair_disease" ,"Mental_disability");
+			case "diseaseType": addType("Cancer" ,"Heart_and_vascular_disease" ,"Mental_disability");
 				break;
 			case "cancerType": addType("Breastcancer", "Coloncancer", "Other_types_of_cancer");
 				break;
