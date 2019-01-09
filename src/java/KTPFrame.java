@@ -137,12 +137,12 @@ public class KTPFrame extends JFrame {
 			text = "Based on the answers you have given we advise you to seek contact with your doctor.\n" +
 					"Tell him you did this test and ask if he can refer you to a clinical geneticist.\n" +
 					"Please keep in mind this is not the advice of a professional and should be taken\n" +
-					"with a grain of salt.";
+					"with caution.";
 		else
 			text = 	"Based on the answers you have given we have not found sufficient evidence to suggest you\n" +
 					"need to seek professional help.\n" +
 					"Please keep in mind this is not the advice of a professional and should be taken\n" +
-					"with a grain of salt.";
+					"with caution.";
 		JTextArea textLabel = new JTextArea(text);
 		c.gridx = 0;
 	    c.gridy = 0;

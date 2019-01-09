@@ -15,7 +15,7 @@ https://www.tutorialspoint.com/online_xml_editor.htm
         <question>Which type of diseas(es) run in your family?</question>
         <extra>Your family is your biological family, like parents, siblings, children and grandparents.</extra>
         <checkbox>Cancer</checkbox>
-        <checkbox>Heart and vasculair disease</checkbox>
+        <checkbox>Heart and vascular disease</checkbox>
         <checkbox>Mental disability</checkbox>
     </question>
     <question inputtype = "checkbox">
@@ -29,7 +29,7 @@ https://www.tutorialspoint.com/online_xml_editor.htm
     <question inputtype = "radiobutton">
         <keyword>ageCancer25</keyword>
         <type>cancer</type>
-        <question>Were any of your first or second degree relatives diagnosed with a not to children specific type of cancer when they were less than 25 years old?</question>
+        <question>Were any of your first or second degree relatives diagnosed with type of cancer which is not specific for children, when they were less than 25 years old?</question>
         <extra>First degree realatives include parents, children or siblings.
 Second degree relatives include uncles, aunts, nephews, nieces, grandparents, grandchildren,
 half-siblings, and double cousins.
@@ -142,15 +142,4 @@ an IQ under 80 and/or an IQ difference with the parents over 15 points.</extra>
 Examples of mental disability include syndrome of down, any congenital abnormalities an IQ under 80 and/or an IQ difference with the parents over 15 points.</extra>
         <spinner>0,0,10,1</spinner>
     </question>
-
-
-
-<!--     <question inputtype = "radiobutton">
-        <keyword>genderSelf</keyword>
-        <question>What is your gender?</question>
-        <radiobutton selected="true">Man</radiobutton>
-        <radiobutton selected="false">Woman</radiobutton>
-    </question> -->
-
-    
 </questionList>
