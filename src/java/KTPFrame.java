@@ -1,8 +1,4 @@
-/*
- * 
- * TODO Use other layout?
- * 
- */
+
 
 
 
@@ -22,6 +18,11 @@ import org.jdom2.input.SAXBuilder;
 import net.sf.flora2.API.*;
 import net.sf.flora2.API.util.*;
 
+/**
+ * Class that contains the Frame of the program. Handels everything graphical.
+ * @author s2410540
+ *
+ */
 public class KTPFrame extends JFrame {
 	public List<Question> questionsList;
 	public List<Question> answeredQuestions;
@@ -41,7 +42,7 @@ public class KTPFrame extends JFrame {
 	KTPFrame(List<Question> questionsList, FloraController fc){
 		super("Genetic disorder referal assesment");
 		this.questionsList = questionsList;
-    this.originalQuestionsList = new ArrayList<Question>();
+		this.originalQuestionsList = new ArrayList<Question>();
 		this.originalQuestionsList.addAll(questionsList);
 		this.fc = fc;
 		answeredQuestions = new ArrayList<Question>();
@@ -70,9 +71,7 @@ public class KTPFrame extends JFrame {
 		//set layoutmanager
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
-		
 		this.setLayout(layout);
-		//this.setLayout(new GridLayout(0,2));
 	    
 	    // create previous, extra information and next buttons
 	    JButton nextButton = createNextButton("Next");
@@ -95,6 +94,7 @@ public class KTPFrame extends JFrame {
 	    histTextArea.setEditable(false);
 	    JPanel textPanel = new JPanel();
 	    textPanel.add(histScrollPane);
+	    
 	    // add the panel to the top right
 	    c.gridx = 1;
 	    c.gridy = 0;
@@ -150,7 +150,7 @@ public class KTPFrame extends JFrame {
 	    containerPanel.add(textLabel, c);
 	    
 	    
-	  //button to exit the program
+	    //button to exit the program
 	    JButton exitButton = new JButton("Exit");
 	    
 	    c.gridx = 1;
@@ -177,18 +177,18 @@ public class KTPFrame extends JFrame {
 	    		answeredQuestions.clear();				//remove all answers
 	    		currentPanel = 0;						//reset currenPanel counter
 	    		
-	    		//remove answers from log
 	    		
+	    		//remove answers from log
 	    		for(Question q : originalQuestionsList){
 	    				q.resetAnswers();
 	    		}
 	    							
 	    		fc.loadModel();
-					questionsList.clear();
-					questionsList.addAll(originalQuestionsList);
+				questionsList.clear();
+				questionsList.addAll(originalQuestionsList);
 	    		setTitle("Genetic disorder risk assesment");	// reset the title of the frame
-			    setVisible(false);										// show the frame
-	    		initGUI();								// re-init GUI
+			    setVisible(false);								// show the frame
+	    		initGUI();										// re-init GUI
 	    	}
 	    });
 	    
@@ -196,7 +196,6 @@ public class KTPFrame extends JFrame {
 	    
 		this.add(containerPanel);
 		this.pack();
-		// this.setLocationByPlatform(true);
 		this.repaint();
 	}
 	
