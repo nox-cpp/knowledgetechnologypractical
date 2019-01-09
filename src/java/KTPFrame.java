@@ -33,6 +33,7 @@ public class KTPFrame extends JFrame {
 	private int familyMember;
 	private boolean previous;
 	private List<Question> originalQuestionsList;
+	private JButton prevButton;
 
 	
 	 
@@ -75,7 +76,7 @@ public class KTPFrame extends JFrame {
 	    
 	    // create previous, extra information and next buttons
 	    JButton nextButton = createNextButton("Next");
-	    JButton prevButton = createPrevButton("Previous");
+	    createPrevButton("Previous");
 	    JButton infoButton = createInfoButton("Extra explanation");
 	    JPanel buttonPanel = new JPanel();
 	    buttonPanel.setLayout(new GridLayout(0,3));
@@ -210,7 +211,12 @@ public class KTPFrame extends JFrame {
 	 * Beware, checks if this is possible must be done before!
 	 */
 	public void showNextPanel(){
-		this.remove(this.questionsList.get(currentPanel).getPanel());	// remove current panel
+		// enable previous button
+		this.prevButton.setEnabled(true);
+		
+		
+		// remove current panel
+		this.remove(this.questionsList.get(currentPanel).getPanel());
 		this.currentPanel++;
 		
 		
@@ -235,8 +241,15 @@ public class KTPFrame extends JFrame {
 	 * Beware, checks if this is possible must be done before!
 	 */	
 	public void showPrevPanel(){
-		this.remove(this.questionsList.get(currentPanel).getPanel());	// remove current panel
+		
+		// remove current panel
+		this.remove(this.questionsList.get(currentPanel).getPanel());
 		this.currentPanel--;
+		
+		//grey out previous button
+		if(this.currentPanel == 0){
+			this.prevButton.setEnabled(false);
+		}
 		
 		// add prev panel
 		GridBagConstraints c = new GridBagConstraints();
@@ -591,10 +604,10 @@ public class KTPFrame extends JFrame {
 	/** Creates the previous button with action listener
 	 * @param text The text of the button
 	 */
-	private JButton createPrevButton(String text){
+	private void createPrevButton(String text){
 		
-		JButton prevButton = new JButton(text);
-		prevButton.addActionListener(new ActionListener()
+		this.prevButton = new JButton(text);
+		this.prevButton.addActionListener(new ActionListener()
 	    {
 	    	  public void actionPerformed(ActionEvent e){
 	    		  if(currentPanel - 1 >= 0 ){		// check if there is a previous panel
@@ -605,7 +618,7 @@ public class KTPFrame extends JFrame {
 	    		  }
 	    	  }
 	    });
-	    return prevButton;
+		this.prevButton.setEnabled(false);
 		
 	}
 	
