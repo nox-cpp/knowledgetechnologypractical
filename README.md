@@ -36,7 +36,7 @@ It is important to also export the variables, otherwise they can not be used by 
 
 On Windows, system variables may be set through the settings GUI. As a general note, on Windows all system variables follow this format `%VAR%`. Whenever a command in this manual shows `$VAR` it should be replaced with `%VAR%` on Windows.
 ### RUNNING
-To run the program (on linux) I use the following line (it should all be one command):
+To run the program (on linux) I use the following line (it should all be one command). The shell script runSys executes this code.:
 ```bash
   java -DPROLOGDIR="${PROLOGDIR}" -DFLORADIR="$FLORADIR" -classpath "$FLORADIR"/java/flora2java.jar:"${FLORADIR}"/java/interprolog.jar:./build/main/:./src/ src/java/MainController
 ```
@@ -45,7 +45,5 @@ NOTE: It is assumed that these commands are run from the top level of the reposi
 The first two arguments are used to make clear to java where it can find the Flora and Java executables. This is required for the packages to work. The third argument specifies to java where it can find the Flora package and the flora and interprolog .jar's. This was giving me trouble at first because the paths and references are either incorrect in the flora api source or there was some parameter we were missing to point to them.
 I made it work by placing the package in the same directory as the helloWorld java class AND moving the flrException class folder (util) to the same folder as the rest of the flora classes. Otherwise it wouldn't quite work.
 
-So it's a bit of a mess right now, but we're able to compile and run our own flora-java code which is neato.
-
 ## ON THE REPO
-I decided it would be a good idea to adhere to some structure for the repository, so I did a quick search and decided to shamelessly steal [this](https://github.com/kriasoft/Folder-Structure-Conventions).
+I decided it would be a good idea to adhere to some structure for the repository, so I did a quick search and decided to use [this](https://github.com/kriasoft/Folder-Structure-Conventions).
