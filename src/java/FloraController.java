@@ -65,7 +65,7 @@ public class FloraController {
    * @return
    */
   public String askQuery(String query) {
-   Iterator<FloraObject> response = session.ExecuteQuery(query + "@knowledgebase.");
+   Iterator<FloraObject> response = session.executeQuery(query + "@knowledgebase.");
    String answervals = "";
    if(response.hasNext())
      answervals = response.next().toString();
